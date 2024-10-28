@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "Za6m3DDwhVHI3NIMTuo1LbUx8//Qa0Am9dSJNJ/w3Qe7SfRD1uP3e01UkprJeshLt5AHspt4wtKRiRY+o8IDgQ==",
+  "success": true,
+  "projectFilePath": "/Users/robertofmbarreto/Documents/Mestrado/Semestre1/budgify-api/auth/auth.csproj",
+  "expectedPackageFiles": [
+    "/Users/robertofmbarreto/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "/Users/robertofmbarreto/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
+    "/Users/robertofmbarreto/.nuget/packages/swashbuckle.aspnetcore/6.5.0/swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
+    "/Users/robertofmbarreto/.nuget/packages/swashbuckle.aspnetcore.swagger/6.5.0/swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
+    "/Users/robertofmbarreto/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.5.0/swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
+    "/Users/robertofmbarreto/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.5.0/swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}
