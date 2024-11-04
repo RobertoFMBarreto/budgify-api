@@ -1,25 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "/Users/robertofmbarreto/Documents/Mestrado/Semestre1/budgify-api/auth/auth.csproj": {}
+    "C:\\Users\\Filipe Morais\\Documents\\GitHub\\budgify-api\\auth\\auth.csproj": {}
   },
   "projects": {
-    "/Users/robertofmbarreto/Documents/Mestrado/Semestre1/budgify-api/auth/auth.csproj": {
+    "C:\\Users\\Filipe Morais\\Documents\\GitHub\\budgify-api\\auth\\auth.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/robertofmbarreto/Documents/Mestrado/Semestre1/budgify-api/auth/auth.csproj",
+        "projectUniqueName": "C:\\Users\\Filipe Morais\\Documents\\GitHub\\budgify-api\\auth\\auth.csproj",
         "projectName": "auth",
-        "projectPath": "/Users/robertofmbarreto/Documents/Mestrado/Semestre1/budgify-api/auth/auth.csproj",
-        "packagesPath": "/Users/robertofmbarreto/.nuget/packages/",
-        "outputPath": "/Users/robertofmbarreto/Documents/Mestrado/Semestre1/budgify-api/auth/obj/",
+        "projectPath": "C:\\Users\\Filipe Morais\\Documents\\GitHub\\budgify-api\\auth\\auth.csproj",
+        "packagesPath": "C:\\Users\\Filipe Morais\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Filipe Morais\\Documents\\GitHub\\budgify-api\\auth\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/robertofmbarreto/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Filipe Morais\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -32,6 +35,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -54,6 +62,24 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.33, 6.0.33]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[6.0.33, 6.0.33]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.33, 6.0.33]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[6.0.33, 6.0.33]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -62,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.425/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }
