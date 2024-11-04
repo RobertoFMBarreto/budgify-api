@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\auth"
   ],
-  "SelectedNode": "\\auth",
+  "SelectedNode": "\\auth\\Dockerfile",
   "PreviewInSolutionExplorer": false
 }
