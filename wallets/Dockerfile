@@ -4,11 +4,13 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS base
 # vamos trabalhar no /app
 WORKDIR /app
 
-COPY *.csproj ./
-RUN dotnet restore
+EXPOSE 5001
+EXPOSE 80
 
 COPY . ./
-RUN dotnet publish -o out
+RUN dotnet restore
+
+RUN dotnet publish -c Release -o out
 
 # *** guardar com build-env
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
@@ -17,8 +19,3 @@ WORKDIR /build
 
 COPY --from=base /app/out .
 ENTRYPOINT [ "dotnet", "wallets.dll" ]
-
-
-
-
-
