@@ -1,15 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "0EJWlo+mEWu/AKKYy0pBNzdPyPsH7V/yLfTYmUJPJf1sn/SSdBNkjyAAZWV3vQQaHZif5fUtWDXCe2cgkSCuRA==",
+  "dgSpecHash": "9OCCR8c73M4cg8Icma624TFZ/P4KW9REda+NDBQg2PaIrT6X0ykQsg8995cEQt3m6w37eMvNI6GxGN1IakGdCQ==",
   "success": true,
-  "projectFilePath": "/Users/robertofmbarreto/Documents/Mestrado/Semestre1/budgify-api/transactions/transactions.csproj",
+  "projectFilePath": "/home/tiago/programmer/budgify-api/transactions/transactions.csproj",
   "expectedPackageFiles": [
-    "/Users/robertofmbarreto/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
-    "/Users/robertofmbarreto/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
-    "/Users/robertofmbarreto/.nuget/packages/swashbuckle.aspnetcore/6.5.0/swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
-    "/Users/robertofmbarreto/.nuget/packages/swashbuckle.aspnetcore.swagger/6.5.0/swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
-    "/Users/robertofmbarreto/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.5.0/swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
-    "/Users/robertofmbarreto/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.5.0/swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512"
+    "/home/tiago/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "/home/tiago/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
+    "/home/tiago/.nuget/packages/swashbuckle.aspnetcore/6.5.0/swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
+    "/home/tiago/.nuget/packages/swashbuckle.aspnetcore.swagger/6.5.0/swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
+    "/home/tiago/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.5.0/swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
+    "/home/tiago/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.5.0/swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512",
+    "/home/tiago/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.35/microsoft.aspnetcore.app.ref.6.0.35.nupkg.sha512"
   ],
   "logs": []
 }
