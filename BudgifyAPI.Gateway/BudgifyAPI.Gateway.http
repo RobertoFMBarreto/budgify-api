@@ -1,0 +1,6 @@
+@BudgifyAPI.Gateway_HostAddress = http://localhost:5073
+
+GET {{BudgifyAPI.Gateway_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
