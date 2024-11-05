@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace auth.Infrastructure.Data.Configurations
+namespace family.Infrastructure.Data.Configurations
 {
     public class CustomConfiguration
     {
-        
+
     }
 }

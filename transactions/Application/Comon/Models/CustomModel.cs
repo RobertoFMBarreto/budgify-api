@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace auth.Application.Comon.Models
+namespace transactions.Application.Comon.Models
 {
     public class CustomModel
     {
-        
+
     }
 }

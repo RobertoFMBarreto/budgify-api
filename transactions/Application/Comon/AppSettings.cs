@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace auth.Application.Comon
+namespace transactions.Application.Comon
 {
     public class AppSettings
     {
-        
+
     }
 }

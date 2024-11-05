@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace auth.Presentation.Middlewares
+namespace gateway.Presentation.Middlewares
 {
     public class CustomMiddleware
     {
-        
+
     }
 }

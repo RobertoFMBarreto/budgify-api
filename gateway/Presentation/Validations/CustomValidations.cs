@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace auth.Presentation.Validations
+namespace gateway.Presentation.Validations
 {
     public class CustomValidations
     {
-        
+
     }
 }

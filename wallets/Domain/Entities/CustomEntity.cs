@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace auth.Domain.Entities
+namespace wallets.Domain.Entities
 {
     public class CustomEntity
     {
-        
+
     }
 }

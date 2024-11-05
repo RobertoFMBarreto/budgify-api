@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace auth.Application.Comon.Models
+namespace wallets.Application.Comon.Models
 {
     public class CustomHelper
     {

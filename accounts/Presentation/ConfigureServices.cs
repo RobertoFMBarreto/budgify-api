@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace auth.Presentation
+namespace accounts.Presentation
 {
     public class ConfigureServices
     {
-        
+
     }
 }

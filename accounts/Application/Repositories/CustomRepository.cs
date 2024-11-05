@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace auth.Application.Repositories
+namespace accounts.Application.Repositories
 {
     public class CustomRepository
     {
-        
+
     }
 }
