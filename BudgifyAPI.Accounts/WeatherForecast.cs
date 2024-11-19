@@ -1,4 +1,4 @@
-namespace BudgifyAPI.Accounts
+namespace BudgifyAPI.Accounts;
 
 public class WeatherForecast
 {
