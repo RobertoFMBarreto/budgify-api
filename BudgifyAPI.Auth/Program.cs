@@ -1,6 +1,13 @@
 using BudgifyAPI.Auth.Configuration;
+using BudgifyAPI.Auth.Models.DB;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Ler a connection string do appsettings.json
+
+builder.Services.AddDbContext<UserContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("budgify-db")));
 
 
 builder.WebHost.UseUrls("http://+:5072").UseKestrel();

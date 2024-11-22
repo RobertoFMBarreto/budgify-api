@@ -32,4 +32,9 @@ public class AuthenticationQueries:IAuthenticationQueries
         });
         return await _context.SaveChangesAsync() > 0;
     }
+
+    public async Task<List<User>> GetUsers()
+    {
+        return await _context.Users.ToListAsync();
+    }
 }

@@ -1,4 +1,5 @@
 using BudgifyAPI.Auth.Helpers.Interfaces;
+using BudgifyAPI.Auth.Models.DB;
 using BudgifyAPI.Auth.Models.Queries.Interfaces;
 using BudgifyAPI.Auth.Services.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -30,5 +31,9 @@ public class AuthenticationServices:IAuthenticationServices
     public async Task<bool> register(string email, string password, string name, DateOnly dateOfBirth, int genre)
     {
         return await _authenticationQueries.Register(email, password, name, dateOfBirth, genre);
+    }
+    public async Task<List<User>> GetUsers()
+    {
+        return await _authenticationQueries.GetUsers();
     }
 }
