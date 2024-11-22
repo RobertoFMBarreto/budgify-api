@@ -1,3 +1,4 @@
+using BudgifyAPI.Auth.Models.DB;
 using BudgifyAPI.Auth.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using LoginRequest = BudgifyAPI.Auth.Models.Request.LoginRequest;
@@ -29,4 +30,10 @@ public class AuthenticationController : ControllerBase
         return result? Ok(): Unauthorized();
     }
     
+    [HttpGet("users")]
+    public async Task<IActionResult> Get()
+    {
+        List<User> users = await _authenticationServices.GetUsers();
+        return Ok(users);
+    }
 }
