@@ -89,9 +89,9 @@ spec:
   selector:
     app: postgres
     role: service
-  type: ClusterIP
   ports:
     - name: postgres
       port: 5432
       targetPort: 5432
       protocol: TCP
+  clusterIP: None
