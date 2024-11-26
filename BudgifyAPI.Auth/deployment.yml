@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: budgify-api-auth-container
-          image: ecmiraldo/budgify
+          image: ecmiraldo/budgify:master
           resources:
             requests:
               cpu: 200m
