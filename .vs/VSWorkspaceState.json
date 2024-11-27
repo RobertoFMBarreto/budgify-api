@@ -1,12 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\BudgifyAPI.Accounts",
-    "\\BudgifyAPI.Accounts\\Application",
-    "\\BudgifyAPI.Accounts\\Application\\Comon",
-    "\\BudgifyAPI.Accounts\\Application\\Comon\\Models",
-    "\\BudgifyAPI.Auth"
+    "\\BudgifyAPI.Auth.CA"
   ],
-  "SelectedNode": "\\BudgifyAPI.Accounts\\appsettings.json",
+  "SelectedNode": "\\BudgifyAPI.Auth",
   "PreviewInSolutionExplorer": false
 }
