@@ -23,6 +23,20 @@ public static class UserRoute
             }
         });
         
+        app.MapPost($"{baseRoute}/register", async ([FromBody]UserEntity body)=>
+        {
+            try
+            {
+                CustomHttpResponse resp = await UserInteractorEF.register(UserPersistence.UserRegisterPersistence,body );
+                return resp;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        });
+        
         return app;
     }
 }

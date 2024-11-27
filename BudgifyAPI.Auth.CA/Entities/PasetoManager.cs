@@ -10,9 +10,9 @@ public static class PasetoManager
         var pasetoKey = new PasetoBuilder().Use(ProtocolVersion.V4, Purpose.Local).GenerateSymmetricKey(); 
         var token = new PasetoBuilder().Use(ProtocolVersion.V4, Purpose.Local)
             .WithKey(pasetoKey)
-            //.AddClaim("uid", "this is a secret message")
-            //.Issuer("https://github.com/daviddesmet/paseto-dotnet")
-            .Subject(userId.ToString())
+            .AddClaim("uid", userId)
+            .Issuer("https://github.com/RobertoFMBarreto/budgify-api")
+            //.Subject(userId.ToString())
             //.Audience("https://paseto.io")
             .NotBefore(DateTime.UtcNow.AddMinutes(5))
             .IssuedAt(DateTime.UtcNow)
@@ -21,5 +21,10 @@ public static class PasetoManager
             //.AddFooter("arbitrary-string-that-isn't-json")
             .Encode();
         return token;
+    }
+
+    public static string DecodePasetoToken(string token)
+    {
+        new PasetoBuilder().Use(ProtocolVersion.V4, Purpose.Local).Decode(token);
     }
 }
