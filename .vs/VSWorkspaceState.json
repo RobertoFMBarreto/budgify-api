@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\auth"
+    "\\auth",
+    "\\BudgifyAPI.Auth",
+    "\\BudgifyAPI.Auth\\Application"
   ],
-  "SelectedNode": "\\auth\\Dockerfile",
   "PreviewInSolutionExplorer": false
 }
