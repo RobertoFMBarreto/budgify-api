@@ -1,8 +1,12 @@
 {
   "ExpandedNodes": [
     "",
-    "\\auth"
+    "\\BudgifyAPI.Accounts",
+    "\\BudgifyAPI.Accounts\\Application",
+    "\\BudgifyAPI.Accounts\\Application\\Comon",
+    "\\BudgifyAPI.Accounts\\Application\\Comon\\Models",
+    "\\BudgifyAPI.Auth"
   ],
-  "SelectedNode": "\\auth\\Dockerfile",
+  "SelectedNode": "\\BudgifyAPI.Accounts\\appsettings.json",
   "PreviewInSolutionExplorer": false
 }
