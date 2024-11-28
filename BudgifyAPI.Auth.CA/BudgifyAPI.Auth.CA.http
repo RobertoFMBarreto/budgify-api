@@ -1,0 +1,6 @@
+@BudgifyAPI.Auth.CA_HostAddress = http://localhost:5066
+
+GET {{BudgifyAPI.Auth.CA_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

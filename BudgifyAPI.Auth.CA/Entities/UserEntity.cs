@@ -14,10 +14,14 @@ public class UserEntity
 
     public async Task<bool> Validate()
     {
-        if (this.Name is null || this.Email is null || this.Password is null)
+        if (String.IsNullOrEmpty(Name)|| String.IsNullOrEmpty(Email) || String.IsNullOrEmpty(Password))
         {
             throw new Exception("missing fields");
-            
+        }
+
+        if (Genre is < 0 or > 2)
+        {
+            throw new Exception("invalid genre");
         }
 
         return true;

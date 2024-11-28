@@ -15,4 +15,10 @@ public static class UserInteractorEF
         return await userPersistence(user);
         
     }
+    
+    public static async Task<CustomHttpResponse> register(Func<UserEntity,Task<CustomHttpResponse>> userPersistence, UserEntity user)
+    {
+        return await userPersistence(user);
+        
+    }
 }
