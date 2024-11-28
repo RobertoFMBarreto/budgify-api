@@ -31,29 +31,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-<<<<<<< HEAD
-              "Title": "UserContext.cs",
-              "DocumentMoniker": "C:\\Users\\FilipeMorais\\Documents\\MEI\\Relat\u00F3rios\\budgify-api\\BudgifyAPI.Auth\\Models\\DB\\UserContext.cs",
-              "RelativeDocumentMoniker": "BudgifyAPI.Auth\\Models\\DB\\UserContext.cs",
-              "ToolTip": "C:\\Users\\FilipeMorais\\Documents\\MEI\\Relat\u00F3rios\\budgify-api\\BudgifyAPI.Auth\\Models\\DB\\UserContext.cs",
-              "RelativeToolTip": "BudgifyAPI.Auth\\Models\\DB\\UserContext.cs",
-              "ViewState": "AgIAAD4AAAAAAAAAAAAuwFEAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-27T12:00:39.184Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\FilipeMorais\\Documents\\MEI\\Relat\u00F3rios\\budgify-api\\BudgifyAPI.Auth\\Models\\DB\\User.cs",
-              "RelativeDocumentMoniker": "BudgifyAPI.Auth\\Models\\DB\\User.cs",
-              "ToolTip": "C:\\Users\\FilipeMorais\\Documents\\MEI\\Relat\u00F3rios\\budgify-api\\BudgifyAPI.Auth\\Models\\DB\\User.cs",
-              "RelativeToolTip": "BudgifyAPI.Auth\\Models\\DB\\User.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-27T12:00:27.684Z",
-=======
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Filipe Morais\\Documents\\GitHub\\budgify-api\\BudgifyAPI.Accounts.CA\\appsettings.json",
               "RelativeDocumentMoniker": "BudgifyAPI.Accounts.CA\\appsettings.json",
@@ -62,23 +39,11 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2024-11-06T14:59:26.4Z",
->>>>>>> d3b25e2a9f9a25d39b8e65c8c57f6ed31a1875f2
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-<<<<<<< HEAD
-              "Title": "PasetoHelper.cs",
-              "DocumentMoniker": "C:\\Users\\FilipeMorais\\Documents\\MEI\\Relat\u00F3rios\\budgify-api\\BudgifyAPI.Auth\\Helpers\\PasetoHelper.cs",
-              "RelativeDocumentMoniker": "BudgifyAPI.Auth\\Helpers\\PasetoHelper.cs",
-              "ToolTip": "C:\\Users\\FilipeMorais\\Documents\\MEI\\Relat\u00F3rios\\budgify-api\\BudgifyAPI.Auth\\Helpers\\PasetoHelper.cs",
-              "RelativeToolTip": "BudgifyAPI.Auth\\Helpers\\PasetoHelper.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-27T09:50:05.252Z",
-              "EditorCaption": ""
-=======
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Filipe Morais\\Documents\\GitHub\\budgify-api\\auth\\Program.cs",
               "RelativeDocumentMoniker": "auth\\Program.cs",
@@ -108,7 +73,6 @@
               "RelativeToolTip": "auth\\Dockerfile",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2024-11-04T19:38:02.873Z"
->>>>>>> d3b25e2a9f9a25d39b8e65c8c57f6ed31a1875f2
             }
           ]
         }
