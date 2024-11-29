@@ -11,7 +11,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
             application.MapGet($"{baseRoute}/user-group/{{id}}", async (Guid userGroupId)=> {
                 try
                 {
-                    CustomHttpResponse resp = await AccountsInteractorEF.GetGroups(AccountsPersistence.GetGroupsPersistence, userGroupId);
+                    CustomHttpResponse resp = await AccountsInteractorEF.GetGroupsById(AccountsPersistence.GetGroupsByIdPersistence, userGroupId);
                     return resp;
                 }
                 catch (Exception ex)

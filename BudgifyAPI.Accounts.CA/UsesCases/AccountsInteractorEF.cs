@@ -4,9 +4,9 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
 {
     public class AccountsInteractorEF
     {
-        public static async Task<CustomHttpResponse> GetGroups(Func<Guid, Task<CustomHttpResponse>> GetGroupsPersistence, Guid userGroupId)
+        public static async Task<CustomHttpResponse> GetGroupsById(Func<Guid, Task<CustomHttpResponse>> GetGroupsByIdPersistence, Guid userGroupId)
         {
-            return await GetGroupsPersistence(userGroupId);
+            return await GetGroupsByIdPersistence(userGroupId);
         }
     }
 }
