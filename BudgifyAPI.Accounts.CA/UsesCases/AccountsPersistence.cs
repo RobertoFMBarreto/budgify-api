@@ -7,6 +7,39 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
 {
     public static class AccountsPersistence
     {
+        public static async Task<CustomHttpResponse> AddUserGroup(RequestName name)
+        {
+            AccountsContext accountsContext = new AccountsContext();
+            try
+            {
+                await _contextUsers.UserGroups.AddAsync(new UserGroup() { Name = name.userGroupName });
+                if (accountsContext != null)
+                {
+                    return new CustomHttpResponse()
+                    {
+                        message = "Grupo criado com sucesso",
+                        status = 200
+                    };
+                    await _contextUsers.SaveChangesAsync();
+                }
+                return new CustomHttpResponse()
+                {
+                    message = "Occurreu um erro",
+                    status = 400
+                };
+                
+                
+
+            }
+            catch (Exception ex)
+            {
+                return new CustomHttpResponse()
+                {
+                    message= ex.Message,
+                    status = 500    
+                }
+            }
+        }
         public static async Task<CustomHttpResponse> GetGroupsPersistence(Guid userGroupId)
         {
             AccountsContext accountsContext = new AccountsContext();
@@ -17,7 +50,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "caralhoosooooooooos A minha sogra é um boi",
+                        message = "Occurreu um erro",
                         status = 400,
                     };
                 }
