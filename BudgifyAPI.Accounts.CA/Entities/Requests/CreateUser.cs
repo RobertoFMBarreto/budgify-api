@@ -1,4 +1,4 @@
-﻿namespace BudgifyAPI.Accounts.CA.Controllers.Requests
+﻿namespace BudgifyAPI.Accounts.CA.Entities.Requests
 {
     public class CreateUser
     {

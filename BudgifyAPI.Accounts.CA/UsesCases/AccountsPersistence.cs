@@ -1,9 +1,11 @@
-﻿using BudgifyAPI.Accounts.CA.Controllers.Requests;
-using BudgifyAPI.Accounts.CA.Entities;
+﻿using BudgifyAPI.Accounts.CA.Entities;
 using BudgifyAPI.Accounts.CA.Entities.Requests;
 using BudgifyAPI.Accounts.CA.Framework.EntityFramework.Models;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
+using System.Diagnostics;
+using System.Net.NetworkInformation;
+using System.Security.Cryptography;
 
 namespace BudgifyAPI.Accounts.CA.UsesCases
 {
@@ -23,7 +25,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                         message = "Grupo criado com sucesso",
                         status = 200
                     };
-                    
+
                 }
                 return new CustomHttpResponse()
                 {
@@ -81,7 +83,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 if (userGroupExist != null)
                 {
                     string queryUserGroupNull = "update public.user set id_user_group = null where id_user_group = @userGroup";
-                    var resp = accountsContext.Database.ExecuteSqlRaw(queryUserGroupNull,new NpgsqlParameter("@id_user_group", userGroupId));
+                    var resp = accountsContext.Database.ExecuteSqlRaw(queryUserGroupNull, new NpgsqlParameter("@id_user_group", userGroupId));
                     accountsContext.UserGroups.Remove(userGroupExist);
                     await accountsContext.SaveChangesAsync();
                     return new CustomHttpResponse()
@@ -126,7 +128,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     status = 200,
                     Data = listaUserGroups,
-                    
+
                 };
             }
             catch (Exception ex)
@@ -186,6 +188,298 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     status = 500,
                     message = ex.Message
+                };
+            }
+        }
+        public static async Task<CustomHttpResponse> DeleteUserFromUserGroupPersistence(Guid userId)
+        {
+            AccountsContext accountsContext = new AccountsContext();
+            try
+            {
+                var userExist = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == userId);
+                if (userExist == null)
+                    return new CustomHttpResponse()
+                    {
+                        message = "O utilizador não existe",
+                        status = 400
+                    };
+                string query = "update public.user " +
+                    "set id_user_group = null " +
+                    "where id_user = @id_user ";
+                var result = accountsContext.Database.ExecuteSqlRawAsync(query, new NpgsqlParameter("@id_user", userId));
+                await accountsContext.SaveChangesAsync();
+                return new CustomHttpResponse()
+                {
+                    message = "Utilizador removido do grupo com sucesso",
+                    status = 200
+                };
+
+            }
+            catch (Exception ex)
+            {
+                return new CustomHttpResponse()
+                {
+                    message = ex.Message,
+                    status = 500
+                };
+            }
+        }
+        public static async Task<CustomHttpResponse> AddManagerToUserGroupPersistence(User user)
+        {
+            AccountsContext accountsContext = new AccountsContext();
+            try
+            {
+                var userExist = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == user.IdUser);  
+                if(userExist == null)
+                {
+                    return new CustomHttpResponse()
+                    {
+                        message = "Utilizador não existe",
+                        status = 400
+                    };
+                }
+                if (user.IsManager)
+                {
+                    string query = "update public.user " +
+                    $"set id_user_group = @id_user_group " +
+                    $"where id_user = @id_user";
+                    var result = accountsContext.Database.ExecuteSqlRawAsync(query, new NpgsqlParameter("@id_user_group", user.IdUserGroup), new NpgsqlParameter("@id_user", user.IdUser));
+                    return new CustomHttpResponse()
+                    {
+                        message = "Gestor adicionado ao grupo com sucesso",
+                        status = 200
+                    };
+                }
+                return new CustomHttpResponse()
+                {
+                    message = "Utilizador não é Gestor",
+                    status = 400
+                };
+            }
+            catch (Exception ex)
+            {
+                return new CustomHttpResponse()
+                {
+                    message = ex.Message,
+                    status = 500
+                };
+            }
+        }
+        public static async Task<CustomHttpResponse> DeleteManagerToUserGroupPersistence(User user)
+        {
+            AccountsContext accountsContext = new AccountsContext();
+            try
+            {
+                var userExist = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == user.IdUser);
+                if (userExist == null)
+                {
+                    return new CustomHttpResponse()
+                    {
+                        message = "Utilizador não existe",
+                        status = 400
+                    };
+                }
+                if (user.IsManager)
+                {
+                    string query = "update public.user " +
+                    $"set id_user_group = @id_user_group " +
+                    $"where id_user = @id_user";
+                    var result = accountsContext.Database.ExecuteSqlRawAsync(query, new NpgsqlParameter("@id_user_group", user.IdUserGroup), new NpgsqlParameter("@id_user", user.IdUser));
+                    return new CustomHttpResponse()
+                    {
+                        message = "Gestor adicionado ao grupo com sucesso",
+                        status = 200
+                    };
+                }
+                return new CustomHttpResponse()
+                {
+                    message = "Utilizador não é Gestor",
+                    status = 400
+                };
+            }
+            catch (Exception ex)
+            {
+                return new CustomHttpResponse()
+                {
+                    message = ex.Message,
+                    status = 500
+                };
+            }
+        }
+        public static async Task<CustomHttpResponse> AddUserPersistence(CreateUser createUser)
+        {
+            AccountsContext accountsContext = new AccountsContext();
+            try
+            {
+                var userExists = await accountsContext.Users.FirstOrDefaultAsync(x => x.Email == createUser.Email);
+                if (userExists != null)
+                {
+                    return new CustomHttpResponse()
+                    {
+                        message = "Utilizador já existe",
+                        status = 400
+                    };
+                }
+                await accountsContext.Users.AddAsync(new User
+                {
+
+                    IdUserGroup = createUser.IdUserGroup,
+                    Name = createUser.Name,
+                    Email = createUser.Email,
+                    Password = createUser.Password,
+                    DateOfBirth = createUser.DateOfBirth,
+                    Genre = createUser.Genre,
+                    IsActive = createUser.IsActive,
+                    IsAdmin = createUser.IsAdmin,
+                    IsManager = createUser.IsManager,
+                    AllowWalletWatch = createUser.AllowWalletWatch
+
+                });
+                await accountsContext.SaveChangesAsync();
+                return new CustomHttpResponse()
+                {
+                    message = "Utilizador adicionado com sucesso",
+                    status = 200
+                };
+
+            }
+            catch (Exception ex)
+            {
+                return new CustomHttpResponse()
+                {
+                    message = ex.Message,
+                    status = 500
+                };
+            }
+        }
+        public static async Task<CustomHttpResponse> UpdateUserPersistence(Guid userId, CreateUser createUser)
+        {
+            AccountsContext accountsContext = new AccountsContext();
+            try
+            {
+                var userExist = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == userId);
+                if (userExist == null)
+                {
+                    return new CustomHttpResponse()
+                    {
+                        message = "Utilizador não existe",
+                        status = 400
+                    };
+                }
+
+                accountsContext.Users.Update(new User()
+                {
+                    IdUserGroup = createUser.IdUserGroup,
+                    Name = createUser.Name,
+                    Email = createUser.Email,
+                    Password = createUser.Password,
+                    DateOfBirth = createUser.DateOfBirth,
+                    Genre = createUser.Genre,
+                    IsActive = createUser.IsActive,
+                    IsAdmin = createUser.IsAdmin,
+                    IsManager = createUser.IsManager,
+                    AllowWalletWatch = createUser.AllowWalletWatch
+                });
+                await accountsContext.SaveChangesAsync();
+                return new CustomHttpResponse()
+                {
+                    message = "Utilizador atualizado com sucesso",
+                    status = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new CustomHttpResponse()
+                {
+                    message = ex.Message,
+                    status = 500
+                };
+            }
+        }
+        public static async Task<CustomHttpResponse> DeleteUserPersistence(Guid userId)
+        {
+            AccountsContext accountsContext = new AccountsContext();
+            try
+            {
+                var userExist = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == userId);
+                if (userExist == null)
+                {
+                    return new CustomHttpResponse()
+                    {
+                        message = "Utilizador não existe",
+                        status = 400
+                    };
+                }
+                string query = "update public.user " +
+                   "set is_active = 'false' " +
+                   "where id_user = @id_user";
+                var result2 = accountsContext.Database.ExecuteSqlRawAsync(query, new NpgsqlParameter("@id_user", userId));
+                await accountsContext.SaveChangesAsync();
+                return new CustomHttpResponse()
+                {
+                    message = "Utilizador removido com sucesso",
+                    status = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new CustomHttpResponse()
+                {
+                    message = ex.Message,
+                    status = 500
+                };
+            }
+        }
+        public static async Task<CustomHttpResponse> GetUsersPersistence()
+        {
+            AccountsContext accountsContext = new AccountsContext();
+            try
+            {
+                string query = "select * from public.user";
+                List<User> listUsers = await accountsContext.Users.FromSqlRaw(query).ToListAsync();
+                return new CustomHttpResponse()
+                {
+                    status = 200,
+                    Data = listUsers
+                };
+            }
+            catch (Exception ex)
+            {
+                return new CustomHttpResponse()
+                {
+                    message = ex.Message,
+                    status = 500
+                };
+            }
+        }
+        public static async Task<CustomHttpResponse> GetUserById(Guid userId)
+        {
+            AccountsContext accountsContext = new AccountsContext();
+            try
+            {
+                var userIdExist = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser.Equals(userId));
+                if (userIdExist == null)
+                {
+                    return new CustomHttpResponse()
+                    {
+                        message = "Não existem utilizadores",
+                        status = 400
+                    };
+                }
+                string query = "select * from public.user where id_user = @id_user";
+                var user = await accountsContext.Users.FromSqlRaw(query, new NpgsqlParameter("@id_user", userId)).FirstOrDefaultAsync();
+                return new CustomHttpResponse()
+                {
+                    status = 200,
+                    Data = user
+                };
+            }
+            catch (Exception ex)
+            {
+                return new CustomHttpResponse()
+                {
+                    message = ex.Message,
+                    status = 500
                 };
             }
         }
