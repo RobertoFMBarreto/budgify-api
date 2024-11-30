@@ -1,6 +1,7 @@
 {
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:5001"
+    "BaseUrl": "http://localhost:5001",
+    
   },
   "Routes": [
     {
@@ -9,6 +10,12 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Paseto",
         "AllowedScopes": []
+      },
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "15s",
+        "PeriodTimespan": 1,
+        "Limit": 1
       },
       "DelegatingHandlers": [ "AddUserInfoHeaderHandler" ],
       "DownstreamPathTemplate": "/api/v1/authentication/{everything}",
@@ -22,10 +29,16 @@
     },
     {
       "UpstreamPathTemplate": "/gateway/wallets/{everything}",
-      "UpstreamHttpMethod": [ "POST" ],
+      "UpstreamHttpMethod": [ "GET","POST","PUT","DELETE" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Paseto",
         "AllowedScopes": []
+      },
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "15s",
+        "PeriodTimespan": 1,
+        "Limit": 1
       },
       "DelegatingHandlers": [ "AddUserInfoHeaderHandler" ],
       "DownstreamPathTemplate": "/api/v1/wallets/{everything}",
@@ -38,10 +51,16 @@
       ]
     },{
       "UpstreamPathTemplate": "/gateway/accounts/{everything}",
-      "UpstreamHttpMethod": [ "POST" ],
+      "UpstreamHttpMethod": ["GET","POST","PUT","DELETE" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Paseto",
         "AllowedScopes": []
+      },
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "15s",
+        "PeriodTimespan": 1,
+        "Limit": 1
       },
       "DelegatingHandlers": [ "AddUserInfoHeaderHandler" ],
       "DownstreamPathTemplate": "/api/v1/accounts/{everything}",
@@ -54,10 +73,16 @@
       ]
     },{
       "UpstreamPathTemplate": "/gateway/transactions/{everything}",
-      "UpstreamHttpMethod": [ "POST" ],
+      "UpstreamHttpMethod": ["GET","POST","PUT","DELETE"],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Paseto",
         "AllowedScopes": []
+      },
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "15s",
+        "PeriodTimespan": 1,
+        "Limit": 1
       },
       "DelegatingHandlers": [ "AddUserInfoHeaderHandler" ],
       "DownstreamPathTemplate": "/api/v1/transactions/{everything}",
@@ -70,4 +95,5 @@
       ]
     }
   ]
+  
 }
