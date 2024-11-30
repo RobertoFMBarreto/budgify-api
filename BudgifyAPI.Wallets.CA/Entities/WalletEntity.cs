@@ -15,6 +15,11 @@ namespace BudgifyAPI.Wallets.CA.Entities
 
         public string? Requisition {get; set;}
 
-        
+        public async Task<bool> Validate() {
+            if (string.IsNullOrEmpty(WalletName) || WalletName.Contains(";") || WalletName.Contains(")")) {
+                throw new ArgumentException("Invalid name for wallet");
+            }
+            return true;
+        } 
     }
 }
