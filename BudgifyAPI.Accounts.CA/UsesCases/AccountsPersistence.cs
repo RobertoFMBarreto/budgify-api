@@ -167,7 +167,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "O utilizador não está atribuído a um grupo",
+                        message = "O utilizador já está atribuído a um grupo",
                         status = 400
                     };
                 }
@@ -226,47 +226,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
         }
         public static async Task<CustomHttpResponse> AddManagerToUserGroupPersistence(User user)
         {
-            AccountsContext accountsContext = new AccountsContext();
-            try
-            {
-                var userExist = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == user.IdUser);  
-                if(userExist == null)
-                {
-                    return new CustomHttpResponse()
-                    {
-                        message = "Utilizador não existe",
-                        status = 400
-                    };
-                }
-                if (user.IsManager)
-                {
-                    string query = "update public.user " +
-                    $"set id_user_group = @id_user_group " +
-                    $"where id_user = @id_user";
-                    var result = accountsContext.Database.ExecuteSqlRawAsync(query, new NpgsqlParameter("@id_user_group", user.IdUserGroup), new NpgsqlParameter("@id_user", user.IdUser));
-                    return new CustomHttpResponse()
-                    {
-                        message = "Gestor adicionado ao grupo com sucesso",
-                        status = 200
-                    };
-                }
-                return new CustomHttpResponse()
-                {
-                    message = "Utilizador não é Gestor",
-                    status = 400
-                };
-            }
-            catch (Exception ex)
-            {
-                return new CustomHttpResponse()
-                {
-                    message = ex.Message,
-                    status = 500
-                };
-            }
-        }
-        public static async Task<CustomHttpResponse> DeleteManagerToUserGroupPersistence(User user)
-        {
+            //primeiro adicionar ao grupo e depois tornar manager
             AccountsContext accountsContext = new AccountsContext();
             try
             {
@@ -430,6 +390,40 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 };
             }
         }
+        public static async Task<CustomHttpResponse> ActiveUserPersistence(Guid userId)
+        {
+            AccountsContext accountsContext = new AccountsContext();
+            try
+            {
+                var userExist = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == userId);
+                if (userExist == null)
+                {
+                    return new CustomHttpResponse()
+                    {
+                        message = "Utilizador não existe",
+                        status = 400
+                    };
+                }
+                string query = "update public.user " +
+                   "set is_active = 'active' " +
+                   "where id_user = @id_user";
+                var result2 = accountsContext.Database.ExecuteSqlRawAsync(query, new NpgsqlParameter("@id_user", userId));
+                await accountsContext.SaveChangesAsync();
+                return new CustomHttpResponse()
+                {
+                    message = "Utilizador atualizado com sucesso",
+                    status = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new CustomHttpResponse()
+                {
+                    message = ex.Message,
+                    status = 500
+                };
+            }
+        }
         public static async Task<CustomHttpResponse> GetUsersPersistence()
         {
             AccountsContext accountsContext = new AccountsContext();
@@ -452,7 +446,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 };
             }
         }
-        public static async Task<CustomHttpResponse> GetUserById(Guid userId)
+        public static async Task<CustomHttpResponse> GetUserByIdPersistence(Guid userId)
         {
             AccountsContext accountsContext = new AccountsContext();
             try
