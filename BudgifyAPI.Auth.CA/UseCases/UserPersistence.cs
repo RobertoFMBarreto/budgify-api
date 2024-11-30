@@ -22,7 +22,6 @@ public static class UserPersistence
             }
             
             User? user = await context.Users.Where(u=> u.Email == userEntity.Email).FirstOrDefaultAsync();
-
             if (user == null)
             {
                 return new CustomHttpResponse()
@@ -88,6 +87,7 @@ public static class UserPersistence
                 Name = userEntity.Name,
             });
             
+            await context.SaveChangesAsync();
             return new CustomHttpResponse()
             {
                 message = "success",

@@ -1,5 +1,6 @@
 using BudgifyAPI.Auth.Models.DB;
 using BudgifyAPI.Auth.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using LoginRequest = BudgifyAPI.Auth.Models.Request.LoginRequest;
 using RegisterRequest = BudgifyAPI.Auth.Models.Request.RegisterRequest;
@@ -17,6 +18,7 @@ public class AuthenticationController : ControllerBase
     }
 
     [HttpPost("login")]
+    [AllowAnonymous]
     public async Task<IActionResult> Get([FromBody] LoginRequest request)
     { 
         string result = await _authenticationServices.login(request.Email,request.Password);

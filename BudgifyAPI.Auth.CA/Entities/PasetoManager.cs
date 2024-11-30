@@ -1,5 +1,12 @@
+using System.Text;
+using BudgifyAPI.Auth.CA.Framework.EntityFramework.Models;
+using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Crypto.Parameters;
+using Org.BouncyCastle.Crypto.Signers;
+using Org.BouncyCastle.OpenSsl;
 using Paseto;
 using Paseto.Builder;
+using Paseto.Cryptography.Key;
 
 namespace BudgifyAPI.Auth.CA.Entities;
 
@@ -7,24 +14,23 @@ public static class PasetoManager
 {
     public static string GeneratePasetoToken(Guid userId)
     {
-        var pasetoKey = new PasetoBuilder().Use(ProtocolVersion.V4, Purpose.Local).GenerateSymmetricKey(); 
+
+        var environmentName =
+            Environment.GetEnvironmentVariable(
+                "ASPNETCORE_ENVIRONMENT");
+        var config = new ConfigurationBuilder().AddJsonFile("appsettings" + (String.IsNullOrWhiteSpace(environmentName) ? "" : "." + environmentName) + ".json", false).Build();
+        Byte[]key = Convert.FromBase64String(config["keys:paseto-key"]);
+        
         var token = new PasetoBuilder().Use(ProtocolVersion.V4, Purpose.Local)
-            .WithKey(pasetoKey)
-            .AddClaim("uid", userId)
+            .WithKey(key, Encryption.SymmetricKey)
             .Issuer("https://github.com/RobertoFMBarreto/budgify-api")
-            //.Subject(userId.ToString())
-            //.Audience("https://paseto.io")
-            .NotBefore(DateTime.UtcNow.AddMinutes(5))
+            .NotBefore(DateTime.UtcNow)
             .IssuedAt(DateTime.UtcNow)
             .Expiration(DateTime.UtcNow.AddMinutes(15))
+            .Subject(userId.ToString())
             .TokenIdentifier("123456ABCD")
-            //.AddFooter("arbitrary-string-that-isn't-json")
             .Encode();
+       
         return token;
-    }
-
-    public static string DecodePasetoToken(string token)
-    {
-        new PasetoBuilder().Use(ProtocolVersion.V4, Purpose.Local).Decode(token);
     }
 }

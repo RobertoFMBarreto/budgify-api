@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -18,6 +19,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.2.1" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.11" />
         <PackageReference Include="Paseto.Core" Version="1.3.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
@@ -27,6 +29,27 @@
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+      <Content Remove="BudgifyAPI.Gateway\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="BudgifyAPI.Gateway\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="BudgifyAPI.Gateway\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="BudgifyAPI.Gateway\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="BudgifyAPI.Gateway\appsettings.Development.json" />
+      <_ContentIncludedByDefault Remove="BudgifyAPI.Gateway\appsettings.json" />
+      <_ContentIncludedByDefault Remove="BudgifyAPI.Gateway\obj\BudgifyAPI.Gateway.csproj.nuget.dgspec.json" />
+      <_ContentIncludedByDefault Remove="BudgifyAPI.Gateway\obj\project.assets.json" />
+      <_ContentIncludedByDefault Remove="BudgifyAPI.Gateway\Properties\launchSettings.json" />
     </ItemGroup>
 
 </Project>

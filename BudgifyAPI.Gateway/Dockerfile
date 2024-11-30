@@ -1,13 +1,23 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS base
+﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+USER $APP_UID
 WORKDIR /app
+EXPOSE 8080
+EXPOSE 8081
 
-EXPOSE 5004
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG BUILD_CONFIGURATION=Release
+WORKDIR /src
+COPY ["BudgifyAPI.Gateway/BudgifyAPI.Gateway.csproj", "BudgifyAPI.Gateway/"]
+RUN dotnet restore "BudgifyAPI.Gateway/BudgifyAPI.Gateway.csproj"
+COPY . .
+WORKDIR "/src/BudgifyAPI.Gateway"
+RUN dotnet build "BudgifyAPI.Gateway.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-COPY . ./
-RUN dotnet restore
-RUN dotnet publish -c Release -o out
+FROM build AS publish
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "BudgifyAPI.Gateway.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
-WORKDIR /build
-COPY --from=base /app/out .
-ENTRYPOINT ["dotnet", "accounts.dll"]
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "BudgifyAPI.Gateway.dll"]

@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgifyAPI.Accounts", "Budg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgifyAPI.Family", "BudgifyAPI.Family\BudgifyAPI.Family.csproj", "{9AFAABA2-D4D0-4469-A46C-4724B1415376}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgifyAPI.Gateway", "BudgifyAPI.Gateway\BudgifyAPI.Gateway.csproj", "{B13FF295-A715-4E27-BDC7-89E40C1E7548}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgifyAPI.Transactions", "BudgifyAPI.Transactions\BudgifyAPI.Transactions.csproj", "{C56720F3-987C-4771-B477-D800C7E56525}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgifyAPI.Wallets", "BudgifyAPI.Wallets\BudgifyAPI.Wallets.csproj", "{BDB93AF0-A1A5-499A-850B-49D18BBEC4FA}"
@@ -18,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgifyAPI.Auth.CA", "BudgifyAPI.Auth.CA\BudgifyAPI.Auth.CA.csproj", "{4CEE4718-9C03-4F0D-954F-E8FF1EF2A74C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgifyAPI.Accounts.CA", "BudgifyAPI.Accounts.CA\BudgifyAPI.Accounts.CA.csproj", "{339DDF44-EFFB-45A7-85C3-7FA94C06132F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgifyAPI.Gateway", "BudgifyAPI.Gateway\BudgifyAPI.Gateway.csproj", "{75361287-7BB5-4007-86D0-4AF50B91B29A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,10 +36,6 @@ Global
 		{9AFAABA2-D4D0-4469-A46C-4724B1415376}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AFAABA2-D4D0-4469-A46C-4724B1415376}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AFAABA2-D4D0-4469-A46C-4724B1415376}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B13FF295-A715-4E27-BDC7-89E40C1E7548}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B13FF295-A715-4E27-BDC7-89E40C1E7548}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B13FF295-A715-4E27-BDC7-89E40C1E7548}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B13FF295-A715-4E27-BDC7-89E40C1E7548}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C56720F3-987C-4771-B477-D800C7E56525}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C56720F3-987C-4771-B477-D800C7E56525}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C56720F3-987C-4771-B477-D800C7E56525}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -60,5 +56,9 @@ Global
 		{339DDF44-EFFB-45A7-85C3-7FA94C06132F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{339DDF44-EFFB-45A7-85C3-7FA94C06132F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{339DDF44-EFFB-45A7-85C3-7FA94C06132F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75361287-7BB5-4007-86D0-4AF50B91B29A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75361287-7BB5-4007-86D0-4AF50B91B29A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75361287-7BB5-4007-86D0-4AF50B91B29A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75361287-7BB5-4007-86D0-4AF50B91B29A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
