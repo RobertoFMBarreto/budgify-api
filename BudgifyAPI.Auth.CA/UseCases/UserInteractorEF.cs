@@ -1,4 +1,5 @@
 using BudgifyAPI.Auth.CA.Entities;
+using BudgifyAPI.Auth.CA.Entities.Requests;
 
 namespace BudgifyAPI.Auth.CA.UseCases;
 
@@ -20,5 +21,20 @@ public static class UserInteractorEF
     {
         return await userPersistence(user);
         
+    }
+
+    public static async Task<CustomHttpResponse> newPassword(
+        Func<NewPasswordRequest, Task<CustomHttpResponse>> newPasswordPersistence,
+        NewPasswordRequest newPasswordRequest)
+    {
+        return await newPasswordPersistence(newPasswordRequest);
+    }
+    
+    public static async Task<CustomHttpResponse> newSessionToken(
+        Func<NewSessionTokenRequest, Task<CustomHttpResponse>> newSessionTokenPersistence,
+        NewSessionTokenRequest
+            newSessionTokenRequest)
+    {
+        return await newSessionTokenPersistence(newSessionTokenRequest);
     }
 }

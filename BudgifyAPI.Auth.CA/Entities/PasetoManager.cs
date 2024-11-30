@@ -33,4 +33,26 @@ public static class PasetoManager
        
         return token;
     }
+    
+    public static string GenerateRefreshPasetoToken(Guid userId)
+    {
+
+        var environmentName =
+            Environment.GetEnvironmentVariable(
+                "ASPNETCORE_ENVIRONMENT");
+        var config = new ConfigurationBuilder().AddJsonFile("appsettings" + (String.IsNullOrWhiteSpace(environmentName) ? "" : "." + environmentName) + ".json", false).Build();
+        Byte[]key = Convert.FromBase64String(config["keys:paseto-key"]);
+        
+        var token = new PasetoBuilder().Use(ProtocolVersion.V4, Purpose.Local)
+            .WithKey(key, Encryption.SymmetricKey)
+            .Issuer("https://github.com/RobertoFMBarreto/budgify-api")
+            .NotBefore(DateTime.UtcNow)
+            .IssuedAt(DateTime.UtcNow)
+            .Expiration(DateTime.UtcNow.AddYears(1))
+            .Subject(userId.ToString())
+            .TokenIdentifier("123456ABCD")
+            .Encode();
+       
+        return token;
+    }
 }

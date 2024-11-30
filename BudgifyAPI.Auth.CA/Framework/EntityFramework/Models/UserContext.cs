@@ -72,6 +72,9 @@ public partial class UserContext : DbContext
             entity.Property(e => e.Password)
                 .HasMaxLength(255)
                 .HasColumnName("password");
+            entity.Property(e => e.RefreshToken)
+                .HasMaxLength(255)
+                .HasColumnName("refresh_token");
 
             entity.HasOne(d => d.IdUserGroupNavigation).WithMany(p => p.Users)
                 .HasForeignKey(d => d.IdUserGroup)

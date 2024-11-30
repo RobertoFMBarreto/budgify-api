@@ -12,18 +12,29 @@ public class UserEntity
 
     public int Genre { get; set; }
 
-    public async Task<bool> Validate()
+    public async Task<CustomHttpResponse> Validate()
     {
         if (String.IsNullOrEmpty(Name)|| String.IsNullOrEmpty(Email) || String.IsNullOrEmpty(Password))
         {
-            throw new Exception("missing fields");
+            return new CustomHttpResponse()
+            {
+                status = 400,
+                message = "missing fields",
+            };
         }
 
         if (Genre is < 0 or > 2)
         {
-            throw new Exception("invalid genre");
+            return new CustomHttpResponse()
+            {
+                status = 400,
+                message = "missing fields",
+            };
         }
 
-        return true;
+        return  new CustomHttpResponse()
+        {
+            status = 200,
+        };;
     }
 }

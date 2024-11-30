@@ -8,7 +8,7 @@ namespace BudgifyAPI.Auth.CA.controllers;
 
 public static class UserRoute
 {
-    public static WebApplication setRoutes(WebApplication app, string baseRoute)
+    public static WebApplication SetRoutes(WebApplication app, string baseRoute)
     {
         app.MapPost($"{baseRoute}/login", [AllowAnonymous] async (HttpRequest req,[FromBody] LoginRequest body) =>
         {
@@ -39,6 +39,35 @@ public static class UserRoute
             try
             {
                 CustomHttpResponse resp = await UserInteractorEF.register(UserPersistence.UserRegisterPersistence,body );
+                return resp;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        });
+        
+        app.MapPost($"{baseRoute}/new-password",[AllowAnonymous] async ([FromBody]NewPasswordRequest body)=>
+        {
+            try
+            {
+                CustomHttpResponse resp = await UserInteractorEF.newPassword(UserPersistence.NewPasswordPersistence,body );
+                return resp;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        });
+        
+        
+        app.MapPost($"{baseRoute}/new-session-token",[AllowAnonymous] async ([FromBody]NewSessionTokenRequest body)=>
+        {
+            try
+            {
+                CustomHttpResponse resp = await UserInteractorEF.newSessionToken(UserPersistence.NewSessionTokenPersistence,body );
                 return resp;
             }
             catch (Exception e)
