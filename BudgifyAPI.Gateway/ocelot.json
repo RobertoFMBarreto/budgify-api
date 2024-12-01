@@ -7,6 +7,24 @@
     {
       "UpstreamPathTemplate": "/gateway/authentication/{everything}",
       "UpstreamHttpMethod": [ "POST" ],
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "15s",
+        "PeriodTimespan": 1,
+        "Limit": 1
+      },
+      "DownstreamPathTemplate": "/api/v1/authentication/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5066
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/authentication/logout",
+      "UpstreamHttpMethod": [ "GET" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Paseto",
         "AllowedScopes": []
@@ -18,7 +36,7 @@
         "Limit": 1
       },
       "DelegatingHandlers": [ "AddUserInfoHeaderHandler" ],
-      "DownstreamPathTemplate": "/api/v1/authentication/{everything}",
+      "DownstreamPathTemplate": "/api/v1/authentication/logout",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {

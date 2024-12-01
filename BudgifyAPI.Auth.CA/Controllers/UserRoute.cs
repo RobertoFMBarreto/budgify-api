@@ -14,6 +14,10 @@ public static class UserRoute
         {
             var userAgent = req.Headers["User-Agent"];
             var host = context.Connection.RemoteIpAddress.ToString();
+            if (host.Contains(":"))
+            {
+                host = "127.0.0.1";
+            }
             try
             {
                 CustomHttpResponse resp =
@@ -27,12 +31,15 @@ public static class UserRoute
             }
         });
         
-        app.MapPost($"{baseRoute}/logout", [AllowAnonymous] async (HttpContext context,HttpRequest req,[FromBody] LoginRequest body) =>
+        app.MapGet($"{baseRoute}/logout", [AllowAnonymous] async (HttpContext context,HttpRequest req) =>
         {
             var userAgent = req.Headers["User-Agent"];
             var host = context.Connection.RemoteIpAddress.ToString();
             var received_uid  =req.Headers["X-User-Id"];
-
+            if (host.Contains(":"))
+            {
+                host = "127.0.0.1";
+            }
             if (string.IsNullOrEmpty(received_uid))
             {
                 return new CustomHttpResponse()

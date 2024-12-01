@@ -17,8 +17,7 @@ public static class UserInteractorEF
         return await userPersistence(user,userAgent);
         
     }
-    
-        public static async Task<CustomHttpResponse> logout(Func<string,string,Task<CustomHttpResponse>> userPersistence, string uid,
+    public static async Task<CustomHttpResponse> logout(Func<string,string,Task<CustomHttpResponse>> userPersistence, string uid,
         string userAgent)
     {
 

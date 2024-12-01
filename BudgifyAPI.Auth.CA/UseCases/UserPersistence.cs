@@ -287,6 +287,7 @@ public static class UserPersistence
             if (!token.IsValid)
                 return false;
             var uid = token.Paseto.Payload["sub"].ToString();
+            Console.WriteLine($"Agent: {request.Agent}");
             
             UserRefreshToken? user = await context.UserRefreshTokens.Where(u=> u.IdUser == Guid.Parse(uid) && u.Device == request.Agent).FirstOrDefaultAsync();
             Console.WriteLine(user);

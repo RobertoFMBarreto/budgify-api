@@ -15,7 +15,7 @@ public class AddUserInfoHeaderHandler : DelegatingHandler
     protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         var user = _httpContextAccessor.HttpContext.User;
-        
+        request.Headers.Add("X-User-Ip", _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString());
         if (user.Identity.IsAuthenticated)
         {
             var userId = user.FindFirst(ClaimTypes.Name)?.Value;
