@@ -1,18 +1,19 @@
-syntax = 'proto3';
+syntax = "proto3";
 
-option csharp_namespace = "ValidateSessionService";
+package authservice;
 
-package greet;
-
-service ValidateSessionGRPC{
-  rpc GetItems (ValidateSessionRequest) returns (ValidateSessionResponse);
+service AuthService {
+  // Valida o refresh token
+  rpc ValidateRefreshToken(ValidateTokenRequest) returns (ValidateTokenResponse);
 }
 
-message ValidateSessionRequest {
+message ValidateTokenRequest {
   string token = 1;
+  string agent = 2;
 }
 
-message ValidateSessionResponse {
-  bool isValid = 1;
+message ValidateTokenResponse {
+  bool is_valid = 1;
 }
+
 

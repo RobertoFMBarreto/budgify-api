@@ -1,6 +1,6 @@
 namespace BudgifyAPI.Gateway.Entities;
 
-public class CacheManager
+public static class CacheManager
 {
-    
+        
 }

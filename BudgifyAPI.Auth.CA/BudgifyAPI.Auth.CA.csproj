@@ -10,6 +10,13 @@
 
     <ItemGroup>
         <PackageReference Include="BCrypt.Net" Version="0.1.0" />
+        <PackageReference Include="Google.Protobuf" Version="3.29.0" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.67.0" />
+        <PackageReference Include="Grpc.Core" Version="2.46.6" />
+        <PackageReference Include="Grpc.Tools" Version="2.67.0">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.10" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.11" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.11">
@@ -51,6 +58,11 @@
       <_ContentIncludedByDefault Remove="BudgifyAPI.Gateway\obj\BudgifyAPI.Gateway.csproj.nuget.dgspec.json" />
       <_ContentIncludedByDefault Remove="BudgifyAPI.Gateway\obj\project.assets.json" />
       <_ContentIncludedByDefault Remove="BudgifyAPI.Gateway\Properties\launchSettings.json" />
+    </ItemGroup>
+    <ItemGroup>
+     <Protobuf Include="Entities\grpc\ValidateSession.proto" GrpcServices="Server">
+          <Link>Entities\grpc\ValidateSession.proto</Link>
+        </Protobuf>
     </ItemGroup>
 
 </Project>

@@ -28,7 +28,7 @@ public static class PasetoManager
             .IssuedAt(DateTime.UtcNow)
             .Expiration(DateTime.UtcNow.AddMinutes(15))
             .Subject(userId.ToString())
-            .TokenIdentifier("123456ABCD")
+            .TokenIdentifier(Guid.NewGuid().ToString())
             .Encode();
        
         return token;
@@ -50,9 +50,29 @@ public static class PasetoManager
             .IssuedAt(DateTime.UtcNow)
             .Expiration(DateTime.UtcNow.AddYears(1))
             .Subject(userId.ToString())
-            .TokenIdentifier("123456ABCD")
+            .TokenIdentifier(Guid.NewGuid().ToString())
             .Encode();
        
         return token;
+    }
+
+    public static PasetoTokenValidationResult DecodePasetoToken(string token)
+    {
+        var environmentName =
+            Environment.GetEnvironmentVariable(
+                "ASPNETCORE_ENVIRONMENT");
+        var config = new ConfigurationBuilder().AddJsonFile("appsettings" + (String.IsNullOrWhiteSpace(environmentName) ? "" : "." + environmentName) + ".json", false).Build();
+
+        Byte[]key = Convert.FromBase64String(config["keys:paseto-key"]);
+        var valParams = new PasetoTokenValidationParameters
+        {
+            ValidateLifetime = true,
+            ValidateIssuer = true,
+            ValidIssuer = "https://github.com/RobertoFMBarreto/budgify-api"
+        };
+            
+        var result = new PasetoBuilder().Use(ProtocolVersion.V4, Purpose.Local)
+            .WithKey(key, Encryption.SymmetricKey).Decode(token,valParams);
+        return result;
     }
 }

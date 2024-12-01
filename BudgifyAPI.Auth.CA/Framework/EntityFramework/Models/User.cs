@@ -27,6 +27,5 @@ public partial class User
 
     public bool AllowWalletWatch { get; set; }
 
-    public string? RefreshToken { get; set; }
-    public virtual UserGroup? IdUserGroupNavigation { get; set; }
+    public virtual ICollection<UserRefreshToken> UserRefreshTokens { get; set; } = new List<UserRefreshToken>();
 }

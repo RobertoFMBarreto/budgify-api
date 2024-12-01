@@ -1,3 +1,4 @@
+using Authservice;
 using BudgifyAPI.Auth.CA.Entities;
 using BudgifyAPI.Auth.CA.Entities.Requests;
 using BudgifyAPI.Auth.CA.Entities.Responses;
@@ -9,7 +10,7 @@ namespace BudgifyAPI.Auth.CA.UseCases;
 
 public static class UserPersistence
 {
-    public static async Task<CustomHttpResponse> UserLoginPersistence(UserEntity userEntity)
+    public static async Task<CustomHttpResponse> UserLoginPersistence(UserEntity userEntity, string userAgent)
     {
         UserContext context = new UserContext();
         try
@@ -44,10 +45,25 @@ public static class UserPersistence
 
             string token = PasetoManager.GeneratePasetoToken(user.IdUser);
             string refreshToken = PasetoManager.GenerateRefreshPasetoToken(user.IdUser);
-            string hash = CustomEncryptor.EncryptString(refreshToken);
+
+            UserRefreshToken? refToken = await context.UserRefreshTokens.Where(userRefreshToken => userRefreshToken.Device == userAgent)
+                .FirstOrDefaultAsync();
+            if (refToken == null)
+            {
+                
+                string hash = CustomEncryptor.EncryptString(refreshToken);
+                await context.UserRefreshTokens.AddAsync(new UserRefreshToken()
+                {
+                    Token = hash,
+                    Device = userAgent,
+                    IdUser = user.IdUser,
+                });
+            }
+            else
+            {
+                refreshToken = CustomEncryptor.DecryptString(refToken.Token);
+            }
             
-            user.RefreshToken = hash;
-            context.Users.Update(user);
             await context.SaveChangesAsync();
             
             return new CustomHttpResponse()
@@ -70,6 +86,39 @@ public static class UserPersistence
             };
         }
     }
+
+    public static async Task<CustomHttpResponse> UserLogoutPersistence(string uid, string device)
+    { 
+        UserContext context = new UserContext();
+        try
+        {
+            User? user = await context.Users.Where(u => u.IdUser == Guid.Parse(uid)).FirstOrDefaultAsync();
+            if (user == null)
+            {
+                return new CustomHttpResponse()
+                {
+                    message = "Email or password is incorrect",
+                    status = 400
+                };
+            }
+            
+            UserRefreshToken? refToken = await context.UserRefreshTokens.Where(ur=>ur.Device==device).FirstOrDefaultAsync();
+            context.UserRefreshTokens.Remove(refToken);
+            await context.SaveChangesAsync();
+            return new CustomHttpResponse()
+            {
+                message = "success",
+                status = 200
+            };
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        
+    }
+    
     public static async Task<CustomHttpResponse> UserRegisterPersistence(UserEntity userEntity)
     {
         UserContext context = new UserContext();
@@ -158,7 +207,7 @@ public static class UserPersistence
             
             string hash = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
             user.Password = hash;
-            user.RefreshToken = null;
+            context.UserRefreshTokens.RemoveRange(context.UserRefreshTokens.Where(ur=>ur.IdUser==user.IdUser));
             context.Users.Update(user);
             await context.SaveChangesAsync();
             return new CustomHttpResponse()
@@ -194,8 +243,8 @@ public static class UserPersistence
                 };
             }
             
-            User? user = await context.Users.Where(u => u.Email == CustomEncryptor.EncryptString(request.RefreshToken)).FirstOrDefaultAsync();
-            if (user == null)
+            UserRefreshToken? userRefresh = await context.UserRefreshTokens.Where(u => u.Token == CustomEncryptor.EncryptString(request.RefreshToken)).FirstOrDefaultAsync();
+            if (userRefresh == null)
             {
                 return new CustomHttpResponse()
                 {
@@ -204,7 +253,11 @@ public static class UserPersistence
                 };
             }
             
-            var token = PasetoManager.GeneratePasetoToken(user.IdUser);
+            var token = PasetoManager.GeneratePasetoToken(userRefresh.IdUser);
+            
+            userRefresh.LastUsage = DateTime.Now;
+            context.UserRefreshTokens.Update(userRefresh);
+            await context.SaveChangesAsync();
             return new CustomHttpResponse()
             {
                 data = new TokenResponse()
@@ -222,6 +275,32 @@ public static class UserPersistence
                 message = e.Message,
                 status = 500
             };
+        }
+    }
+    
+    public static async Task<bool> ValidateSessionPersistence(ValidateTokenRequest request)
+    {
+        UserContext context = new UserContext();
+        try
+        {
+            var token = PasetoManager.DecodePasetoToken(CustomEncryptor.DecryptString(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(request.Token))));
+            if (!token.IsValid)
+                return false;
+            var uid = token.Paseto.Payload["sub"].ToString();
+            
+            UserRefreshToken? user = await context.UserRefreshTokens.Where(u=> u.IdUser == Guid.Parse(uid) && u.Device == request.Agent).FirstOrDefaultAsync();
+            Console.WriteLine(user);
+            if(user == null)
+                return false;
+
+            var result = PasetoManager.DecodePasetoToken(CustomEncryptor.DecryptString(user.Token));
+ 
+            return result.IsValid;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return false;
         }
     }
 }

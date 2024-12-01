@@ -1,16 +1,10 @@
-using System.Reflection;
+using Authservice;
 using BudgifyAPI.Auth.CA.controllers;
 using BudgifyAPI.Auth.CA.Entities;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication.BearerToken;
-using Microsoft.OpenApi.Models;
-using Paseto;
-using Paseto.Builder;
-using Paseto.Cryptography.Key;
+using Grpc.AspNetCore;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 // builder.Services.AddAuthentication("Bearer")
@@ -68,7 +62,23 @@ builder.Services.AddSwaggerGen();
 //     c.IncludeXmlComments(xmlPath);
 // });
 
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddGrpc();
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenLocalhost(5066, o=>o.Protocols=HttpProtocols.Http1);
+    options.ListenLocalhost(5067, o => { 
+        o.Protocols = HttpProtocols.Http2;
+        o.UseHttps();
+    });
+});
+
 var app = builder.Build();
+
+app.MapGrpcService<AuthServiceHandler>();
 
 app = UserRoute.SetRoutes(app,"/api/v1/authentication");
 // Configure the HTTP request pipeline.
