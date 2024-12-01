@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package authservice;
+
+service AuthService {
+  // Valida o refresh token
+  rpc ValidateRefreshToken(ValidateTokenRequest) returns (ValidateTokenResponse);
+}
+
+message ValidateTokenRequest {
+  string token = 1;
+  string agent = 2;
+}
+
+message ValidateTokenResponse {
+  bool is_valid = 1;
+}
+
+

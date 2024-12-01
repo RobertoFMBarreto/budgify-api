@@ -1,0 +1,18 @@
+syntax = 'proto3';
+
+option csharp_namespace = "ValidateSessionService";
+
+package greet;
+
+service ValidateSessionGRPC{
+  rpc GetItems (ValidateSessionRequest) returns (ValidateSessionResponse);
+}
+
+message ValidateSessionRequest {
+  string token = 1;
+}
+
+message ValidateSessionResponse {
+  bool isValid = 1;
+}
+
