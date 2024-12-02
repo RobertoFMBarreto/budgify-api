@@ -539,7 +539,29 @@ namespace BudgifyAPI.Transactions.UseCases
                 };
             }
         }
-
-
+        public static async Task<CustomHttpResponse> GetTransactionsGroupPersistence()
+        {
+            TransactionsContext transactionsContext = new TransactionsContext();
+            try
+            {
+                string query = "select * from public.transaction_group";
+                List<TransactionGroup> listTransacationgroup = await transactionsContext.TransactionGroups.FromSqlRaw(query).ToListAsync();
+                return new CustomHttpResponse()
+                {
+                    Data = listTransacationgroup,
+                    status = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new CustomHttpResponse()
+                {
+                    message = ex.Message,
+                    status = 500
+                };
+            }
+        }
+        
+        //Faltam alguns
     }
 }
