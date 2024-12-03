@@ -1,3 +1,5 @@
+using System.Text;
+using BudgifyAPI.Auth.CA.Entities;
 using Microsoft.AspNetCore.Mvc;
 using BudgifyAPI.Wallets.CA.Entities.Requests;
 using BudgifyAPI.Wallets.CA.Entities;
@@ -14,9 +16,18 @@ public static class WalletRoute {
         Guid tempUserID = Guid.NewGuid();
     
     
-        app.MapPost($"{baseRoute}/RegisterWallet", async ([FromBody] RegisterWalletRequest body) => {
+        app.MapPost($"{baseRoute}/RegisterWallet", async (HttpRequest req,[FromBody] RegisterWalletRequest body) => {
             try {
-               return await WalletInteractorEF.RegisterWallet(WalletPersistence.RegisterWallet, tempUserID, body.wallet_name);
+                var received_uid  =req.Headers["X-User-Id"];
+                if (string.IsNullOrEmpty(received_uid))
+                {
+                    return new CustomHTTPResponse(400,"Missing token");
+                
+                }
+
+                var uid = CustomEncryptor.DecryptString(
+                    Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+               return await WalletInteractorEF.RegisterWallet(WalletPersistence.RegisterWallet, Guid.Parse(uid), body.wallet_name);
             } 
             catch (Exception e)
             {
@@ -24,9 +35,18 @@ public static class WalletRoute {
                 throw;
             }
         });
-        app.MapDelete($"{baseRoute}/DeleteWallet", async ([FromBody] DeleteWalletRequest body) => {
+        app.MapDelete($"{baseRoute}/DeleteWallet", async (HttpRequest req,[FromBody] DeleteWalletRequest body) => {
             try {
-               return await WalletInteractorEF.DeleteWallet(WalletPersistence.DeleteWallet, tempUserID, body.wallet_id);
+                var received_uid  =req.Headers["X-User-Id"];
+                if (string.IsNullOrEmpty(received_uid))
+                {
+                    return new CustomHTTPResponse(400,"Missing token");
+                
+                }
+
+                var uid = CustomEncryptor.DecryptString(
+                    Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+               return await WalletInteractorEF.DeleteWallet(WalletPersistence.DeleteWallet, Guid.Parse(uid), body.wallet_id);
             } 
             catch (Exception e)
             {
@@ -34,9 +54,18 @@ public static class WalletRoute {
                 throw;
             }
         });
-        app.MapGet($"{baseRoute}/GetWallet", async ([FromBody] GetWalletRequest body) => {
+        app.MapGet($"{baseRoute}/GetWallet", async (HttpRequest req,[FromBody] GetWalletRequest body) => {
             try {
-               return await WalletInteractorEF.GetWallet(WalletPersistence.GetWallet, tempUserID, body.wallet_id);
+                var received_uid  =req.Headers["X-User-Id"];
+                if (string.IsNullOrEmpty(received_uid))
+                {
+                    return new CustomHTTPResponse(400,"Missing token");
+                
+                }
+
+                var uid = CustomEncryptor.DecryptString(
+                    Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+               return await WalletInteractorEF.GetWallet(WalletPersistence.GetWallet, Guid.Parse(uid), body.wallet_id);
             } 
             catch (Exception e)
             {
