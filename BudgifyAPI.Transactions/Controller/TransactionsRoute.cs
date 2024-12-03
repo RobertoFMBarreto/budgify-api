@@ -1,5 +1,6 @@
 ﻿using BudgifyAPI.Transactions.Entities;
 using BudgifyAPI.Transactions.Entities.Request;
+using BudgifyAPI.Transactions.Framework.EntityFramework.Models;
 using BudgifyAPI.Transactions.UseCases;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,11 +35,11 @@ namespace BudgifyAPI.Transactions.Controller
                     throw;
                 }
             });
-            application.MapGet($"{baseRoute}/transaction", async () =>
+            application.MapGet($"{baseRoute}/transaction", async ([FromBody] TransactionGroup transactionGroup) =>
             {
                 try
                 {
-                    CustomHttpResponse resp = await TransactionsInteractorEF.GetTransactionSlidingWindow(TransactionsPersistence.GetTransactionSlidingWindowPersistence);
+                    CustomHttpResponse resp = await TransactionsInteractorEF.GetTransactionSlidingWindow(TransactionsPersistence.GetTransactionSlidingWindowPersistence, transactionGroup);
                     return resp;
                 }
                 catch (Exception ex)

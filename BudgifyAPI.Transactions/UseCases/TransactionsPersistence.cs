@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Reflection.Metadata.Ecma335;
 using System.Xml.Linq;
+using Npgsql;
 
 namespace BudgifyAPI.Transactions.UseCases
 {
@@ -67,16 +68,18 @@ namespace BudgifyAPI.Transactions.UseCases
                 };
             }
         }
-        public static async Task<CustomHttpResponse> GetTransactionSlidingWindowPersistence()
+        public static async Task<CustomHttpResponse> GetTransactionSlidingWindowPersistence(TransactionGroup transactionGroup)
         {
             TransactionsContext transactionsContext = new TransactionsContext();
             //ver
             try
             {
-                string query = "WITH janela AS (SELECT *  ROW_NUMBER() OVER (ORDER BY start_date) AS date " +
-                    "FROM public.transaction_group " +
-                    "SELECT * FROM janela nWHERE date BETWEEN 1 AND 10";
-                List<Transaction> listTransactions = await transactionsContext.Transactions.FromSqlRaw(query).ToListAsync();
+                string query = "WITH janela AS (SELECT tg.*, t.amount, ROW_NUMBER() OVER (ORDER BY start_date) AS rn  public.transaction_group as tg " +
+                    "inner join public.transactions as t on t.id_transaction_group = tg.id_transaction_group  " +
+                    "    WHERE start_date >= '@start_date' AND end_date <= '@end_date') " +
+                    "SELECT * FROM janela WHERE rn BETWEEN 1 AND 10;";
+
+                List<Transaction> listTransactions = await transactionsContext.Transactions.FromSqlRaw(query,new NpgsqlParameter("@start_date", transactionGroup.StartDate), new NpgsqlParameter("end_date", transactionGroup.EndDate)).ToListAsync();
                 return new CustomHttpResponse()
                 {
                     Data = listTransactions,
