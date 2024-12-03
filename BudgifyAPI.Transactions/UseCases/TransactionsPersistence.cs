@@ -69,11 +69,29 @@ namespace BudgifyAPI.Transactions.UseCases
         }
         public static async Task<CustomHttpResponse> GetTransactionSlidingWindowPersistence()
         {
-            //TODO
-            return new CustomHttpResponse()
+            TransactionsContext transactionsContext = new TransactionsContext();
+            //ver
+            try
             {
-
-            };
+                string query = "WITH janela AS (SELECT *  ROW_NUMBER() OVER (ORDER BY start_date) AS date " +
+                    "FROM public.transaction_group " +
+                    "SELECT * FROM janela nWHERE date BETWEEN 1 AND 10";
+                List<Transaction> listTransactions = await transactionsContext.Transactions.FromSqlRaw(query).ToListAsync();
+                return new CustomHttpResponse()
+                {
+                    Data = listTransactions,
+                    status = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new CustomHttpResponse()
+                {
+                    message = ex.Message,
+                    status = 500
+                };
+            }
+            
         }
         public static async Task<CustomHttpResponse> GetTrasnactionsIntervalPersistence(CreateTransaction transaction)
         {
@@ -95,7 +113,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 };
             }
         }
-        public static async Task<CustomHttpResponse> UpdateTrasnactionsPersistence(CreateTransaction transaction)
+        public static async Task<CustomHttpResponse> UpdateTrasnactionsPersistence(Guid transactionId)
         {
             TransactionsContext transactionsContext = new TransactionsContext();
             try
@@ -115,7 +133,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 };
             }
         }
-        public static async Task<CustomHttpResponse> DeleteTrasnactionsPersistence(CreateTransaction transaction)
+        public static async Task<CustomHttpResponse> DeleteTrasnactionsPersistence(Guid transactionId)
         {
             TransactionsContext transactionsContext = new TransactionsContext();
             try

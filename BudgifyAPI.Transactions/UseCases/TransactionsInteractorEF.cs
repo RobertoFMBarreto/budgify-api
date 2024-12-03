@@ -22,13 +22,13 @@ namespace BudgifyAPI.Transactions.UseCases
         {
             return await GetTrasnactionsIntervalPersistence(transaction);
         }
-        public static async Task<CustomHttpResponse> UpdateTrasnactions(Func<CreateTransaction, Task<CustomHttpResponse>> UpdateTrasnactionsPersistence, CreateTransaction transaction)
+        public static async Task<CustomHttpResponse> UpdateTrasnactions(Func<Guid, Task<CustomHttpResponse>> UpdateTrasnactionsPersistence, Guid transactionId)
         {
-            return await UpdateTrasnactionsPersistence(transaction);
+            return await UpdateTrasnactionsPersistence(transactionId);
         }
-        public static async Task<CustomHttpResponse> DeleteTrasnactions(Func<Task<CustomHttpResponse>> DeleteTrasnactionsPersistence)
+        public static async Task<CustomHttpResponse> DeleteTrasnactions(Func<Guid, Task<CustomHttpResponse>> DeleteTrasnactionsPersistence, Guid transactionId)
         {
-            return await DeleteTrasnactionsPersistence();
+            return await DeleteTrasnactionsPersistence(transactionId);
         }
         public static async Task<CustomHttpResponse> GetCategories(Func<Task<CustomHttpResponse>> GetCategoriesPersistence)
         {

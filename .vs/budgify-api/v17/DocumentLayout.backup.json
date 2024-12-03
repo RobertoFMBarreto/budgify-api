@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C56720F3-987C-4771-B477-D800C7E56525}|BudgifyAPI.Transactions\\BudgifyAPI.Transactions.csproj|c:\\users\\filipemorais\\documents\\mei\\budgify-api\\budgifyapi.transactions\\usecases\\transactionsinteractoref.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C56720F3-987C-4771-B477-D800C7E56525}|BudgifyAPI.Transactions\\BudgifyAPI.Transactions.csproj|solutionrelative:budgifyapi.transactions\\usecases\\transactionsinteractoref.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C56720F3-987C-4771-B477-D800C7E56525}|BudgifyAPI.Transactions\\BudgifyAPI.Transactions.csproj|c:\\users\\filipemorais\\documents\\mei\\budgify-api\\budgifyapi.transactions\\usecases\\transactionspersistence.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C56720F3-987C-4771-B477-D800C7E56525}|BudgifyAPI.Transactions\\BudgifyAPI.Transactions.csproj|solutionrelative:budgifyapi.transactions\\usecases\\transactionspersistence.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C56720F3-987C-4771-B477-D800C7E56525}|BudgifyAPI.Transactions\\BudgifyAPI.Transactions.csproj|c:\\users\\filipemorais\\documents\\mei\\budgify-api\\budgifyapi.transactions\\controller\\transactionsroute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C56720F3-987C-4771-B477-D800C7E56525}|BudgifyAPI.Transactions\\BudgifyAPI.Transactions.csproj|solutionrelative:budgifyapi.transactions\\controller\\transactionsroute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{339DDF44-EFFB-45A7-85C3-7FA94C06132F}|BudgifyAPI.Accounts.CA\\BudgifyAPI.Accounts.CA.csproj|c:\\users\\filipemorais\\documents\\mei\\budgify-api\\budgifyapi.accounts.ca\\controllers\\accountsroute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{339DDF44-EFFB-45A7-85C3-7FA94C06132F}|BudgifyAPI.Accounts.CA\\BudgifyAPI.Accounts.CA.csproj|solutionrelative:budgifyapi.accounts.ca\\controllers\\accountsroute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C56720F3-987C-4771-B477-D800C7E56525}|BudgifyAPI.Transactions\\BudgifyAPI.Transactions.csproj|c:\\users\\filipemorais\\documents\\mei\\budgify-api\\budgifyapi.transactions\\usecases\\transactionsinteractoref.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C56720F3-987C-4771-B477-D800C7E56525}|BudgifyAPI.Transactions\\BudgifyAPI.Transactions.csproj|solutionrelative:budgifyapi.transactions\\usecases\\transactionsinteractoref.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,19 +22,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AccountsRoute.cs",
-              "DocumentMoniker": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Accounts.CA\\Controllers\\AccountsRoute.cs",
-              "RelativeDocumentMoniker": "BudgifyAPI.Accounts.CA\\Controllers\\AccountsRoute.cs",
-              "ToolTip": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Accounts.CA\\Controllers\\AccountsRoute.cs",
-              "RelativeToolTip": "BudgifyAPI.Accounts.CA\\Controllers\\AccountsRoute.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "TransactionsPersistence.cs",
+              "DocumentMoniker": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Transactions\\UseCases\\TransactionsPersistence.cs",
+              "RelativeDocumentMoniker": "BudgifyAPI.Transactions\\UseCases\\TransactionsPersistence.cs",
+              "ToolTip": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Transactions\\UseCases\\TransactionsPersistence.cs",
+              "RelativeToolTip": "BudgifyAPI.Transactions\\UseCases\\TransactionsPersistence.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAFMAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T10:59:38.541Z",
+              "WhenOpened": "2024-12-03T15:05:37.25Z",
               "EditorCaption": ""
             },
             {
@@ -45,20 +45,20 @@
               "RelativeDocumentMoniker": "BudgifyAPI.Transactions\\Controller\\TransactionsRoute.cs",
               "ToolTip": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Transactions\\Controller\\TransactionsRoute.cs",
               "RelativeToolTip": "BudgifyAPI.Transactions\\Controller\\TransactionsRoute.cs",
-              "ViewState": "AgIAACUAAAAAAAAAAAAcwEoAAAAPAAAAAAAAAA==",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAQwEsAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-02T11:00:12.198Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "TransactionsInteractorEF.cs",
               "DocumentMoniker": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Transactions\\UseCases\\TransactionsInteractorEF.cs",
               "RelativeDocumentMoniker": "BudgifyAPI.Transactions\\UseCases\\TransactionsInteractorEF.cs",
               "ToolTip": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Transactions\\UseCases\\TransactionsInteractorEF.cs",
               "RelativeToolTip": "BudgifyAPI.Transactions\\UseCases\\TransactionsInteractorEF.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACgAAAA9AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBwAAACQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-02T10:06:55.338Z",
               "EditorCaption": ""

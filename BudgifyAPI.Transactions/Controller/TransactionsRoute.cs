@@ -60,11 +60,204 @@ namespace BudgifyAPI.Transactions.Controller
                     throw;
                 }
             });
-            application.MapPut($"{baseRoute}/transaction", async ([FromBody] CreateTransaction transaction) =>
+            application.MapPut($"{baseRoute}/transaction/{{transactionId}}", async (Guid transactionId) =>
             {
                 try
                 {
-                    CustomHttpResponse resp = await TransactionsInteractorEF.UpdateTrasnactions(TransactionsPersistence.UpdateTrasnactionsPersistence, transaction);
+                    CustomHttpResponse resp = await TransactionsInteractorEF.UpdateTrasnactions(TransactionsPersistence.UpdateTrasnactionsPersistence, transactionId);
+                    return resp;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
+            });
+            application.MapDelete($"{baseRoute}/transaction/{{transactionId}}", async (Guid transactionId) =>
+            {
+                try
+                {
+                    CustomHttpResponse resp = await TransactionsInteractorEF.DeleteTrasnactions(TransactionsPersistence.DeleteTrasnactionsPersistence, transactionId);
+                    return resp;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
+            });
+            application.MapGet($"{baseRoute}/categories", async () =>
+            {
+                try
+                {
+                    CustomHttpResponse resp = await TransactionsInteractorEF.GetCategories(TransactionsPersistence.GetCategoriesPersistence);
+                    return resp;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
+            });
+            application.MapPost($"{baseRoute}/categories", async ([FromBody] CreateCategories categories)=> {
+                try
+                {
+                    CustomHttpResponse resp = await TransactionsInteractorEF.AddCategories(TransactionsPersistence.AddCategoriesPersistence, categories);
+                    return resp;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
+            });
+            application.MapPut($"{baseRoute}/categories/{{categoryId}}", async (Guid categoryId, [FromBody] RequestName name) =>
+            {
+                try
+                {
+                    CustomHttpResponse resp = await TransactionsInteractorEF.UpdateCategories(TransactionsPersistence.UpdateCategoriesPersistence, categoryId, name);
+                    return resp;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
+            });
+            application.MapDelete($"{baseRoute}/categories/{{categoryId}}", async (Guid categoryId) =>
+            {
+                try
+                {
+                    CustomHttpResponse resp = await TransactionsInteractorEF.DeleteCategory(TransactionsPersistence.DeleteCategoryPersistence, categoryId); 
+                    return resp; 
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
+            });
+            application.MapPost($"{baseRoute}/subcategories", async ([FromBody] CreateSubcategory subcategories) => {
+                try
+                {
+                    CustomHttpResponse resp = await TransactionsInteractorEF.AddSubcategories(TransactionsPersistence.AddSubcategoriesPersistence, subcategories);
+                    return resp;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
+            });
+            application.MapPut($"{baseRoute}/subcategories/{{subcategoryId}}", async (Guid subcategoryId, [FromBody] RequestName name) =>
+            {
+                try
+                {
+                    CustomHttpResponse resp = await TransactionsInteractorEF.UpdateSubcategories(TransactionsPersistence.UpdateSubcategoriesPersistence, subcategoryId, name);
+                    return resp;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
+            });
+            application.MapDelete($"{baseRoute}/subcategories/{{subcategoryId}}", async (Guid subcategoryId) =>
+            {
+                try
+                {
+                    CustomHttpResponse resp = await TransactionsInteractorEF.DeleteSubcategory(TransactionsPersistence.DeleteSubcategoryPersistence, subcategoryId);
+                    return resp;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
+            });
+            application.MapPost($"{baseRoute}/reocurring", async ([FromBody] CreateReocurring reocurring) =>
+            {
+                try
+                {
+                    CustomHttpResponse resp = await TransactionsInteractorEF.AddReocurring(TransactionsPersistence.AddReocurringPersistence, reocurring);
+                    return resp;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
+            });
+            application.MapPut($"{baseRoute}/reocurring/{{reocurringId}}", async (Guid reocurringId, [FromBody] CreateReocurring reocurring) =>
+            {
+                try
+                {
+                    CustomHttpResponse resp = await TransactionsInteractorEF.UpdateReocurring(TransactionsPersistence.UpdateReocurringPersistence, reocurringId, reocurring);
+                    return resp;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
+            });
+            application.MapDelete($"{baseRoute}/reocurring/{{reocurringId}}", async ( Guid reocurringId) =>
+            {
+                try
+                {
+                    CustomHttpResponse resp = await TransactionsInteractorEF.DeleteReocurring(TransactionsPersistence.DeleteReocurringPersistence, reocurringId);
+                    return resp;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
+            });
+            application.MapPost($"{baseRoute}/transaciotnGroup", async ([FromBody] CreateTransactionGroup transactionGroup) =>
+            {
+                try
+                {
+                    CustomHttpResponse resp = await TransactionsInteractorEF.AddTransactionGroup(TransactionsPersistence.AddTransactionGroupPersistence, transactionGroup);
+                    return resp;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
+            });
+            application.MapPut($"{baseRoute}/reocurring/{{transactionGroupId}}", async (Guid transactionGroupId, [FromBody] CreateTransactionGroup transactionGroup) =>
+            {
+                try
+                {
+                    CustomHttpResponse resp = await TransactionsInteractorEF.UpdateTransactionGroup(TransactionsPersistence.UpdateTransactionGroupPersistence, transactionGroupId, transactionGroup);
+                    return resp;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
+            });
+            application.MapDelete($"{baseRoute}/reocurring/{{transactionGroupId}}", async (Guid transactionGroupId) =>
+            {
+                try
+                {
+                    CustomHttpResponse resp = await TransactionsInteractorEF.DeleteTransactionGroup(TransactionsPersistence.DeleteTransactionGroupPersistence, transactionGroupId);
+                    return resp;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
+            });
+            application.MapGet($"{baseRoute}/transactionGroup", async () =>
+            {
+                try
+                {
+                    CustomHttpResponse resp = await TransactionsInteractorEF.GetTransactionsGroup(TransactionsPersistence.GetTransactionsGroupPersistence);
                     return resp;
                 }
                 catch (Exception ex)
