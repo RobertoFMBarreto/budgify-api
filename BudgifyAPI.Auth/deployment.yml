@@ -15,7 +15,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: budgify-api-auth
+      app: budgify-api-auth                       associa o deployment ao pod que possui a mesma label
   template:
     metadata:
       labels:
