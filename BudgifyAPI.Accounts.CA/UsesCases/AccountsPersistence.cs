@@ -226,7 +226,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
         }
         public static async Task<CustomHttpResponse> AddManagerToUserGroupPersistence(User user)
         {
-            //primeiro adicionar ao grupo e depois tornar manager
+            //primeiro adicionar ao grupo e depois tornar manager - FEITO - REVER
             AccountsContext accountsContext = new AccountsContext();
             try
             {
@@ -239,23 +239,22 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                         status = 400
                     };
                 }
-                if (user.IsManager)
-                {
-                    string query = "update public.user " +
-                    $"set id_user_group = @id_user_group " +
-                    $"where id_user = @id_user";
-                    var result = accountsContext.Database.ExecuteSqlRawAsync(query, new NpgsqlParameter("@id_user_group", user.IdUserGroup), new NpgsqlParameter("@id_user", user.IdUser));
-                    return new CustomHttpResponse()
-                    {
-                        message = "Gestor adicionado ao grupo com sucesso",
-                        status = 200
-                    };
-                }
+                string query = "update public.user " +
+                  $"set id_user_group = @id_user_group " +
+                  $"set is_Manager = true, " +
+                  $"where id_user = @id_user";
+
+                await accountsContext.Database.ExecuteSqlRawAsync(query,
+                    new NpgsqlParameter("@id_user_group", user.IdUserGroup),
+                    new NpgsqlParameter("@id_user", user.IdUser));
+
+                accountsContext.SaveChangesAsync();
+
                 return new CustomHttpResponse()
                 {
-                    message = "Utilizador não é Gestor",
-                    status = 400
-                };
+                    message = "Gestor adicionado ao grupo com sucesso",
+                    status = 200
+                }; 
             }
             catch (Exception ex)
             {
