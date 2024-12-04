@@ -14,7 +14,7 @@ namespace BudgifyAPI.Transactions.UseCases
             TransactionsContext transactionsContext = new TransactionsContext();
             try
             {
-                
+
                 //string query = "SELECT tg.@id_transaction_ " +
                 //        "FROM public.transactions as t inner join public.transaction_group as tg " +
                 //        "on t.id_transaction_group = tg.id_transaction_group " +
@@ -192,7 +192,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 return new CustomHttpResponse()
                 {
                     message = "Transaction updated successfully",
-                    status= 200
+                    status = 200
                 };
             }
             catch (Exception ex)
@@ -245,7 +245,7 @@ namespace BudgifyAPI.Transactions.UseCases
                     status = 500
                 };
             }
-        
+
         }
         public static async Task<CustomHttpResponse> GetCategoriesPersistence()
         {

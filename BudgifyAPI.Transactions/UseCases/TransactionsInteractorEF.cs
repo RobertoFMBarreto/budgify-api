@@ -14,6 +14,10 @@ namespace BudgifyAPI.Transactions.UseCases
         {
             return await GetTrasnactionsIntervalPersistence();
         }
+        public static async Task<CustomHttpResponse> GetTransactrions(Func<Guid, Task<CustomHttpResponse>> GetTransactrionsPersistence, Guid uid)
+        {
+            return await GetTransactrionsPersistence(uid);
+        }
         public static async Task<CustomHttpResponse> GetTransactionSlidingWindow(Func<TransactionGroup, int, int, Task<CustomHttpResponse>> GetTransactionSlidingWindowPersistence, TransactionGroup transactionGroup, int limite, int cur_index)
         {
             return await GetTransactionSlidingWindowPersistence(transactionGroup, limite, cur_index);

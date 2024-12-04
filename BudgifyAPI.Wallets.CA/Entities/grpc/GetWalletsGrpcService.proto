@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package getwalletsgrpcservice;
+
+service GetWalletsGrpcService {
+  // Valida o refresh token
+  rpc GetWallets(GetWalletsRequest) returns (GetWalletsResponse);
+}
+
+message GetWalletsRequest {
+  string uid = 1;
+}
+
+message GetWalletsResponse {
+  repeated string walletId = 1;
+}
+
+
