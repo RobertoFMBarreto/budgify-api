@@ -3,16 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C56720F3-987C-4771-B477-D800C7E56525}|BudgifyAPI.Transactions\\BudgifyAPI.Transactions.csproj|c:\\users\\filipemorais\\documents\\mei\\budgify-api\\budgifyapi.transactions\\controller\\transactionsroute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C56720F3-987C-4771-B477-D800C7E56525}|BudgifyAPI.Transactions\\BudgifyAPI.Transactions.csproj|solutionrelative:budgifyapi.transactions\\controller\\transactionsroute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C56720F3-987C-4771-B477-D800C7E56525}|BudgifyAPI.Transactions\\BudgifyAPI.Transactions.csproj|c:\\users\\filipemorais\\documents\\mei\\budgify-api\\budgifyapi.transactions\\usecases\\transactionsinteractoref.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C56720F3-987C-4771-B477-D800C7E56525}|BudgifyAPI.Transactions\\BudgifyAPI.Transactions.csproj|solutionrelative:budgifyapi.transactions\\usecases\\transactionsinteractoref.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C56720F3-987C-4771-B477-D800C7E56525}|BudgifyAPI.Transactions\\BudgifyAPI.Transactions.csproj|c:\\users\\filipemorais\\documents\\mei\\budgify-api\\budgifyapi.transactions\\usecases\\transactionspersistence.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C56720F3-987C-4771-B477-D800C7E56525}|BudgifyAPI.Transactions\\BudgifyAPI.Transactions.csproj|solutionrelative:budgifyapi.transactions\\usecases\\transactionspersistence.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ED31ACA4-5AF4-43C7-8A22-101768B85FC4}|BudgifyAPI.Wallets.CA\\BudgifyAPI.Wallets.CA.csproj|c:\\users\\filipemorais\\documents\\mei\\budgify-api\\budgifyapi.wallets.ca\\controllers\\walletroute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ED31ACA4-5AF4-43C7-8A22-101768B85FC4}|BudgifyAPI.Wallets.CA\\BudgifyAPI.Wallets.CA.csproj|solutionrelative:budgifyapi.wallets.ca\\controllers\\walletroute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,45 +18,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "TransactionsPersistence.cs",
               "DocumentMoniker": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Transactions\\UseCases\\TransactionsPersistence.cs",
               "RelativeDocumentMoniker": "BudgifyAPI.Transactions\\UseCases\\TransactionsPersistence.cs",
               "ToolTip": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Transactions\\UseCases\\TransactionsPersistence.cs",
               "RelativeToolTip": "BudgifyAPI.Transactions\\UseCases\\TransactionsPersistence.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAMwFEAAACNAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACcBAAB5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-03T15:05:37.25Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "TransactionsRoute.cs",
-              "DocumentMoniker": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Transactions\\Controller\\TransactionsRoute.cs",
-              "RelativeDocumentMoniker": "BudgifyAPI.Transactions\\Controller\\TransactionsRoute.cs",
-              "ToolTip": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Transactions\\Controller\\TransactionsRoute.cs",
-              "RelativeToolTip": "BudgifyAPI.Transactions\\Controller\\TransactionsRoute.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAewCwAAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T11:00:12.198Z",
+              "WhenOpened": "2024-12-04T10:39:33.324Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "TransactionsInteractorEF.cs",
-              "DocumentMoniker": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Transactions\\UseCases\\TransactionsInteractorEF.cs",
-              "RelativeDocumentMoniker": "BudgifyAPI.Transactions\\UseCases\\TransactionsInteractorEF.cs",
-              "ToolTip": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Transactions\\UseCases\\TransactionsInteractorEF.cs",
-              "RelativeToolTip": "BudgifyAPI.Transactions\\UseCases\\TransactionsInteractorEF.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAYAAAARAAAAAAAAAA==",
+              "Title": "WalletRoute.cs",
+              "DocumentMoniker": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Wallets.CA\\Controllers\\WalletRoute.cs",
+              "RelativeDocumentMoniker": "BudgifyAPI.Wallets.CA\\Controllers\\WalletRoute.cs",
+              "ToolTip": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Wallets.CA\\Controllers\\WalletRoute.cs",
+              "RelativeToolTip": "BudgifyAPI.Wallets.CA\\Controllers\\WalletRoute.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwBIAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T10:06:55.338Z",
+              "WhenOpened": "2024-12-04T09:20:04.836Z",
               "EditorCaption": ""
             }
           ]
