@@ -2,9 +2,6 @@
 using BudgifyAPI.Transactions.Entities;
 using BudgifyAPI.Transactions.Framework.EntityFramework.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
-using System.Reflection.Metadata.Ecma335;
-using System.Xml.Linq;
 using Npgsql;
 
 namespace BudgifyAPI.Transactions.UseCases
