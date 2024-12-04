@@ -13,7 +13,7 @@ public static class GrpcPersistence
 
         try {
             List<Wallet> wallets = await context.Wallets.Where(x => x.IdUser == uid).ToListAsync();
-            return wallets.Select(x => x.IdUser.ToString()).ToList();
+            return wallets.Select(x => x.IdWallet.ToString()).ToList();
         }
         catch (Exception ex) {
             Console.WriteLine(ex);

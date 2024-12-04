@@ -1,6 +1,7 @@
 ﻿using BudgifyAPI.Transactions.Entities.Request;
 using BudgifyAPI.Transactions.Entities;
 using BudgifyAPI.Transactions.Framework.EntityFramework.Models;
+using Getwalletsgrpcservice;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
@@ -47,8 +48,10 @@ namespace BudgifyAPI.Transactions.UseCases
             TransactionsContext transactionsContext = new TransactionsContext();
             try
             {
-                string query = "select * from public.transactions";
-                List<Transaction> listTransaction = await transactionsContext.Transactions.FromSqlRaw(query).ToListAsync();
+                IEnumerable<string> wallets = await WalletsServiceClient.GetUserWallets(uid);
+                string[] walletsArray = wallets.ToArray();
+                string query = "select * from public.transactions WHERE id_wallet in @IdWallet";
+                List<Transaction> listTransaction = await transactionsContext.Transactions.FromSqlRaw(query, new NpgsqlParameter("IdWallet",walletsArray)).ToListAsync();
                 return new CustomHttpResponse()
                 {
                     Data = listTransaction,

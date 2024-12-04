@@ -7,7 +7,7 @@ public static class WalletsServiceClient
 {
     public static async Task<IEnumerable<string>> GetUserWallets(Guid uid)
     {
-        var channel = GrpcChannel.ForAddress("https://localhost:5001");
+        var channel = GrpcChannel.ForAddress("https://localhost:7132");
     
         GetWalletsGrpcService.GetWalletsGrpcServiceClient _client =
             new GetWalletsGrpcService.GetWalletsGrpcServiceClient(channel);

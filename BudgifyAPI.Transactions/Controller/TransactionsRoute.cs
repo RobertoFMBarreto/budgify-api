@@ -12,7 +12,7 @@ namespace BudgifyAPI.Transactions.Controller
     {
         public static WebApplication SetRoutes(WebApplication application, string baseRoute)
         {
-            application.MapPost("{baseRoute}/transactions", async ([FromBody] CreateTransaction transaction) => {
+            application.MapPost($"{baseRoute}/", async ([FromBody] CreateTransaction transaction) => {
                 try
                 {
                     CustomHttpResponse resp = await TransactionsInteractorEF.AddTransaction(TransactionsPersistence.AddTransactionPersistence, transaction);
@@ -24,11 +24,12 @@ namespace BudgifyAPI.Transactions.Controller
                     throw;
                 }
             });
-            application.MapGet($"{baseRoute}/transactions", async (HttpRequest req) =>
+            application.MapGet($"{baseRoute}/", async (HttpRequest req) =>
             {
                 try
                 {
                     var received_uid  =req.Headers["X-User-Id"];
+                    Console.WriteLine($"Received uid: {received_uid}");
                     if (string.IsNullOrEmpty(received_uid))
                     {
                         return new CustomHttpResponse()
@@ -38,9 +39,11 @@ namespace BudgifyAPI.Transactions.Controller
                         };
                 
                     }
-
+                    
+                    Console.WriteLine($"Received uid: {Encoding.UTF8.GetString(Convert.FromBase64String(received_uid))}");
                     var uid = CustomEncryptor.DecryptString(
                         Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                    Console.WriteLine($"uid: {uid}");
                     CustomHttpResponse resp = await TransactionsInteractorEF.GetTransactrions(TransactionsPersistence.GetTransactionsPersistence, Guid.Parse(uid));
                     return resp;
                 }
@@ -50,8 +53,9 @@ namespace BudgifyAPI.Transactions.Controller
                     throw;
                 }
             });
-            application.MapGet($"{baseRoute}/transaction", async ([FromBody] TransactionGroup transactionGroup) =>
+            application.MapGet($"{baseRoute}/{{startIndex}}/{{amount}}", async ([FromBody] TransactionGroup transactionGroup) =>
             {
+                //!TODO: Mudar para post para receber a referencia temporal
                 try
                 {
                     CustomHttpResponse resp = await TransactionsInteractorEF.GetTransactionSlidingWindow(TransactionsPersistence.GetTransactionSlidingWindowPersistence, transactionGroup);
@@ -63,8 +67,9 @@ namespace BudgifyAPI.Transactions.Controller
                     throw;
                 }
             });
-            application.MapGet($"{baseRoute}/transaction", async ([FromBody] CreateTransaction transaction) =>
+            application.MapGet($"{baseRoute}/range", async ([FromBody] CreateTransaction transaction) =>
             {
+                //!TODO: Mudar para post para receber o range
                 try
                 {
                     CustomHttpResponse resp = await TransactionsInteractorEF.GetTrasnactionsInterval(TransactionsPersistence.GetTrasnactionsIntervalPersistence, transaction);

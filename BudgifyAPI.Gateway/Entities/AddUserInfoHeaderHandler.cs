@@ -24,7 +24,7 @@ public class AddUserInfoHeaderHandler : DelegatingHandler
             {
                 string enc = CustomEncryptor.EncryptString(user.Identity.Name);
                 request.Headers.Add("X-User-Id", Convert.ToBase64String(Encoding.UTF8.GetBytes(enc)));
-                Console.WriteLine(request.Headers);
+                Console.WriteLine(request.Headers.Contains("X-User-Id"));
                
             }
         }
