@@ -16,9 +16,11 @@ public static class WalletRoute {
         Guid tempUserID = Guid.NewGuid();
     
     
-        app.MapPost($"{baseRoute}/RegisterWallet", async (HttpRequest req,[FromBody] RegisterWalletRequest body) => {
+        app.MapPost($"{baseRoute}/", async (HttpRequest req,[FromBody] RegisterWalletRequest body) => {
             try {
+;
                 var received_uid  =req.Headers["X-User-Id"];
+                Console.WriteLine($"received_uid: {received_uid}");
                 if (string.IsNullOrEmpty(received_uid))
                 {
                     return new CustomHTTPResponse(400,"Missing token");
@@ -35,7 +37,7 @@ public static class WalletRoute {
                 throw;
             }
         });
-        app.MapDelete($"{baseRoute}/DeleteWallet", async (HttpRequest req,[FromBody] DeleteWalletRequest body) => {
+        app.MapDelete($"{baseRoute}/", async (HttpRequest req,[FromBody] DeleteWalletRequest body) => {
             try {
                 var received_uid  =req.Headers["X-User-Id"];
                 if (string.IsNullOrEmpty(received_uid))
@@ -54,7 +56,7 @@ public static class WalletRoute {
                 throw;
             }
         });
-        app.MapGet($"{baseRoute}/GetWallet", async (HttpRequest req,[FromBody] GetWalletRequest body) => {
+        app.MapGet($"{baseRoute}/", async (HttpRequest req,[FromBody] GetWalletRequest body) => {
             try {
                 var received_uid  =req.Headers["X-User-Id"];
                 if (string.IsNullOrEmpty(received_uid))
