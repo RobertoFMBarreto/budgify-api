@@ -1,6 +1,7 @@
 ﻿using BudgifyAPI.Transactions.Entities.Request;
 using BudgifyAPI.Transactions.Entities;
 using BudgifyAPI.Transactions.Framework.EntityFramework.Models;
+using Getwalletsgrpcservice;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -89,6 +90,10 @@ namespace BudgifyAPI.Transactions.UseCases
                     "where date = CURRENT_TIMESTAMP - INTERVAL '7' " +
                     "ORDER BY date DESC";
                 List<Transaction> listTransaction = await transactionsContext.Transactions.FromSqlRaw(query).ToListAsync();
+                IEnumerable<string> wallets = await WalletsServiceClient.GetUserWallets(uid);
+                string[] walletsArray = wallets.ToArray();
+                // string query = "select * from public.transactions WHERE id_wallet in @IdWallet";
+                // List<Transaction> listTransaction = await transactionsContext.Transactions.FromSqlRaw(query, new NpgsqlParameter("IdWallet",walletsArray)).ToListAsync();
                 return new CustomHttpResponse()
                 {
                     Data = listTransaction,

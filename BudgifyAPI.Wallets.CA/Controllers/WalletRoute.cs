@@ -18,9 +18,8 @@ public static class WalletRoute {
     
         app.MapPost($"{baseRoute}/", async (HttpRequest req,[FromBody] RegisterWalletRequest body) => {
             try {
-;
+                
                 var received_uid  =req.Headers["X-User-Id"];
-                Console.WriteLine($"received_uid: {received_uid}");
                 if (string.IsNullOrEmpty(received_uid))
                 {
                     return new CustomHTTPResponse(400,"Missing token");
