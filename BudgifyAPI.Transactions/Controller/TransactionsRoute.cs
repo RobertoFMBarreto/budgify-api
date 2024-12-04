@@ -1,4 +1,6 @@
-﻿using BudgifyAPI.Transactions.Entities;
+﻿using System.Text;
+using BudgifyAPI.Auth.CA.Entities;
+using BudgifyAPI.Transactions.Entities;
 using BudgifyAPI.Transactions.Entities.Request;
 using BudgifyAPI.Transactions.Framework.EntityFramework.Models;
 using BudgifyAPI.Transactions.UseCases;
@@ -10,7 +12,7 @@ namespace BudgifyAPI.Transactions.Controller
     {
         public static WebApplication SetRoutes(WebApplication application, string baseRoute)
         {
-            application.MapPost("{baseRoute}/transaction", async ([FromBody] CreateTransaction transaction) => {
+            application.MapPost("{baseRoute}/transactions", async ([FromBody] CreateTransaction transaction) => {
                 try
                 {
                     CustomHttpResponse resp = await TransactionsInteractorEF.AddTransaction(TransactionsPersistence.AddTransactionPersistence, transaction);
@@ -22,11 +24,24 @@ namespace BudgifyAPI.Transactions.Controller
                     throw;
                 }
             });
-            application.MapGet($"{baseRoute}/transaction", async () =>
+            application.MapGet($"{baseRoute}/transactions", async (HttpRequest req) =>
             {
                 try
                 {
-                    CustomHttpResponse resp = await TransactionsInteractorEF.GetTransactrions(TransactionsPersistence.GetTransactrionsPersistence);
+                    var received_uid  =req.Headers["X-User-Id"];
+                    if (string.IsNullOrEmpty(received_uid))
+                    {
+                        return new CustomHttpResponse()
+                        {
+                            status = 400,
+                            message = "Bad Request",
+                        };
+                
+                    }
+
+                    var uid = CustomEncryptor.DecryptString(
+                        Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                    CustomHttpResponse resp = await TransactionsInteractorEF.GetTransactrions(TransactionsPersistence.GetTransactionsPersistence, Guid.Parse(uid));
                     return resp;
                 }
                 catch (Exception ex)

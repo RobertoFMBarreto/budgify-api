@@ -1,3 +1,6 @@
+using BudgifyAPI.Wallets.CA.Controllers;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,8 +8,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddGrpc();
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenLocalhost(7131, o=>o.Protocols=HttpProtocols.Http1);
+    options.ListenLocalhost(7132, o => { 
+        o.Protocols = HttpProtocols.Http2;
+        o.UseHttps();
+    });
+});
+
 var app = builder.Build();
 
+app.MapGrpcService<WalletsGrpcService>();
+WalletRoute.setRoutes(app,"/api/v1/wallets");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

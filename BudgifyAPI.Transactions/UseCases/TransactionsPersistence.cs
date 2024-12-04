@@ -42,7 +42,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 };
             }
         }
-        public static async Task<CustomHttpResponse> GetTransactrionsPersistence()
+        public static async Task<CustomHttpResponse> GetTransactionsPersistence(Guid uid)
         {
             TransactionsContext transactionsContext = new TransactionsContext();
             try

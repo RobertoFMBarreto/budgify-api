@@ -10,9 +10,9 @@ namespace BudgifyAPI.Transactions.UseCases
         {
             return await AddTransactionPersistence(transaction);
         }
-        public static async Task<CustomHttpResponse> GetTransactrions(Func<Task<CustomHttpResponse>> GetTransactrionsPersistence)
+        public static async Task<CustomHttpResponse> GetTransactrions(Func<Guid,Task<CustomHttpResponse>> GetTransactrionsPersistence, Guid uid)
         {
-            return await GetTransactrionsPersistence();
+            return await GetTransactrionsPersistence(uid);
         }
         public static async Task<CustomHttpResponse> GetTransactionSlidingWindow(Func<TransactionGroup, Task<CustomHttpResponse>> GetTransactionSlidingWindowPersistence, TransactionGroup transactionGroup)
         {

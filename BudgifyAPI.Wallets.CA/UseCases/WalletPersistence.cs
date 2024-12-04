@@ -73,10 +73,5 @@ namespace BudgifyAPI.Wallets.CA.UseCases
                 return new CustomHTTPResponse(500, ex.Message);
             }
         }
-
-
     }
-
-
-
 }
