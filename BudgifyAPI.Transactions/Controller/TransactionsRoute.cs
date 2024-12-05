@@ -42,8 +42,7 @@ namespace BudgifyAPI.Transactions.Controller
                     }
                     var uid = CustomEncryptor.DecryptString(
                         Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
-                    Console.WriteLine($"uid: {uid}");
-                    CustomHttpResponse resp = await TransactionsInteractorEF.GetTransactrions(TransactionsPersistence.GetTransactionsPersistence, Guid.Parse(uid));
+                    CustomHttpResponse resp = await TransactionsInteractorEF.GetTransactrions(TransactionsPersistence.GetTrasnactionsIntervalPersistence, Guid.Parse(uid));
                     return resp;
                 }
                 catch (Exception ex)
@@ -57,7 +56,7 @@ namespace BudgifyAPI.Transactions.Controller
                 //!TODO: Mudar para post para receber a referencia temporal
                 try
                 {
-                    CustomHttpResponse resp = await TransactionsInteractorEF.GetTransactionSlidingWindow(TransactionsPersistence.GetTransactionSlidingWindowPersistence, transactionGroup);
+                    CustomHttpResponse resp = await TransactionsInteractorEF.GetTransactionSlidingWindow(TransactionsPersistence.GetTransactionSlidingWindowPersistence, transactionGroup, limite, cur_index);
                     return resp;
                 }
                 catch (Exception ex)

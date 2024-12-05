@@ -81,7 +81,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 };
             }
         }
-        public static async Task<CustomHttpResponse> GetTrasnactionsIntervalPersistence()
+        public static async Task<CustomHttpResponse> GetTrasnactionsIntervalPersistence(Guid uid)
         {
             TransactionsContext transactionsContext = new TransactionsContext();
             try
