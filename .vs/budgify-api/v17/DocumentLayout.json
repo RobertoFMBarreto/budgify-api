@@ -1,21 +1,29 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\",
+  "WorkspaceRootPath": "C:\\Users\\Filipe Morais\\Documents\\GitHub\\budgify-api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{339DDF44-EFFB-45A7-85C3-7FA94C06132F}|BudgifyAPI.Accounts.CA\\BudgifyAPI.Accounts.CA.csproj|c:\\users\\filipemorais\\documents\\mei\\budgify-api\\budgifyapi.accounts.ca\\usescases\\accountspersistence.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C56720F3-987C-4771-B477-D800C7E56525}|BudgifyAPI.Transactions\\BudgifyAPI.Transactions.csproj|c:\\users\\filipe morais\\documents\\github\\budgify-api\\budgifyapi.transactions\\usecases\\transactionspersistence.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C56720F3-987C-4771-B477-D800C7E56525}|BudgifyAPI.Transactions\\BudgifyAPI.Transactions.csproj|solutionrelative:budgifyapi.transactions\\usecases\\transactionspersistence.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C56720F3-987C-4771-B477-D800C7E56525}|BudgifyAPI.Transactions\\BudgifyAPI.Transactions.csproj|c:\\users\\filipe morais\\documents\\github\\budgify-api\\budgifyapi.transactions\\usecases\\walletsserviceclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C56720F3-987C-4771-B477-D800C7E56525}|BudgifyAPI.Transactions\\BudgifyAPI.Transactions.csproj|solutionrelative:budgifyapi.transactions\\usecases\\walletsserviceclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339DDF44-EFFB-45A7-85C3-7FA94C06132F}|BudgifyAPI.Accounts.CA\\BudgifyAPI.Accounts.CA.csproj|c:\\users\\filipe morais\\documents\\github\\budgify-api\\budgifyapi.accounts.ca\\usescases\\accountspersistence.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{339DDF44-EFFB-45A7-85C3-7FA94C06132F}|BudgifyAPI.Accounts.CA\\BudgifyAPI.Accounts.CA.csproj|solutionrelative:budgifyapi.accounts.ca\\usescases\\accountspersistence.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{339DDF44-EFFB-45A7-85C3-7FA94C06132F}|BudgifyAPI.Accounts.CA\\BudgifyAPI.Accounts.CA.csproj|c:\\users\\filipemorais\\documents\\mei\\budgify-api\\budgifyapi.accounts.ca\\controllers\\accountsroute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{339DDF44-EFFB-45A7-85C3-7FA94C06132F}|BudgifyAPI.Accounts.CA\\BudgifyAPI.Accounts.CA.csproj|c:\\users\\filipe morais\\documents\\github\\budgify-api\\budgifyapi.accounts.ca\\controllers\\accountsroute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{339DDF44-EFFB-45A7-85C3-7FA94C06132F}|BudgifyAPI.Accounts.CA\\BudgifyAPI.Accounts.CA.csproj|solutionrelative:budgifyapi.accounts.ca\\controllers\\accountsroute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{339DDF44-EFFB-45A7-85C3-7FA94C06132F}|BudgifyAPI.Accounts.CA\\BudgifyAPI.Accounts.CA.csproj|c:\\users\\filipemorais\\documents\\mei\\budgify-api\\budgifyapi.accounts.ca\\usescases\\accountsinteractoref.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{339DDF44-EFFB-45A7-85C3-7FA94C06132F}|BudgifyAPI.Accounts.CA\\BudgifyAPI.Accounts.CA.csproj|c:\\users\\filipe morais\\documents\\github\\budgify-api\\budgifyapi.accounts.ca\\usescases\\accountsinteractoref.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{339DDF44-EFFB-45A7-85C3-7FA94C06132F}|BudgifyAPI.Accounts.CA\\BudgifyAPI.Accounts.CA.csproj|solutionrelative:budgifyapi.accounts.ca\\usescases\\accountsinteractoref.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C56720F3-987C-4771-B477-D800C7E56525}|BudgifyAPI.Transactions\\BudgifyAPI.Transactions.csproj|c:\\users\\filipemorais\\documents\\mei\\budgify-api\\budgifyapi.transactions\\controller\\transactionsroute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C56720F3-987C-4771-B477-D800C7E56525}|BudgifyAPI.Transactions\\BudgifyAPI.Transactions.csproj|c:\\users\\filipe morais\\documents\\github\\budgify-api\\budgifyapi.transactions\\controller\\transactionsroute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C56720F3-987C-4771-B477-D800C7E56525}|BudgifyAPI.Transactions\\BudgifyAPI.Transactions.csproj|solutionrelative:budgifyapi.transactions\\controller\\transactionsroute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -26,41 +34,65 @@
       "DocumentGroups": [
         {
           "DockedHeight": 447,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TransactionsPersistence.cs",
+              "DocumentMoniker": "C:\\Users\\Filipe Morais\\Documents\\GitHub\\budgify-api\\BudgifyAPI.Transactions\\UseCases\\TransactionsPersistence.cs",
+              "RelativeDocumentMoniker": "BudgifyAPI.Transactions\\UseCases\\TransactionsPersistence.cs",
+              "ToolTip": "C:\\Users\\Filipe Morais\\Documents\\GitHub\\budgify-api\\BudgifyAPI.Transactions\\UseCases\\TransactionsPersistence.cs",
+              "RelativeToolTip": "BudgifyAPI.Transactions\\UseCases\\TransactionsPersistence.cs",
+              "ViewState": "AgIAALUAAAAAAwAAAIAnwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T20:52:20.924Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "WalletsServiceClient.cs",
+              "DocumentMoniker": "C:\\Users\\Filipe Morais\\Documents\\GitHub\\budgify-api\\BudgifyAPI.Transactions\\UseCases\\WalletsServiceClient.cs",
+              "RelativeDocumentMoniker": "BudgifyAPI.Transactions\\UseCases\\WalletsServiceClient.cs",
+              "ToolTip": "C:\\Users\\Filipe Morais\\Documents\\GitHub\\budgify-api\\BudgifyAPI.Transactions\\UseCases\\WalletsServiceClient.cs",
+              "RelativeToolTip": "BudgifyAPI.Transactions\\UseCases\\WalletsServiceClient.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T20:52:12.75Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "AccountsRoute.cs",
-              "DocumentMoniker": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Accounts.CA\\Controllers\\AccountsRoute.cs",
+              "DocumentMoniker": "C:\\Users\\Filipe Morais\\Documents\\GitHub\\budgify-api\\BudgifyAPI.Accounts.CA\\Controllers\\AccountsRoute.cs",
               "RelativeDocumentMoniker": "BudgifyAPI.Accounts.CA\\Controllers\\AccountsRoute.cs",
-              "ToolTip": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Accounts.CA\\Controllers\\AccountsRoute.cs",
+              "ToolTip": "C:\\Users\\Filipe Morais\\Documents\\GitHub\\budgify-api\\BudgifyAPI.Accounts.CA\\Controllers\\AccountsRoute.cs",
               "RelativeToolTip": "BudgifyAPI.Accounts.CA\\Controllers\\AccountsRoute.cs",
               "ViewState": "AgIAAGcAAAAAAAAAAAAowHkAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-05T17:14:49.851Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-05T17:14:49.851Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AccountsInteractorEF.cs",
+              "DocumentMoniker": "C:\\Users\\Filipe Morais\\Documents\\GitHub\\budgify-api\\BudgifyAPI.Accounts.CA\\UsesCases\\AccountsInteractorEF.cs",
+              "RelativeDocumentMoniker": "BudgifyAPI.Accounts.CA\\UsesCases\\AccountsInteractorEF.cs",
+              "ToolTip": "C:\\Users\\Filipe Morais\\Documents\\GitHub\\budgify-api\\BudgifyAPI.Accounts.CA\\UsesCases\\AccountsInteractorEF.cs",
+              "RelativeToolTip": "BudgifyAPI.Accounts.CA\\UsesCases\\AccountsInteractorEF.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAcwCIAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T17:13:30.145Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "AccountsInteractorEF.cs",
-              "DocumentMoniker": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Accounts.CA\\UsesCases\\AccountsInteractorEF.cs",
-              "RelativeDocumentMoniker": "BudgifyAPI.Accounts.CA\\UsesCases\\AccountsInteractorEF.cs",
-              "ToolTip": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Accounts.CA\\UsesCases\\AccountsInteractorEF.cs",
-              "RelativeToolTip": "BudgifyAPI.Accounts.CA\\UsesCases\\AccountsInteractorEF.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAcwCIAAABGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-05T17:13:30.145Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "AccountsPersistence.cs",
-              "DocumentMoniker": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Accounts.CA\\UsesCases\\AccountsPersistence.cs",
+              "DocumentMoniker": "C:\\Users\\Filipe Morais\\Documents\\GitHub\\budgify-api\\BudgifyAPI.Accounts.CA\\UsesCases\\AccountsPersistence.cs",
               "RelativeDocumentMoniker": "BudgifyAPI.Accounts.CA\\UsesCases\\AccountsPersistence.cs",
-              "ToolTip": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Accounts.CA\\UsesCases\\AccountsPersistence.cs",
+              "ToolTip": "C:\\Users\\Filipe Morais\\Documents\\GitHub\\budgify-api\\BudgifyAPI.Accounts.CA\\UsesCases\\AccountsPersistence.cs",
               "RelativeToolTip": "BudgifyAPI.Accounts.CA\\UsesCases\\AccountsPersistence.cs",
               "ViewState": "AgIAAOMAAAAAAAAAAAAowBoCAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -69,29 +101,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "TransactionsRoute.cs",
-              "DocumentMoniker": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Transactions\\Controller\\TransactionsRoute.cs",
+              "DocumentMoniker": "C:\\Users\\Filipe Morais\\Documents\\GitHub\\budgify-api\\BudgifyAPI.Transactions\\Controller\\TransactionsRoute.cs",
               "RelativeDocumentMoniker": "BudgifyAPI.Transactions\\Controller\\TransactionsRoute.cs",
-              "ToolTip": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Transactions\\Controller\\TransactionsRoute.cs",
+              "ToolTip": "C:\\Users\\Filipe Morais\\Documents\\GitHub\\budgify-api\\BudgifyAPI.Transactions\\Controller\\TransactionsRoute.cs",
               "RelativeToolTip": "BudgifyAPI.Transactions\\Controller\\TransactionsRoute.cs",
               "ViewState": "AgIAACgAAAAAAAAAAAAjwEQAAAC7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-05T12:05:26.764Z"
-            }
-          ]
-        },
-        {
-          "DockedHeight": 138,
-          "SelectedChildIndex": -1,
-          "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             }
           ]
         }
