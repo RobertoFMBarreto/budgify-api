@@ -40,8 +40,6 @@ namespace BudgifyAPI.Transactions.Controller
                         };
 
                     }
-
-                    Console.WriteLine($"Received uid: {Encoding.UTF8.GetString(Convert.FromBase64String(received_uid))}");
                     var uid = CustomEncryptor.DecryptString(
                         Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
                     Console.WriteLine($"uid: {uid}");
@@ -54,7 +52,7 @@ namespace BudgifyAPI.Transactions.Controller
                     throw;
                 }
             });
-            application.MapGet($"{baseRoute}/transaction/{{limite}}/{{curindex}}", async (int limite, int cur_index, [FromBody] TransactionGroup transactionGroup) =>
+            application.MapGet($"{baseRoute}/{{limite}}/{{curindex}}", async (int limite, int cur_index, [FromBody] TransactionGroup transactionGroup) =>
             {
                 //!TODO: Mudar para post para receber a referencia temporal
                 try
@@ -82,7 +80,7 @@ namespace BudgifyAPI.Transactions.Controller
                     throw;
                 }
             });
-            application.MapPut($"{baseRoute}/transaction/{{transactionId}}/{{walletId}}", async (Guid transactionId, Guid walletId, [FromBody] CreateTransaction transaction) =>
+            application.MapPut($"{baseRoute}/{{transactionId}}/{{walletId}}", async (Guid transactionId, Guid walletId, [FromBody] CreateTransaction transaction) =>
             {
                 try
                 {
@@ -95,7 +93,7 @@ namespace BudgifyAPI.Transactions.Controller
                     throw;
                 }
             });
-            application.MapDelete($"{baseRoute}/transaction/{{transactionId}}", async (Guid transactionId, Guid walletId) =>
+            application.MapDelete($"{baseRoute}/{{transactionId}}", async (Guid transactionId, Guid walletId) =>
             {
                 try
                 {
