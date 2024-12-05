@@ -14,8 +14,6 @@ namespace BudgifyAPI.Wallets.CA.UseCases
             var wallet = new WalletEntity() {
                 WalletName = walletName,
                 UserId = userID,
-                WalletId = new Guid(),
-
             };
             return await walletPersistence( wallet );
         }
@@ -23,8 +21,7 @@ namespace BudgifyAPI.Wallets.CA.UseCases
         public static async Task<CustomHTTPResponse> DeleteWallet(Func<WalletEntity, Task<CustomHTTPResponse>> walletPersistence, Guid userID, Guid walletID ) {
             var wallet = new WalletEntity() {
                 UserId = userID,
-                WalletId = new Guid(),
-
+                WalletId = walletID,
             };
             return await walletPersistence( wallet );
         }
@@ -32,8 +29,7 @@ namespace BudgifyAPI.Wallets.CA.UseCases
             public static async Task<CustomHTTPResponse> GetWallet(Func<WalletEntity, Task<CustomHTTPResponse>> walletPersistence, Guid userID, Guid walletID ) {
             var wallet = new WalletEntity() {
                 UserId = userID,
-                WalletId = new Guid(),
-
+                WalletId = walletID,
             };
             return await walletPersistence( wallet );
         }

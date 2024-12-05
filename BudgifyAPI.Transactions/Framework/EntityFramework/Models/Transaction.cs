@@ -5,6 +5,7 @@ namespace BudgifyAPI.Transactions.Framework.EntityFramework.Models;
 
 public partial class Transaction
 {
+    public Guid IdTransaction { get; set; }
     public Guid IdWallet { get; set; }
 
     public Guid? IdCategory { get; set; }

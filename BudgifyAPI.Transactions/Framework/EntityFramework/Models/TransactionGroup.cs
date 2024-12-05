@@ -14,6 +14,4 @@ public partial class TransactionGroup
     public DateTime EndDate { get; set; }
 
     public float PlannedAmount { get; set; }
-
-    public virtual ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
 }

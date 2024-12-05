@@ -3,13 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgifyAPI.Accounts", "BudgifyAPI.Accounts\BudgifyAPI.Accounts.csproj", "{26C435C8-FD0A-4530-82EC-54908F9FFB3C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgifyAPI.Family", "BudgifyAPI.Family\BudgifyAPI.Family.csproj", "{9AFAABA2-D4D0-4469-A46C-4724B1415376}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgifyAPI.Transactions", "BudgifyAPI.Transactions\BudgifyAPI.Transactions.csproj", "{C56720F3-987C-4771-B477-D800C7E56525}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgifyAPI.Wallets", "BudgifyAPI.Wallets\BudgifyAPI.Wallets.csproj", "{BDB93AF0-A1A5-499A-850B-49D18BBEC4FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgifyAPI.Auth", "BudgifyAPI.Auth\BudgifyAPI.Auth.csproj", "{B3967666-4555-483D-929B-FD17E7611FC1}"
 EndProject
@@ -18,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgifyAPI.Accounts.CA", "BudgifyAPI.Accounts.CA\BudgifyAPI.Accounts.CA.csproj", "{339DDF44-EFFB-45A7-85C3-7FA94C06132F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgifyAPI.Gateway", "BudgifyAPI.Gateway\BudgifyAPI.Gateway.csproj", "{75361287-7BB5-4007-86D0-4AF50B91B29A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgifyAPI.Wallets.CA", "BudgifyAPI.Wallets.CA\BudgifyAPI.Wallets.CA.csproj", "{ED31ACA4-5AF4-43C7-8A22-101768B85FC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,10 +26,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{26C435C8-FD0A-4530-82EC-54908F9FFB3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{26C435C8-FD0A-4530-82EC-54908F9FFB3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{26C435C8-FD0A-4530-82EC-54908F9FFB3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26C435C8-FD0A-4530-82EC-54908F9FFB3C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9AFAABA2-D4D0-4469-A46C-4724B1415376}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9AFAABA2-D4D0-4469-A46C-4724B1415376}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AFAABA2-D4D0-4469-A46C-4724B1415376}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -40,10 +34,6 @@ Global
 		{C56720F3-987C-4771-B477-D800C7E56525}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C56720F3-987C-4771-B477-D800C7E56525}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C56720F3-987C-4771-B477-D800C7E56525}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BDB93AF0-A1A5-499A-850B-49D18BBEC4FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BDB93AF0-A1A5-499A-850B-49D18BBEC4FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BDB93AF0-A1A5-499A-850B-49D18BBEC4FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BDB93AF0-A1A5-499A-850B-49D18BBEC4FA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B3967666-4555-483D-929B-FD17E7611FC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B3967666-4555-483D-929B-FD17E7611FC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3967666-4555-483D-929B-FD17E7611FC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -60,5 +50,9 @@ Global
 		{75361287-7BB5-4007-86D0-4AF50B91B29A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75361287-7BB5-4007-86D0-4AF50B91B29A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75361287-7BB5-4007-86D0-4AF50B91B29A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED31ACA4-5AF4-43C7-8A22-101768B85FC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED31ACA4-5AF4-43C7-8A22-101768B85FC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED31ACA4-5AF4-43C7-8A22-101768B85FC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED31ACA4-5AF4-43C7-8A22-101768B85FC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

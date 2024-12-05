@@ -45,7 +45,7 @@ public static class UserPersistence
 
             string token = PasetoManager.GeneratePasetoToken(user.IdUser);
             string refreshToken = PasetoManager.GenerateRefreshPasetoToken(user.IdUser);
-
+            Console.WriteLine(userAgent);
             UserRefreshToken? refToken = await context.UserRefreshTokens.Where(userRefreshToken => userRefreshToken.Device == userAgent)
                 .FirstOrDefaultAsync();
             if (refToken == null)
@@ -287,10 +287,8 @@ public static class UserPersistence
             if (!token.IsValid)
                 return false;
             var uid = token.Paseto.Payload["sub"].ToString();
-            Console.WriteLine($"Agent: {request.Agent}");
-            
             UserRefreshToken? user = await context.UserRefreshTokens.Where(u=> u.IdUser == Guid.Parse(uid) && u.Device == request.Agent).FirstOrDefaultAsync();
-            Console.WriteLine(user);
+            Console.WriteLine(user==null);
             if(user == null)
                 return false;
 

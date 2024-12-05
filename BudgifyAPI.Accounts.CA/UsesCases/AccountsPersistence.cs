@@ -22,14 +22,14 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                     await accountsContext.SaveChangesAsync();
                     return new CustomHttpResponse()
                     {
-                        message = "Grupo criado com sucesso",
+                        message = "User group added successfully",
                         status = 200
                     };
 
                 }
                 return new CustomHttpResponse()
                 {
-                    message = "Occurreu um erro",
+                    message = "An error occourred",
                     status = 400
                 };
             }
@@ -55,13 +55,13 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
 
                     return new CustomHttpResponse()
                     {
-                        message = "Grupo atualizado com sucesso",
+                        message = "User group updated successfully",
                         status = 200
                     };
                 }
                 return new CustomHttpResponse()
                 {
-                    message = "Ocurreu um erro",
+                    message = "An error occourred",
                     status = 400
                 };
             }
@@ -88,13 +88,13 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                     await accountsContext.SaveChangesAsync();
                     return new CustomHttpResponse()
                     {
-                        message = "Grupo removido com sucesso",
+                        message = "User group removed successfully",
                         status = 200
                     };
                 }
                 return new CustomHttpResponse()
                 {
-                    message = "Occureu um erro",
+                    message = "An error occourred",
                     status = 400
                 };
             }
@@ -118,7 +118,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "Occurreu um erro",
+                        message = "An error occourred",
                         status = 400,
                     };
                 }
@@ -150,7 +150,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "O utilizador não existe",
+                        message = "User does not exist",
                         status = 400
                     };
                 }
@@ -159,7 +159,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "O grupo não existe",
+                        message = "User group does not exist",
                         status = 400
                     };
                 }
@@ -167,7 +167,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "O utilizador já está atribuído a um grupo",
+                        message = "User is already in a user group",
                         status = 400
                     };
                 }
@@ -178,7 +178,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 await accountsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "O utilizador associado a um grupo com sucesso",
+                    message = "User added to a user group successfully",
                     status = 200
                 };
             }
@@ -200,7 +200,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 if (userExist == null)
                     return new CustomHttpResponse()
                     {
-                        message = "O utilizador não existe",
+                        message = "User does not exist",
                         status = 400
                     };
                 string query = "update public.user " +
@@ -210,7 +210,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 await accountsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Utilizador removido do grupo com sucesso",
+                    message = "User removed successfully",
                     status = 200
                 };
 
@@ -224,38 +224,95 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 };
             }
         }
-        public static async Task<CustomHttpResponse> AddManagerToUserGroupPersistence(User user)
+        public static async Task<CustomHttpResponse> AddManagerToUserGroupPersistence(User user, Guid userId)
         {
-            //primeiro adicionar ao grupo e depois tornar manager
             AccountsContext accountsContext = new AccountsContext();
             try
             {
-                var userExist = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == user.IdUser);
+                var existGroup = await accountsContext.UserGroups.FirstOrDefaultAsync(x => x.IdUserGroup == user.IdUserGroup);
+                if (existGroup == null)
+                {
+                    return new CustomHttpResponse()
+                    {
+                        message = "User does not exist",
+                        status = 400
+                    };
+                }
+                var userExist = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == userId);
                 if (userExist == null)
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "Utilizador não existe",
+                        message = "User group does not exist",
                         status = 400
                     };
                 }
-                if (user.IsManager)
+                if (userExist.IdUserGroup != null)
                 {
-                    string query = "update public.user " +
-                    $"set id_user_group = @id_user_group " +
-                    $"where id_user = @id_user";
-                    var result = accountsContext.Database.ExecuteSqlRawAsync(query, new NpgsqlParameter("@id_user_group", user.IdUserGroup), new NpgsqlParameter("@id_user", user.IdUser));
                     return new CustomHttpResponse()
                     {
-                        message = "Gestor adicionado ao grupo com sucesso",
+                        message = "User is already in a user group",
+                        status = 400
+                    };
+                }
+                string query = "update public.user " +
+                  $"set id_user_group = @id_user_group " +
+                  $"set is_Manager = true, " +
+                  $"where id_user = @id_user";
+
+                await accountsContext.Database.ExecuteSqlRawAsync(query,
+                    new NpgsqlParameter("@id_user_group", user.IdUserGroup),
+                    new NpgsqlParameter("@id_user", user.IdUser));
+
+                accountsContext.SaveChangesAsync();
+
+                return new CustomHttpResponse()
+                {
+                    message = "Manager added successfully",
+                    status = 200
+                }; 
+            }
+            catch (Exception ex)
+            {
+                return new CustomHttpResponse()
+                {
+                    message = ex.Message,
+                    status = 500
+                };
+            }
+        }
+        public static async Task<CustomHttpResponse> DeleteManagerToUserGroupPersistence(Guid userId)
+        {
+            AccountsContext accountsContext = new AccountsContext();
+            try
+            {
+                var userExist = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == userId);
+                if (userExist == null)
+                    return new CustomHttpResponse()
+                    {
+                        message = "Manager does not exist",
+                        status = 400
+                    };
+                if (userExist.IsManager == true)
+                {
+                    string query = "update public.user " +
+                    "set id_user_group = null " +
+                    "where id_user = @id_user ";
+                    var result = accountsContext.Database.ExecuteSqlRawAsync(query, new NpgsqlParameter("@id_user", userId));
+                    await accountsContext.SaveChangesAsync();
+                    return new CustomHttpResponse()
+                    {
+                        message = "Manager removed successfully",
                         status = 200
                     };
+
                 }
                 return new CustomHttpResponse()
                 {
-                    message = "Utilizador não é Gestor",
+                    message = "Occourred an error",
                     status = 400
                 };
+
             }
             catch (Exception ex)
             {
@@ -276,7 +333,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "Utilizador já existe",
+                        message = "User already exist",
                         status = 400
                     };
                 }
@@ -298,7 +355,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 await accountsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Utilizador adicionado com sucesso",
+                    message = "User added successfully",
                     status = 200
                 };
 
@@ -322,28 +379,28 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "Utilizador não existe",
+                        message = "User does not exist",
                         status = 400
                     };
                 }
 
-                accountsContext.Users.Update(new User()
-                {
-                    IdUserGroup = createUser.IdUserGroup,
-                    Name = createUser.Name,
-                    Email = createUser.Email,
-                    Password = createUser.Password,
-                    DateOfBirth = createUser.DateOfBirth,
-                    Genre = createUser.Genre,
-                    IsActive = createUser.IsActive,
-                    IsAdmin = createUser.IsAdmin,
-                    IsManager = createUser.IsManager,
-                    AllowWalletWatch = createUser.AllowWalletWatch
-                });
+
+                userExist.IdUserGroup = createUser.IdUserGroup;
+                userExist.Name = createUser.Name;
+                userExist.Email = createUser.Email;
+                userExist.Password = createUser.Password;
+                userExist.DateOfBirth = createUser.DateOfBirth;
+                userExist.Genre = createUser.Genre;
+                userExist.IsActive = createUser.IsActive;
+                userExist.IsAdmin = createUser.IsAdmin;
+                userExist.IsManager = createUser.IsManager;
+                userExist.AllowWalletWatch = createUser.AllowWalletWatch;
+
+                accountsContext.Users.Update(userExist);
                 await accountsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Utilizador atualizado com sucesso",
+                    message = "User added successfully",
                     status = 200
                 };
             }
@@ -366,7 +423,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "Utilizador não existe",
+                        message = "User does not exist",
                         status = 400
                     };
                 }
@@ -377,7 +434,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 await accountsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Utilizador removido com sucesso",
+                    message = "User removed successfully",
                     status = 200
                 };
             }
@@ -400,7 +457,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "Utilizador não existe",
+                        message = "User does not exist",
                         status = 400
                     };
                 }
@@ -411,7 +468,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 await accountsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Utilizador atualizado com sucesso",
+                    message = "User added successfully",
                     status = 200
                 };
             }
@@ -456,7 +513,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "Não existem utilizadores",
+                        message = "User does not exist",
                         status = 400
                     };
                 }
