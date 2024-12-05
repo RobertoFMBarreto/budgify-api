@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Reflection.Metadata.Ecma335;
 using System.Xml.Linq;
 using Npgsql;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BudgifyAPI.Transactions.UseCases
 {
@@ -16,12 +17,48 @@ namespace BudgifyAPI.Transactions.UseCases
             TransactionsContext transactionsContext = new TransactionsContext();
             try
             {
+                
+                //string query = "SELECT tg.@id_transaction_ " +
+                //        "FROM public.transactions as t inner join public.transaction_group as tg " +
+                //        "on t.id_transaction_group = tg.id_transaction_group " +
+                //        "WHERE t.date BETWEEN @tg.start_date AND @tg.end_date ";
+
+                //var verify = await transactionsContext.TransactionGroups.FromSqlRaw(query,
+                //        new NpgsqlParameter("@start_date", transactionGroup.StartDate),
+                //        new NpgsqlParameter("@end_date", transactionGroup.EndDate), 
+                //        new NpgsqlParameter("@id_transaction", transactionId)).ToListAsync();
+
+                //if (string.IsNullOrEmpty(query))
+                //{
+                //    return new CustomHttpResponse()
+                //    {
+                //        message = "Transaction Group does not exist",
+                //        status = 400
+                //    };
+                //}
+                //else
+                //{
+                //    await transactionsContext.AddAsync(new Transaction
+                //    {
+                //        IdWallet = transaction.IdWallet,
+                //        IdTransactionGroup = transactionGroupId,
+                //        IdCategory = transaction.IdCategory,
+                //        IdSubcategory = transaction.IdSubcategory,
+                //        IdReocurring = transaction.IdReocurring,
+                //        Date = transaction.Date,
+                //        Description = transaction.Description,
+                //        Amount = transaction.Amount,
+                //        IsPlanned = transaction.IsPlanned,
+                //        Latitude = transaction.Latitude,
+                //        Longitue = transaction.Longitue,
+                //    });
+                //}
                 await transactionsContext.AddAsync(new Transaction
                 {
                     IdWallet = transaction.IdWallet,
+                    IdTransactionGroup = transaction.IdTransactionGroup,
                     IdCategory = transaction.IdCategory,
                     IdSubcategory = transaction.IdSubcategory,
-                    IdTransactionGroup = transaction.IdTransactionGroup,
                     IdReocurring = transaction.IdReocurring,
                     Date = transaction.Date,
                     Description = transaction.Description,
@@ -30,9 +67,10 @@ namespace BudgifyAPI.Transactions.UseCases
                     Latitude = transaction.Latitude,
                     Longitue = transaction.Longitue,
                 });
+                await transactionsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Transação feita com sucesso",
+                    message = "Transaction added success",
                     status = 200,
                 };
             }
@@ -45,12 +83,14 @@ namespace BudgifyAPI.Transactions.UseCases
                 };
             }
         }
-        public static async Task<CustomHttpResponse> GetTransactrionsPersistence()
+        public static async Task<CustomHttpResponse> GetTrasnactionsIntervalPersistence()
         {
             TransactionsContext transactionsContext = new TransactionsContext();
             try
             {
-                string query = "select * from public.transactions";
+                string query = "select * from public.transactions " +
+                    "where date = CURRENT_TIMESTAMP - INTERVAL '7' " +
+                    "ORDER BY date DESC";
                 List<Transaction> listTransaction = await transactionsContext.Transactions.FromSqlRaw(query).ToListAsync();
                 return new CustomHttpResponse()
                 {
@@ -68,21 +108,135 @@ namespace BudgifyAPI.Transactions.UseCases
                 };
             }
         }
-        public static async Task<CustomHttpResponse> GetTransactionSlidingWindowPersistence(TransactionGroup transactionGroup)
+        public static async Task<CustomHttpResponse> GetTransactionSlidingWindowPersistence(TransactionGroup transactionGroup, int limite, int cur_index)
         {
             TransactionsContext transactionsContext = new TransactionsContext();
             //ver
+            {
+                try
+                {
+                    string query = "SELECT tg.*, t.amount " +
+                        "FROM public.transactions as t inner join public.transaction_group as tg " +
+                        "on t.id_transaction_group = tg.id_transaction_group " +
+                        "WHERE t.date BETWEEN @tg.start_date AND @tg.end_date " +
+                        "ORDER BY @t.date ASC " +
+                        "LIMIT @limite OFFSET @cur_index";
+
+                    List<Transaction> listTransactions = await transactionsContext.Transactions.FromSqlRaw(query,
+                        new NpgsqlParameter("@start_date", transactionGroup.StartDate),
+                        new NpgsqlParameter("@end_date", transactionGroup.EndDate),
+                        new NpgsqlParameter("@limite", limite),
+                        new NpgsqlParameter("@cur_index", cur_index)).ToListAsync();
+                    return new CustomHttpResponse()
+                    {
+                        Data = listTransactions,
+                        status = 200
+                    };
+                }
+                catch (Exception ex)
+                {
+                    return new CustomHttpResponse()
+                    {
+                        message = ex.Message,
+                        status = 500
+                    };
+                }
+            }
+        }
+        public static async Task<CustomHttpResponse> GetTransactionNoSlidingWindowPersistence(CreateTransaction transaction)
+        {
+            TransactionsContext transactionsContext = new TransactionsContext();
             try
             {
-                string query = "WITH janela AS (SELECT tg.*, t.amount, ROW_NUMBER() OVER (ORDER BY start_date) AS rn  public.transaction_group as tg " +
-                    "inner join public.transactions as t on t.id_transaction_group = tg.id_transaction_group  " +
-                    "    WHERE start_date >= '@start_date' AND end_date <= '@end_date') " +
-                    "SELECT * FROM janela WHERE rn BETWEEN 1 AND 10;";
-
-                List<Transaction> listTransactions = await transactionsContext.Transactions.FromSqlRaw(query,new NpgsqlParameter("@start_date", transactionGroup.StartDate), new NpgsqlParameter("end_date", transactionGroup.EndDate)).ToListAsync();
+                //TODO
                 return new CustomHttpResponse()
                 {
-                    Data = listTransactions,
+
+                };
+            }
+            catch (Exception ex)
+            {
+                return new CustomHttpResponse()
+                {
+                    message = ex.Message,
+                    status = 500
+                };
+            }
+        }
+        public static async Task<CustomHttpResponse> UpdateTrasnactionsPersistence(Guid transactionId, Guid walletId, CreateTransaction transaction)
+        {
+            TransactionsContext transactionsContext = new TransactionsContext();
+            try
+            {
+                var validation = await transactionsContext.Transactions.FirstOrDefaultAsync(x => x.IdTransaction == transactionId && x.IdWallet == walletId);
+                if (validation == null)
+                {
+                    return new CustomHttpResponse()
+                    {
+                        message = "Transaction does not exist",
+                        status = 400
+                    };
+
+                }
+                validation.IdWallet = transaction.IdWallet;
+                validation.IdReocurring = transaction.IdReocurring;
+                validation.IdCategory = transaction.IdCategory;
+                validation.IdSubcategory = transaction.IdSubcategory;
+                validation.Date = transaction.Date;
+                validation.Description = transaction.Description;
+                validation.Amount = transaction.Amount;
+                validation.IsPlanned = transaction.IsPlanned;
+                validation.Latitude = transaction.Latitude;
+                validation.Longitue = transaction.Longitue;
+
+                transactionsContext.Update(validation);
+                await transactionsContext.SaveChangesAsync();
+
+                return new CustomHttpResponse()
+                {
+                    message = "Transaction updated successfully",
+                    status= 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new CustomHttpResponse()
+                {
+                    message = ex.Message,
+                    status = 500
+                };
+            }
+        }
+        public static async Task<CustomHttpResponse> DeleteTrasnactionsPersistence(Guid transactionId, Guid walletId)
+        {
+            TransactionsContext transactionsContext = new TransactionsContext();
+            try
+            {
+                //var existWallet = await transactionsContext.Transactions.FirstOrDefaultAsync(x => x.IdWallet == walletId);
+                //if (existWallet == null)
+                //{
+                //    return new CustomHttpResponse()
+                //    {
+                //        message = "Não existe carteira",
+                //        status = 400
+                //    };
+
+                //}
+                var validation = await transactionsContext.Transactions.FirstOrDefaultAsync(x => x.IdTransaction == transactionId && x.IdWallet == walletId);
+                if (validation == null)
+                {
+                    return new CustomHttpResponse()
+                    {
+                        message = "transaction does not exist",
+                        status = 400
+                    };
+
+                }
+                transactionsContext.Transactions.Remove(validation);
+                await transactionsContext.SaveChangesAsync();
+                return new CustomHttpResponse()
+                {
+                    message = "Transaction removed successfully",
                     status = 200
                 };
             }
@@ -94,67 +248,7 @@ namespace BudgifyAPI.Transactions.UseCases
                     status = 500
                 };
             }
-            
-        }
-        public static async Task<CustomHttpResponse> GetTrasnactionsIntervalPersistence(CreateTransaction transaction)
-        {
-            TransactionsContext transactionsContext = new TransactionsContext();
-            try
-            {
-                //TODO
-                return new CustomHttpResponse()
-                {
-
-                };
-            }
-            catch (Exception ex)
-            {
-                return new CustomHttpResponse()
-                {
-                    message = ex.Message,
-                    status = 500
-                };
-            }
-        }
-        public static async Task<CustomHttpResponse> UpdateTrasnactionsPersistence(Guid transactionId)
-        {
-            TransactionsContext transactionsContext = new TransactionsContext();
-            try
-            {
-                //TODO
-                return new CustomHttpResponse()
-                {
-
-                };
-            }
-            catch (Exception ex)
-            {
-                return new CustomHttpResponse()
-                {
-                    message = ex.Message,
-                    status = 500
-                };
-            }
-        }
-        public static async Task<CustomHttpResponse> DeleteTrasnactionsPersistence(Guid transactionId)
-        {
-            TransactionsContext transactionsContext = new TransactionsContext();
-            try
-            {
-                //TODO
-                return new CustomHttpResponse()
-                {
-
-                };
-            }
-            catch (Exception ex)
-            {
-                return new CustomHttpResponse()
-                {
-                    message = ex.Message,
-                    status = 500
-                };
-            }
+        
         }
         public static async Task<CustomHttpResponse> GetCategoriesPersistence()
         {
@@ -179,7 +273,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 };
             }
         }
-        public static async Task<CustomHttpResponse> AddCategoriesPersistence (CreateCategories category)
+        public static async Task<CustomHttpResponse> AddCategoriesPersistence(CreateCategories category)
         {
             TransactionsContext transactionsContext = new TransactionsContext();
             try
@@ -191,7 +285,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 });
                 return new CustomHttpResponse()
                 {
-                    message = "Categoria adicionada com sucesso",
+                    message = "Category added successfully",
                     status = 200
                 };
             }
@@ -210,11 +304,11 @@ namespace BudgifyAPI.Transactions.UseCases
             try
             {
                 var categoryExist = await transactionsContext.Categories.FirstOrDefaultAsync(x => x.IdCategory == categoryId);
-                if(categoryExist == null)
+                if (categoryExist == null)
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "A categoria não existe",
+                        message = "Category does not exist",
                         status = 400
                     };
                 }
@@ -223,7 +317,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 await transactionsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Categoria atualizada com sucesso",
+                    message = "Categor updated successfully",
                     status = 200
                 };
             }
@@ -246,7 +340,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "A categoria não existe",
+                        message = "Category does not exist",
                         status = 400
                     };
                 }
@@ -254,7 +348,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 await transactionsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Categoria removida com sucesso",
+                    message = "Category removed successfully",
                     status = 200
                 };
             }
@@ -280,7 +374,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 });
                 return new CustomHttpResponse()
                 {
-                    message = "Subcategoria adicionada com sucesso",
+                    message = "Subcategory added successfully",
                     status = 200
                 };
             }
@@ -303,7 +397,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "A subcategoria não existe",
+                        message = "Subcategory does not exist",
                         status = 400
                     };
                 }
@@ -312,7 +406,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 await transactionsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Subategoria atualizada com sucesso",
+                    message = "Subategory updated successfully",
                     status = 200
                 };
             }
@@ -335,7 +429,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "A subcategoria não existe",
+                        message = "A subcategory does not exist",
                         status = 400
                     };
                 }
@@ -343,7 +437,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 await transactionsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Subcategoria removida com sucesso",
+                    message = "Subcategory removed successfully",
                     status = 200
                 };
             }
@@ -377,7 +471,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 });
                 return new CustomHttpResponse()
                 {
-                    message = "Recorrente adicionado com sucesso",
+                    message = "Reocurring added successfully",
                     status = 200
                 };
             }
@@ -400,28 +494,28 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "Recorrente não existe",
+                        message = "Reocurring does not exist",
                         status = 400
                     };
                 }
-                transactionsContext.Reocurrings.Update(new Reocurring
-                {
-                    IdWallet = reocurring.IdWallet,
-                    IdCategory = reocurring.IdCategory,
-                    IdSubcategory = reocurring.IdSubcategory,
-                    Description = reocurring.Description,
-                    Amount = reocurring.Amount,
-                    DayOfWeek = reocurring.DayOfWeek,
-                    StartDate = reocurring.StartDate,
-                    IsYearly = reocurring.IsYearly,
-                    IsMonthly = reocurring.IsMonthly,
-                    IsWeekly = reocurring.IsWeekly,
-                    IsActive = reocurring.IsActive
-                });
+
+                reocurring.IdWallet = reocurring.IdWallet;
+                reocurring.IdCategory = reocurring.IdCategory;
+                reocurring.IdSubcategory = reocurring.IdSubcategory;
+                reocurring.Description = reocurring.Description;
+                reocurring.Amount = reocurring.Amount;
+                reocurring.DayOfWeek = reocurring.DayOfWeek;
+                reocurring.StartDate = reocurring.StartDate;
+                reocurring.IsYearly = reocurring.IsYearly;
+                reocurring.IsMonthly = reocurring.IsMonthly;
+                reocurring.IsWeekly = reocurring.IsWeekly;
+                reocurring.IsActive = reocurring.IsActive;
+
+                transactionsContext.Reocurrings.Update(reocurringExist);
                 await transactionsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Recorrente atualizado com sucesso",
+                    message = "Reocurring updated successfully",
                     status = 200
                 };
             }
@@ -444,7 +538,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "A recorrente não existe",
+                        message = "Reocurring does not exist",
                         status = 400
                     };
                 }
@@ -452,7 +546,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 await transactionsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Recorrente removido com sucesso",
+                    message = "Reocurring removed successfully",
                     status = 200
                 };
             }
@@ -479,7 +573,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 });
                 return new CustomHttpResponse()
                 {
-                    message = "Grupo de transação adicionado com sucesso",
+                    message = "Transaction Group added successfully",
                     status = 200
                 };
             }
@@ -502,21 +596,19 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "Grupo de transação não existe",
+                        message = "Transaction Group does not exist",
                         status = 400
                     };
                 }
-                transactionsContext.TransactionGroups.Update(new TransactionGroup
-                {
-                    Description = transactionGroup.Description,
-                    StartDate = transactionGroup.StartDate,
-                    EndDate = transactionGroup.EndDate,
-                    PlannedAmount = transactionGroup.PlannedAmount
-                });
+                transacationGroupExist.Description = transactionGroup.Description;
+                transacationGroupExist.StartDate = transactionGroup.StartDate;
+                transacationGroupExist.EndDate = transactionGroup.EndDate;
+                transacationGroupExist.PlannedAmount = transactionGroup.PlannedAmount;
+
                 await transactionsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Grupo de transação com sucesso",
+                    message = "Transaction group updated successfully",
                     status = 200
                 };
             }
@@ -539,7 +631,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "O Grupo de transação não existe",
+                        message = "Transaction Group does not exist",
                         status = 400
                     };
                 }
@@ -547,7 +639,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 await transactionsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Grupo de transação removido com sucesso",
+                    message = "Transaction Group removed successfully",
                     status = 200
                 };
             }
@@ -582,7 +674,26 @@ namespace BudgifyAPI.Transactions.UseCases
                 };
             }
         }
-        
-        //Faltam alguns
+
+        public static async Task<CustomHttpResponse> GetGroupTransactionStats(TransactionGroup transactionGroup, Guid transactionId)
+        {
+            return new CustomHttpResponse()
+            {
+
+            };
+            //TransactionsContext transactionsContext = new TransactionsContext();
+            //try
+            //{
+            //    var existTransaction = await transactionsContext.TransactionGroups.FirstOrDefaultAsync(x => x.IdTransactionGroup == transactionId);
+            //    string query = "";
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine(ex.Message);  
+            //    throw;
+            //}
+        }
+
+
     }
 }
