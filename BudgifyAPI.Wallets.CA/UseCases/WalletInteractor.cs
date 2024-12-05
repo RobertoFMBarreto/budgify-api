@@ -26,12 +26,8 @@ namespace BudgifyAPI.Wallets.CA.UseCases
             return await walletPersistence( wallet );
         }
     
-            public static async Task<CustomHTTPResponse> GetWallet(Func<WalletEntity, Task<CustomHTTPResponse>> walletPersistence, Guid userID, Guid walletID ) {
-            var wallet = new WalletEntity() {
-                UserId = userID,
-                WalletId = walletID,
-            };
-            return await walletPersistence( wallet );
+        public static async Task<CustomHTTPResponse> GetWallet(Func<Guid, Task<CustomHTTPResponse>> walletPersistence, Guid userID ) {
+            return await walletPersistence( userID );
         }
     
     }

@@ -42,7 +42,7 @@ namespace BudgifyAPI.Transactions.Controller
                     }
                     var uid = CustomEncryptor.DecryptString(
                         Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
-                    CustomHttpResponse resp = await TransactionsInteractorEF.GetTransactrions(TransactionsPersistence.GetTrasnactionsIntervalPersistence, Guid.Parse(uid));
+                    CustomHttpResponse resp = await TransactionsInteractorEF.GetTransactions(TransactionsPersistence.GetTransactionsIntervalPersistence, Guid.Parse(uid));
                     return resp;
                 }
                 catch (Exception ex)

@@ -55,7 +55,7 @@ public static class WalletRoute {
                 throw;
             }
         });
-        app.MapGet($"{baseRoute}/", async (HttpRequest req,[FromBody] GetWalletRequest body) => {
+        app.MapGet($"{baseRoute}/", async (HttpRequest req) => {
             try {
                 var received_uid  =req.Headers["X-User-Id"];
                 if (string.IsNullOrEmpty(received_uid))
@@ -66,7 +66,7 @@ public static class WalletRoute {
 
                 var uid = CustomEncryptor.DecryptString(
                     Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
-               return await WalletInteractorEF.GetWallet(WalletPersistence.GetWallet, Guid.Parse(uid), body.wallet_id);
+               return await WalletInteractorEF.GetWallet(WalletPersistence.GetWallet, Guid.Parse(uid));
             } 
             catch (Exception e)
             {

@@ -27,7 +27,7 @@ public partial class TransactionsContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;UserId=postgres;Password=sasa;Database=Transactions");
+        => optionsBuilder.UseNpgsql("Host=localhost; User Id=postgres; Database=Transactions; Password=budgify; Port=42765;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -105,7 +105,7 @@ public partial class TransactionsContext : DbContext
                 .HasColumnName("id_transaction");
             entity.Property(e => e.Amount).HasColumnName("amount");
             entity.Property(e => e.Date)
-                .HasColumnType("timestamp(6) without time zone")
+                .HasColumnType("timestamp(6) with time zone")
                 .HasColumnName("date");
             entity.Property(e => e.Description).HasColumnName("description");
             entity.Property(e => e.IdCategory).HasColumnName("id_category");

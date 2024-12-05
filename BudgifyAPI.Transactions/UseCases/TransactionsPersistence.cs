@@ -1,10 +1,12 @@
-﻿using BudgifyAPI.Transactions.Entities.Request;
+﻿using System.Data;
+using BudgifyAPI.Transactions.Entities.Request;
 using BudgifyAPI.Transactions.Entities;
 using BudgifyAPI.Transactions.Framework.EntityFramework.Models;
 using Getwalletsgrpcservice;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using String = System.String;
 
 namespace BudgifyAPI.Transactions.UseCases
 {
@@ -51,7 +53,19 @@ namespace BudgifyAPI.Transactions.UseCases
                 //        Longitue = transaction.Longitue,
                 //    });
                 //}
-                await transactionsContext.AddAsync(new Transaction
+                
+                
+                // tem tranction group? (idTransactionGroup = null?)
+                // sim
+                //  Verificar se o transaction group existe e é do user
+                //  Inserir a transação
+                // não
+                //  Verificar se existe algum transaction group do user que tenha a data da transação entre start data e end date do grupo
+                //  Sim
+                //      Inserir transação com o id do transaction group indicado (Se houver mais do que um adicionamos ao primeiro)
+                //  Não
+                //      Inserir a transação como uma transação normal sem grupo
+                await transactionsContext.Transactions.AddAsync(new Transaction
                 {
                     IdWallet = transaction.IdWallet,
                     IdTransactionGroup = transaction.IdTransactionGroup,
@@ -74,6 +88,7 @@ namespace BudgifyAPI.Transactions.UseCases
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 return new CustomHttpResponse()
                 {
                     message = ex.Message,
@@ -81,19 +96,28 @@ namespace BudgifyAPI.Transactions.UseCases
                 };
             }
         }
-        public static async Task<CustomHttpResponse> GetTrasnactionsIntervalPersistence(Guid uid)
+        public static async Task<CustomHttpResponse> GetTransactionsIntervalPersistence(Guid uid)
         {
             TransactionsContext transactionsContext = new TransactionsContext();
             try
             {
-                string query = "select * from public.transactions " +
-                    "where date = CURRENT_TIMESTAMP - INTERVAL '7' " +
-                    "ORDER BY date DESC";
-                List<Transaction> listTransaction = await transactionsContext.Transactions.FromSqlRaw(query).ToListAsync();
                 IEnumerable<string> wallets = await WalletsServiceClient.GetUserWallets(uid);
                 string[] walletsArray = wallets.ToArray();
-                // string query = "select * from public.transactions WHERE id_wallet in @IdWallet";
-                // List<Transaction> listTransaction = await transactionsContext.Transactions.FromSqlRaw(query, new NpgsqlParameter("IdWallet",walletsArray)).ToListAsync();
+                Guid[] guids = walletsArray.Select(x=>Guid.Parse(x)).ToArray();
+                var parameters = guids
+                    .Select((uuid, index) => new NpgsqlParameter($"@uuid{index}", uuid))
+                    .ToList();
+                var parameterNames = string.Join(", ", parameters.Select(p => p.ParameterName));
+                
+                string query = "select * from public.transactions " +
+                               "where date >= (CURRENT_TIMESTAMP - INTERVAL '7 DAY')::DATE::TIMESTAMP " +
+                               $"AND id_wallet IN ({parameterNames}) " +
+                               "ORDER BY date DESC";
+     
+                
+                List<Transaction> listTransaction = await transactionsContext.Transactions.FromSqlRaw( query,
+                        parameters.ToArray()
+                    ).ToListAsync();
                 return new CustomHttpResponse()
                 {
                     Data = listTransaction,
@@ -103,6 +127,7 @@ namespace BudgifyAPI.Transactions.UseCases
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 return new CustomHttpResponse()
                 {
                     message = ex.Message,
@@ -117,6 +142,28 @@ namespace BudgifyAPI.Transactions.UseCases
             {
                 try
                 {
+                    // Se for o primeiro pedido (cur_index == 0?)
+                    // SIM
+                    //  query normal sliding window
+                    // Não
+                    //  Receber data do primeiro item
+                    //  query onde date <= data do primeiro item
+                    
+                    /* LIMIT 5 | cur_index 0    | -> 21:38
+                     * 1 -> 21:37               | 1 -> 21:37
+                     * 3 -> 21:35               | 2 -> 21:36
+                     * 4 -> 21:34
+                     * 5 -> 21:33
+                     *
+                     * LIMIT 5 | cur_index 6
+                     * 6 -> 21:32
+                     * 7 -> 21:31
+                     * 8 -> 21:30
+                     * 9 -> 21:29
+                     * 10-> 21:28
+                     * 
+                     */
+                    
                     string query = "SELECT tg.*, t.amount " +
                         "FROM public.transactions as t inner join public.transaction_group as tg " +
                         "on t.id_transaction_group = tg.id_transaction_group " +

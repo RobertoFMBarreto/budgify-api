@@ -60,15 +60,14 @@ namespace BudgifyAPI.Wallets.CA.UseCases
             }
         }
 
-        public static async Task<CustomHTTPResponse> GetWallet(WalletEntity walletEntity) {
+        public static async Task<CustomHTTPResponse> GetWallet(Guid uid) {
             WalletsContext context = new WalletsContext();
 
             try {
-                Wallet? wallet = await context.Wallets.Where(x => x.IdWallet == walletEntity.WalletId).FirstOrDefaultAsync();
-                if (wallet != null) {
-                    return new CustomHTTPResponse(200, JsonSerializer.Serialize(wallet));
-                }
-                return new CustomHTTPResponse(400, "Wallet not found");
+                List<Wallet>? wallet = await context.Wallets.Where(x => x.IdUser == uid).ToListAsync();
+
+                return new CustomHTTPResponse(200, JsonSerializer.Serialize(wallet));
+                    
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);
