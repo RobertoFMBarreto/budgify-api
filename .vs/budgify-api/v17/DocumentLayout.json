@@ -28,7 +28,7 @@
               "RelativeDocumentMoniker": "BudgifyAPI.Accounts.CA\\UsesCases\\AccountsPersistence.cs",
               "ToolTip": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Accounts.CA\\UsesCases\\AccountsPersistence.cs",
               "RelativeToolTip": "BudgifyAPI.Accounts.CA\\UsesCases\\AccountsPersistence.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAA3wAsBAABeAAAAAAAAAA==",
+              "ViewState": "AgIAAEwAAAAAAAAAAAAowAsBAABeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-05T16:09:17.275Z",
               "EditorCaption": ""
@@ -43,8 +43,7 @@
               "RelativeToolTip": "BudgifyAPI.Transactions\\Controller\\TransactionsRoute.cs",
               "ViewState": "AgIAACgAAAAAAAAAAAAjwEQAAAC7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-05T12:05:26.764Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-05T12:05:26.764Z"
             }
           ]
         },
