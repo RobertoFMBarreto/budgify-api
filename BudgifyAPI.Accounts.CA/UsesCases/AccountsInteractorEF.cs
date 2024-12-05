@@ -30,11 +30,14 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
         {
             return await DeleteUserFromUserGroupPersistence(userId);
         }
-        public static async Task<CustomHttpResponse> AddManagerToUserGroup(Func<User, Task<CustomHttpResponse>> AddManagerToUserGroupPersistence, User user)
+        public static async Task<CustomHttpResponse> AddManagerToUserGroup(Func<User, Guid, Task<CustomHttpResponse>> AddManagerToUserGroupPersistence, User user, Guid userId)
         {
-            return await AddManagerToUserGroupPersistence(user);
+            return await AddManagerToUserGroupPersistence(user, userId);
         }
-       
+       public static async Task<CustomHttpResponse> DeleteManagerToUserGroup(Func<Guid, Task<CustomHttpResponse>>DeleteManagerToUserGroupPersistence,Guid userId)
+        {
+            return await DeleteManagerToUserGroupPersistence(userId);   
+        }
         public static async Task<CustomHttpResponse> AddUser(Func<CreateUser, Task<CustomHttpResponse>> AddUserPersistence, CreateUser user)
         {
             return await AddUserPersistence(user);

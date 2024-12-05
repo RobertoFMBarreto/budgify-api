@@ -224,18 +224,34 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 };
             }
         }
-        public static async Task<CustomHttpResponse> AddManagerToUserGroupPersistence(User user)
+        public static async Task<CustomHttpResponse> AddManagerToUserGroupPersistence(User user, Guid userId)
         {
-            //primeiro adicionar ao grupo e depois tornar manager - FEITO - REVER
             AccountsContext accountsContext = new AccountsContext();
             try
             {
-                var userExist = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == user.IdUser);
-                if (userExist == null)
+                var existGroup = await accountsContext.UserGroups.FirstOrDefaultAsync(x => x.IdUserGroup == user.IdUserGroup);
+                if (existGroup == null)
                 {
                     return new CustomHttpResponse()
                     {
                         message = "User does not exist",
+                        status = 400
+                    };
+                }
+                var userExist = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == userId);
+                if (userExist == null)
+                {
+                    return new CustomHttpResponse()
+                    {
+                        message = "User group does not exist",
+                        status = 400
+                    };
+                }
+                if (userExist.IdUserGroup != null)
+                {
+                    return new CustomHttpResponse()
+                    {
+                        message = "User is already in a user group",
                         status = 400
                     };
                 }
@@ -255,6 +271,48 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                     message = "Manager added successfully",
                     status = 200
                 }; 
+            }
+            catch (Exception ex)
+            {
+                return new CustomHttpResponse()
+                {
+                    message = ex.Message,
+                    status = 500
+                };
+            }
+        }
+        public static async Task<CustomHttpResponse> DeleteManagerToUserGroupPersistence(Guid userId)
+        {
+            AccountsContext accountsContext = new AccountsContext();
+            try
+            {
+                var userExist = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == userId);
+                if (userExist == null)
+                    return new CustomHttpResponse()
+                    {
+                        message = "Manager does not exist",
+                        status = 400
+                    };
+                if (userExist.IsManager == true)
+                {
+                    string query = "update public.user " +
+                    "set id_user_group = null " +
+                    "where id_user = @id_user ";
+                    var result = accountsContext.Database.ExecuteSqlRawAsync(query, new NpgsqlParameter("@id_user", userId));
+                    await accountsContext.SaveChangesAsync();
+                    return new CustomHttpResponse()
+                    {
+                        message = "Manager removed successfully",
+                        status = 200
+                    };
+
+                }
+                return new CustomHttpResponse()
+                {
+                    message = "Occourred an error",
+                    status = 400
+                };
+
             }
             catch (Exception ex)
             {
