@@ -1,4 +1,6 @@
-﻿using BudgifyAPI.Transactions.Entities;
+﻿using System.Text;
+using BudgifyAPI.Auth.CA.Entities;
+using BudgifyAPI.Transactions.Entities;
 using BudgifyAPI.Transactions.Entities.Request;
 using BudgifyAPI.Transactions.Framework.EntityFramework.Models;
 using BudgifyAPI.Transactions.UseCases;
@@ -10,8 +12,7 @@ namespace BudgifyAPI.Transactions.Controller
     {
         public static WebApplication SetRoutes(WebApplication application, string baseRoute)
         {
-            application.MapPost("{baseRoute}/transaction", async ([FromBody] CreateTransaction transaction) =>
-            {
+            application.MapPost($"{baseRoute}/", async ([FromBody] CreateTransaction transaction) => {
                 try
                 {
                     CustomHttpResponse resp = await TransactionsInteractorEF.AddTransaction(TransactionsPersistence.AddTransactionPersistence, transaction);
@@ -23,11 +24,27 @@ namespace BudgifyAPI.Transactions.Controller
                     throw;
                 }
             });
-            application.MapGet($"{baseRoute}/transaction", async () =>
+            application.MapGet($"{baseRoute}/", async (HttpRequest req) =>
             {
                 try
                 {
-                    CustomHttpResponse resp = await TransactionsInteractorEF.GetTrasnactionsInterval(TransactionsPersistence.GetTrasnactionsIntervalPersistence);
+                    var received_uid  =req.Headers["X-User-Id"];
+                    Console.WriteLine($"Received uid: {received_uid}");
+                    if (string.IsNullOrEmpty(received_uid))
+                    {
+                        return new CustomHttpResponse()
+                        {
+                            status = 400,
+                            message = "Bad Request",
+                        };
+                
+                    }
+                    
+                    Console.WriteLine($"Received uid: {Encoding.UTF8.GetString(Convert.FromBase64String(received_uid))}");
+                    var uid = CustomEncryptor.DecryptString(
+                        Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                    Console.WriteLine($"uid: {uid}");
+                    CustomHttpResponse resp = await TransactionsInteractorEF.GetTransactrions(TransactionsPersistence.GetTransactionsPersistence, Guid.Parse(uid));
                     return resp;
                 }
                 catch (Exception ex)
@@ -36,8 +53,9 @@ namespace BudgifyAPI.Transactions.Controller
                     throw;
                 }
             });
-            application.MapGet($"{baseRoute}/transaction/{{limite}}/{{curindex}}", async (int limite, int cur_index, [FromBody] TransactionGroup transactionGroup) =>
+            application.MapGet($"{baseRoute}/{{startIndex}}/{{amount}}", async ([FromBody] TransactionGroup transactionGroup) =>
             {
+                //!TODO: Mudar para post para receber a referencia temporal
                 try
                 {
                     CustomHttpResponse resp = await TransactionsInteractorEF.GetTransactionSlidingWindow(TransactionsPersistence.GetTransactionSlidingWindowPersistence, transactionGroup);
@@ -49,11 +67,12 @@ namespace BudgifyAPI.Transactions.Controller
                     throw;
                 }
             });
-            application.MapGet($"{baseRoute}/transaction", async ([FromBody] CreateTransaction transaction) =>
+            application.MapGet($"{baseRoute}/range", async ([FromBody] CreateTransaction transaction) =>
             {
+                //!TODO: Mudar para post para receber o range
                 try
                 {
-                    CustomHttpResponse resp = await TransactionsInteractorEF.GetTransactionNoSlidingWindow(TransactionsPersistence.GetTransactionNoSlidingWindowPersistence, transaction);
+                    CustomHttpResponse resp = await TransactionsInteractorEF.GetTrasnactionsInterval(TransactionsPersistence.GetTrasnactionsIntervalPersistence, transaction);
                     return resp;
                 }
                 catch (Exception ex)
@@ -62,11 +81,11 @@ namespace BudgifyAPI.Transactions.Controller
                     throw;
                 }
             });
-            application.MapPut($"{baseRoute}/transaction/{{transactionId}}/{{walletId}}", async (Guid transactionId, Guid walletId, [FromBody] CreateTransaction transaction) =>
+            application.MapPut($"{baseRoute}/transaction/{{transactionId}}", async (Guid transactionId) =>
             {
                 try
                 {
-                    CustomHttpResponse resp = await TransactionsInteractorEF.UpdateTrasnactions(TransactionsPersistence.UpdateTrasnactionsPersistence, transactionId, walletId, transaction);
+                    CustomHttpResponse resp = await TransactionsInteractorEF.UpdateTrasnactions(TransactionsPersistence.UpdateTrasnactionsPersistence, transactionId);
                     return resp;
                 }
                 catch (Exception ex)
@@ -75,11 +94,11 @@ namespace BudgifyAPI.Transactions.Controller
                     throw;
                 }
             });
-            application.MapDelete($"{baseRoute}/transaction/{{transactionId}}", async (Guid transactionId, Guid walletId) =>
+            application.MapDelete($"{baseRoute}/transaction/{{transactionId}}", async (Guid transactionId) =>
             {
                 try
                 {
-                    CustomHttpResponse resp = await TransactionsInteractorEF.DeleteTrasnactions(TransactionsPersistence.DeleteTrasnactionsPersistence, transactionId, walletId);
+                    CustomHttpResponse resp = await TransactionsInteractorEF.DeleteTrasnactions(TransactionsPersistence.DeleteTrasnactionsPersistence, transactionId);
                     return resp;
                 }
                 catch (Exception ex)
@@ -101,8 +120,7 @@ namespace BudgifyAPI.Transactions.Controller
                     throw;
                 }
             });
-            application.MapPost($"{baseRoute}/categories", async ([FromBody] CreateCategories categories) =>
-            {
+            application.MapPost($"{baseRoute}/categories", async ([FromBody] CreateCategories categories)=> {
                 try
                 {
                     CustomHttpResponse resp = await TransactionsInteractorEF.AddCategories(TransactionsPersistence.AddCategoriesPersistence, categories);
@@ -131,8 +149,8 @@ namespace BudgifyAPI.Transactions.Controller
             {
                 try
                 {
-                    CustomHttpResponse resp = await TransactionsInteractorEF.DeleteCategory(TransactionsPersistence.DeleteCategoryPersistence, categoryId);
-                    return resp;
+                    CustomHttpResponse resp = await TransactionsInteractorEF.DeleteCategory(TransactionsPersistence.DeleteCategoryPersistence, categoryId); 
+                    return resp; 
                 }
                 catch (Exception ex)
                 {
@@ -140,8 +158,7 @@ namespace BudgifyAPI.Transactions.Controller
                     throw;
                 }
             });
-            application.MapPost($"{baseRoute}/subcategories", async ([FromBody] CreateSubcategory subcategories) =>
-            {
+            application.MapPost($"{baseRoute}/subcategories", async ([FromBody] CreateSubcategory subcategories) => {
                 try
                 {
                     CustomHttpResponse resp = await TransactionsInteractorEF.AddSubcategories(TransactionsPersistence.AddSubcategoriesPersistence, subcategories);
@@ -205,7 +222,7 @@ namespace BudgifyAPI.Transactions.Controller
                     throw;
                 }
             });
-            application.MapDelete($"{baseRoute}/reocurring/{{reocurringId}}", async (Guid reocurringId) =>
+            application.MapDelete($"{baseRoute}/reocurring/{{reocurringId}}", async ( Guid reocurringId) =>
             {
                 try
                 {

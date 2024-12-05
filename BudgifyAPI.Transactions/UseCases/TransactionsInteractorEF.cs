@@ -10,25 +10,25 @@ namespace BudgifyAPI.Transactions.UseCases
         {
             return await AddTransactionPersistence(transaction);
         }
-        public static async Task<CustomHttpResponse> GetTrasnactionsInterval(Func<Task<CustomHttpResponse>> GetTrasnactionsIntervalPersistence)
+        public static async Task<CustomHttpResponse> GetTransactrions(Func<Guid,Task<CustomHttpResponse>> GetTransactrionsPersistence, Guid uid)
         {
-            return await GetTrasnactionsIntervalPersistence();
+            return await GetTransactrionsPersistence(uid);
         }
-        public static async Task<CustomHttpResponse> GetTransactionSlidingWindow(Func<TransactionGroup, int, int, Task<CustomHttpResponse>> GetTransactionSlidingWindowPersistence, TransactionGroup transactionGroup, int limite, int cur_index)
+        public static async Task<CustomHttpResponse> GetTransactionSlidingWindow(Func<TransactionGroup, Task<CustomHttpResponse>> GetTransactionSlidingWindowPersistence, TransactionGroup transactionGroup)
         {
-            return await GetTransactionSlidingWindowPersistence(transactionGroup, limite, cur_index);
+            return await GetTransactionSlidingWindowPersistence(transactionGroup);
         }
-        public static async Task<CustomHttpResponse> GetTransactionNoSlidingWindow(Func<CreateTransaction, Task<CustomHttpResponse>> GetTransactionNoSlidingWindowPersistence, CreateTransaction transaction)
+        public static async Task<CustomHttpResponse> GetTrasnactionsInterval(Func<CreateTransaction, Task<CustomHttpResponse>> GetTrasnactionsIntervalPersistence, CreateTransaction transaction)
         {
-            return await GetTransactionNoSlidingWindowPersistence(transaction);
+            return await GetTrasnactionsIntervalPersistence(transaction);
         }
-        public static async Task<CustomHttpResponse> UpdateTrasnactions(Func<Guid, Guid, CreateTransaction, Task<CustomHttpResponse>> UpdateTrasnactionsPersistence, Guid transactionId, Guid walletId, CreateTransaction transaction)
+        public static async Task<CustomHttpResponse> UpdateTrasnactions(Func<Guid, Task<CustomHttpResponse>> UpdateTrasnactionsPersistence, Guid transactionId)
         {
-            return await UpdateTrasnactionsPersistence(transactionId, walletId, transaction);
+            return await UpdateTrasnactionsPersistence(transactionId);
         }
-        public static async Task<CustomHttpResponse> DeleteTrasnactions(Func<Guid, Guid, Task<CustomHttpResponse>> DeleteTrasnactionsPersistence, Guid transactionId, Guid walletId)
+        public static async Task<CustomHttpResponse> DeleteTrasnactions(Func<Guid, Task<CustomHttpResponse>> DeleteTrasnactionsPersistence, Guid transactionId)
         {
-            return await DeleteTrasnactionsPersistence(transactionId, walletId);
+            return await DeleteTrasnactionsPersistence(transactionId);
         }
         public static async Task<CustomHttpResponse> GetCategories(Func<Task<CustomHttpResponse>> GetCategoriesPersistence)
         {
@@ -38,7 +38,7 @@ namespace BudgifyAPI.Transactions.UseCases
         {
             return await AddCategoriesPersistence(categories);
         }
-        public static async Task<CustomHttpResponse> UpdateCategories(Func<Guid, RequestName, Task<CustomHttpResponse>> UpdateCategoriesPersistence, Guid categoryId, RequestName name)
+        public static async Task<CustomHttpResponse> UpdateCategories(Func<Guid , RequestName, Task<CustomHttpResponse>> UpdateCategoriesPersistence, Guid categoryId, RequestName name)
         {
             return await UpdateCategoriesPersistence(categoryId, name);
         }
@@ -46,7 +46,7 @@ namespace BudgifyAPI.Transactions.UseCases
         {
             return await DeleteCategoryPersistence(categoryId);
         }
-        public static async Task<CustomHttpResponse> AddSubcategories(Func<CreateSubcategory, Task<CustomHttpResponse>> AddSubcategoriesPersistence, CreateSubcategory subcategory)
+        public static async Task<CustomHttpResponse> AddSubcategories (Func<CreateSubcategory, Task<CustomHttpResponse>> AddSubcategoriesPersistence, CreateSubcategory subcategory)
         {
             return await AddSubcategoriesPersistence(subcategory);
         }
@@ -59,7 +59,7 @@ namespace BudgifyAPI.Transactions.UseCases
             return await DeleteSubcategoryPersistence(subcategoryId);
         }
 
-        public static async Task<CustomHttpResponse> AddReocurring(Func<CreateReocurring, Task<CustomHttpResponse>> AddReocurringPersistence, CreateReocurring reocurring)
+        public static async Task<CustomHttpResponse> AddReocurring(Func<CreateReocurring,Task<CustomHttpResponse>> AddReocurringPersistence, CreateReocurring reocurring)
         {
             return await AddReocurringPersistence(reocurring);
         }

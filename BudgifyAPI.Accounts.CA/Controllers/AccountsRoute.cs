@@ -110,11 +110,11 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
-            application.MapPost($"{baseRoute}/manager-group", async ([FromBody] User user) =>
+            application.MapPost($"{baseRoute}/manager-group/{{userId}}", async (Guid userId, [FromBody] User user) =>
             {
                 try
                 {
-                    CustomHttpResponse resp = await AccountsInteractorEF.AddManagerToUserGroup(AccountsPersistence.AddManagerToUserGroupPersistence, user);
+                    CustomHttpResponse resp = await AccountsInteractorEF.AddManagerToUserGroup(AccountsPersistence.AddManagerToUserGroupPersistence, user, userId);
                     return resp;
                 }
                 catch (Exception ex)
@@ -123,7 +123,19 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
-            
+            application.MapDelete($"{baseRoute}/manager-group{{userId}}", async (Guid userId) =>
+            {
+                try
+                {
+                    CustomHttpResponse resp = await AccountsInteractorEF.DeleteManagerToUserGroup(AccountsPersistence.DeleteManagerToUserGroupPersistence, userId);
+                    return resp;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    throw;
+                }
+            });
             application.MapPost($"{baseRoute}/user", async ([FromBody] CreateUser user) =>
             {
                 try

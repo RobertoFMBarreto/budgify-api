@@ -19,19 +19,23 @@ public partial class WalletsContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Server=127.0.0.1;Port=5432;UserId=postgres;Password=123;Database=wallets");
+        => optionsBuilder.UseNpgsql("Server=127.0.0.1;Port=42765;UserId=postgres;Password=budgify;Database=Wallets");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasPostgresExtension("uuid-ossp");
+
         modelBuilder.Entity<Wallet>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("wallet");
+            entity.HasKey(e => e.IdWallet).HasName("pk_wallets");
 
+            entity.ToTable("wallet");
+
+            entity.Property(e => e.IdWallet)
+                .ValueGeneratedNever()
+                .HasColumnName("id_wallet");
             entity.Property(e => e.AgreementDays).HasColumnName("agreement_days");
             entity.Property(e => e.IdUser).HasColumnName("id_user");
-            entity.Property(e => e.IdWallet).HasColumnName("id_wallet");
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .HasColumnName("name");

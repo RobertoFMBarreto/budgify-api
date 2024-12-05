@@ -7,6 +7,14 @@
       "RelativeMoniker": "D:0:0:{339DDF44-EFFB-45A7-85C3-7FA94C06132F}|BudgifyAPI.Accounts.CA\\BudgifyAPI.Accounts.CA.csproj|solutionrelative:budgifyapi.accounts.ca\\usescases\\accountspersistence.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{339DDF44-EFFB-45A7-85C3-7FA94C06132F}|BudgifyAPI.Accounts.CA\\BudgifyAPI.Accounts.CA.csproj|c:\\users\\filipemorais\\documents\\mei\\budgify-api\\budgifyapi.accounts.ca\\controllers\\accountsroute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339DDF44-EFFB-45A7-85C3-7FA94C06132F}|BudgifyAPI.Accounts.CA\\BudgifyAPI.Accounts.CA.csproj|solutionrelative:budgifyapi.accounts.ca\\controllers\\accountsroute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{339DDF44-EFFB-45A7-85C3-7FA94C06132F}|BudgifyAPI.Accounts.CA\\BudgifyAPI.Accounts.CA.csproj|c:\\users\\filipemorais\\documents\\mei\\budgify-api\\budgifyapi.accounts.ca\\usescases\\accountsinteractoref.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{339DDF44-EFFB-45A7-85C3-7FA94C06132F}|BudgifyAPI.Accounts.CA\\BudgifyAPI.Accounts.CA.csproj|solutionrelative:budgifyapi.accounts.ca\\usescases\\accountsinteractoref.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{C56720F3-987C-4771-B477-D800C7E56525}|BudgifyAPI.Transactions\\BudgifyAPI.Transactions.csproj|c:\\users\\filipemorais\\documents\\mei\\budgify-api\\budgifyapi.transactions\\controller\\transactionsroute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C56720F3-987C-4771-B477-D800C7E56525}|BudgifyAPI.Transactions\\BudgifyAPI.Transactions.csproj|solutionrelative:budgifyapi.transactions\\controller\\transactionsroute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -18,8 +26,34 @@
       "DocumentGroups": [
         {
           "DockedHeight": 447,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AccountsRoute.cs",
+              "DocumentMoniker": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Accounts.CA\\Controllers\\AccountsRoute.cs",
+              "RelativeDocumentMoniker": "BudgifyAPI.Accounts.CA\\Controllers\\AccountsRoute.cs",
+              "ToolTip": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Accounts.CA\\Controllers\\AccountsRoute.cs",
+              "RelativeToolTip": "BudgifyAPI.Accounts.CA\\Controllers\\AccountsRoute.cs",
+              "ViewState": "AgIAAGcAAAAAAAAAAAAowHkAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T17:14:49.851Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AccountsInteractorEF.cs",
+              "DocumentMoniker": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Accounts.CA\\UsesCases\\AccountsInteractorEF.cs",
+              "RelativeDocumentMoniker": "BudgifyAPI.Accounts.CA\\UsesCases\\AccountsInteractorEF.cs",
+              "ToolTip": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Accounts.CA\\UsesCases\\AccountsInteractorEF.cs",
+              "RelativeToolTip": "BudgifyAPI.Accounts.CA\\UsesCases\\AccountsInteractorEF.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAcwCIAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-05T17:13:30.145Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -28,14 +62,14 @@
               "RelativeDocumentMoniker": "BudgifyAPI.Accounts.CA\\UsesCases\\AccountsPersistence.cs",
               "ToolTip": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Accounts.CA\\UsesCases\\AccountsPersistence.cs",
               "RelativeToolTip": "BudgifyAPI.Accounts.CA\\UsesCases\\AccountsPersistence.cs",
-              "ViewState": "AgIAADIBAAAAAAAAAAAQwBUBAAA1AAAAAAAAAA==",
+              "ViewState": "AgIAAOMAAAAAAAAAAAAowBoCAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-05T16:09:17.275Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "TransactionsRoute.cs",
               "DocumentMoniker": "C:\\Users\\FilipeMorais\\Documents\\MEI\\budgify-api\\BudgifyAPI.Transactions\\Controller\\TransactionsRoute.cs",
               "RelativeDocumentMoniker": "BudgifyAPI.Transactions\\Controller\\TransactionsRoute.cs",
@@ -43,8 +77,7 @@
               "RelativeToolTip": "BudgifyAPI.Transactions\\Controller\\TransactionsRoute.cs",
               "ViewState": "AgIAACgAAAAAAAAAAAAjwEQAAAC7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-05T12:05:26.764Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-05T12:05:26.764Z"
             }
           ]
         },
