@@ -19,10 +19,13 @@ public class AddUserInfoHeaderHandler : DelegatingHandler
         if (user.Identity.IsAuthenticated)
         {
             var userId = user.FindFirst(ClaimTypes.Name)?.Value;
+            Console.WriteLine($"userId: {userId}");
             if (userId != null)
             {
                 string enc = CustomEncryptor.EncryptString(user.Identity.Name);
                 request.Headers.Add("X-User-Id", Convert.ToBase64String(Encoding.UTF8.GetBytes(enc)));
+                Console.WriteLine(request.Headers.Contains("X-User-Id"));
+               
             }
         }
 

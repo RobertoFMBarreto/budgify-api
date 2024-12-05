@@ -25,7 +25,9 @@ namespace BudgifyAPI.Wallets.CA.UseCases
                 }
                 else {
                     await context.Wallets.AddAsync(new Wallet() {
+                        IdWallet = Guid.NewGuid(),
                         Name = walletEntity.WalletName!,
+                        IdUser =walletEntity.UserId
                         
                     });
                     await context.SaveChangesAsync();
@@ -73,10 +75,5 @@ namespace BudgifyAPI.Wallets.CA.UseCases
                 return new CustomHTTPResponse(500, ex.Message);
             }
         }
-
-
     }
-
-
-
 }

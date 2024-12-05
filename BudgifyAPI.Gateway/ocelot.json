@@ -64,7 +64,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5066
+          "Port": 7131
         }
       ]
     },{
@@ -108,7 +108,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5066
+          "Port": 5082
         }
       ]
     }
