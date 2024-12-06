@@ -19,7 +19,7 @@ public partial class Reocurring
 
     public int? DayOfWeek { get; set; }
 
-    public DateOnly StartDate { get; set; }
+    public DateTime StartDate { get; set; }
 
     public bool IsYearly { get; set; }
 
@@ -28,4 +28,10 @@ public partial class Reocurring
     public bool IsWeekly { get; set; }
 
     public bool IsActive { get; set; }
+
+    public virtual Category? IdCategoryNavigation { get; set; }
+
+    public virtual Subcategory? IdSubcategoryNavigation { get; set; }
+
+    public virtual ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
 }

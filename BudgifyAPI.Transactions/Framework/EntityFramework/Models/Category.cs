@@ -10,4 +10,10 @@ public partial class Category
     public string Name { get; set; } = null!;
 
     public Guid? IdUser { get; set; }
+
+    public virtual ICollection<Reocurring> Reocurrings { get; set; } = new List<Reocurring>();
+
+    public virtual ICollection<Subcategory> Subcategories { get; set; } = new List<Subcategory>();
+
+    public virtual ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
 }

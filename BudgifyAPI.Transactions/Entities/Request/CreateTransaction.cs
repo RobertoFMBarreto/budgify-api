@@ -8,7 +8,7 @@
 
         public Guid? IdSubcategory { get; set; }
 
-        public Guid? IdTransactionGroup { get; set; }
+        public Guid? IdTransactionGroup { get; set; } = null!;
 
         public Guid? IdReocurring { get; set; }
 

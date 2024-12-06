@@ -1,0 +1,7 @@
+SELECT tg  
+FROM public.transaction_group as tg  
+INNER JOIN public.transactions as t  ON t.id_transaction_group = tg.id_transaction_group  
+WHERE tg.id_user = @IdUser  
+AND t.date BETWEEN @StartDate AND @EndDate  
+Group BY tg  
+LIMIT @Limite OFFSET @CurIndex;

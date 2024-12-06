@@ -4,7 +4,5 @@
     {
         public string Name { get; set; } = null!;
 
-        public Guid? IdUser { get; set; }
-
     }
 }

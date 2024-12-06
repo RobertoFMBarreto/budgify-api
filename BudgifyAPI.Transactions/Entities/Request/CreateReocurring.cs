@@ -14,7 +14,7 @@
 
         public int? DayOfWeek { get; set; }
 
-        public DateOnly StartDate { get; set; }
+        public DateTime StartDate { get; set; }
 
         public bool IsYearly { get; set; }
 

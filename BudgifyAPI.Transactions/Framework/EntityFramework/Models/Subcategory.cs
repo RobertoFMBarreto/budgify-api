@@ -12,4 +12,10 @@ public partial class Subcategory
     public string Name { get; set; } = null!;
 
     public Guid? IdUser { get; set; }
+
+    public virtual Category IdCategoryNavigation { get; set; } = null!;
+
+    public virtual ICollection<Reocurring> Reocurrings { get; set; } = new List<Reocurring>();
+
+    public virtual ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
 }

@@ -6,6 +6,7 @@ namespace BudgifyAPI.Transactions.Framework.EntityFramework.Models;
 public partial class Transaction
 {
     public Guid IdTransaction { get; set; }
+
     public Guid IdWallet { get; set; }
 
     public Guid? IdCategory { get; set; }
@@ -26,5 +27,13 @@ public partial class Transaction
 
     public float? Latitude { get; set; }
 
-    public float? Longitue { get; set; }
+    public float? Longitude { get; set; }
+
+    public virtual Category? IdCategoryNavigation { get; set; }
+
+    public virtual Reocurring? IdReocurringNavigation { get; set; }
+
+    public virtual Subcategory? IdSubcategoryNavigation { get; set; }
+
+    public virtual TransactionGroup? IdTransactionGroupNavigation { get; set; }
 }
