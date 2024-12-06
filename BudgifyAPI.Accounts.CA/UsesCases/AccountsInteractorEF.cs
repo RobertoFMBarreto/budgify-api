@@ -22,6 +22,10 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
         {
             return await GetGroupsByIdPersistence(userGroupId);
         }
+        public static async Task<CustomHttpResponse> GetUserGroup(Func<Task<CustomHttpResponse>> GetUserGroupPersistence)
+        {
+            return await GetUserGroupPersistence();
+        }
         public static async Task<CustomHttpResponse> AddUserToUserGroup(Func<CreateUser, Guid, Task<CustomHttpResponse>> AddUserToUserGroupPersistence, CreateUser user, Guid userId)
         {
             return await AddUserToUserGroupPersistence(user, userId);

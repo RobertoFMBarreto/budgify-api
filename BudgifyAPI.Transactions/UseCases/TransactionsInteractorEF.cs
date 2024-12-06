@@ -78,6 +78,11 @@ namespace BudgifyAPI.Transactions.UseCases
             return await DeleteCategoryPersistence(categoryId, userId);
         }
 
+        public static async Task<CustomHttpResponse> GetSubcategories(
+            Func<Guid, Task<CustomHttpResponse>> GetSubcategoriesPersistence, Guid userId)
+        {
+            return await GetSubcategoriesPersistence(userId);
+        }
         public static async Task<CustomHttpResponse> AddSubcategories(
             Func<CreateSubcategory, Guid, Task<CustomHttpResponse>> AddSubcategoriesPersistence,
             CreateSubcategory subcategory, Guid userId)
@@ -97,7 +102,11 @@ namespace BudgifyAPI.Transactions.UseCases
         {
             return await DeleteSubcategoryPersistence(subcategoryId, userId);
         }
-
+        public static async Task<CustomHttpResponse> GetReocurring(
+            Func <Guid, Task<CustomHttpResponse>> GetReocurringPersistence, Guid uiserId)
+        {
+            return await GetReocurringPersistence(uiserId);
+        }
         public static async Task<CustomHttpResponse> AddReocurring(
             Func<CreateReocurring, Guid, Task<CustomHttpResponse>> AddReocurringPersistence,
             CreateReocurring reocurring, Guid userId)
@@ -117,7 +126,11 @@ namespace BudgifyAPI.Transactions.UseCases
         {
             return await DeleteReocurringPersistence(reocurringId, userId);
         }
-
+        public static async Task<CustomHttpResponse> GetTransactionGroup(
+            Func<Guid, Task<CustomHttpResponse>>GetTransactionGroupPersistence, Guid userId)
+        {
+            return await GetTransactionGroupPersistence(userId);    
+        }
         public static async Task<CustomHttpResponse> AddTransactionGroup(
             Func<CreateTransactionGroup, Guid, Task<CustomHttpResponse>> AddTransactionGroupPersistence,
             CreateTransactionGroup transactionGroup, Guid userId)

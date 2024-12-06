@@ -72,7 +72,7 @@ namespace BudgifyAPI.Transactions.Controller
             application.MapPost($"{baseRoute}/{{limite}}/{{curindex}}",
                 async (HttpRequest req, int limite, int curindex, [FromBody] DateRequest date) =>
                 {
-                    //!TODO: Mudar para post para receber a referencia temporal
+                    
                     try
                     {
                         var received_uid = req.Headers["X-User-Id"];
@@ -300,6 +300,35 @@ namespace BudgifyAPI.Transactions.Controller
                     throw;
                 }
             });
+            application.MapGet($"{baseRoute}/subcategories", async (HttpRequest req) =>
+            {
+                try
+                {
+                    var received_uid = req.Headers["X-User-Id"];
+                    Console.WriteLine($"Received uid: {received_uid}");
+                    if (string.IsNullOrEmpty(received_uid))
+                    {
+                        return new CustomHttpResponse()
+                        {
+                            status = 400,
+                            message = "Bad Request",
+                        };
+                    }
+
+                    var uid = CustomEncryptor.DecryptString(
+                        Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+
+                    CustomHttpResponse resp =
+                        await TransactionsInteractorEF.GetSubcategories(TransactionsPersistence.GetSubcategoriesPersistence,
+                            Guid.Parse(uid));
+                    return resp;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
+            });
             application.MapPost($"{baseRoute}/subcategories",
                 async (HttpRequest req, [FromBody] CreateSubcategory subcategories) =>
                 {
@@ -389,6 +418,35 @@ namespace BudgifyAPI.Transactions.Controller
                         throw;
                     }
                 });
+            application.MapGet($"{baseRoute}/reocurring", async (HttpRequest req) =>
+            {
+                try
+                {
+                    var received_uid = req.Headers["X-User-Id"];
+                    Console.WriteLine($"Received uid: {received_uid}");
+                    if (string.IsNullOrEmpty(received_uid))
+                    {
+                        return new CustomHttpResponse()
+                        {
+                            status = 400,
+                            message = "Bad Request",
+                        };
+                    }
+
+                    var uid = CustomEncryptor.DecryptString(
+                        Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+
+                    CustomHttpResponse resp =
+                        await TransactionsInteractorEF.GetReocurring(TransactionsPersistence.GetReocurringPersistence,
+                            Guid.Parse(uid));
+                    return resp;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
+            });
             application.MapPost($"{baseRoute}/reocurring",
                 async (HttpRequest req, [FromBody] CreateReocurring reocurring) =>
                 {
@@ -478,6 +536,35 @@ namespace BudgifyAPI.Transactions.Controller
                         throw;
                     }
                 });
+            application.MapGet($"{baseRoute}/group", async (HttpRequest req) =>
+            {
+                try
+                {
+                    var received_uid = req.Headers["X-User-Id"];
+                    Console.WriteLine($"Received uid: {received_uid}");
+                    if (string.IsNullOrEmpty(received_uid))
+                    {
+                        return new CustomHttpResponse()
+                        {
+                            status = 400,
+                            message = "Bad Request",
+                        };
+                    }
+
+                    var uid = CustomEncryptor.DecryptString(
+                        Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+
+                    CustomHttpResponse resp =
+                        await TransactionsInteractorEF.GetTransactionGroup(TransactionsPersistence.GetTransactionGroupPersistence,
+                            Guid.Parse(uid));
+                    return resp;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
+            });
             application.MapPost($"{baseRoute}/transaction-group",
                 async (HttpRequest req, [FromBody] CreateTransactionGroup transactionGroup) =>
                 {
@@ -507,7 +594,7 @@ namespace BudgifyAPI.Transactions.Controller
                         throw;
                     }
                 });
-            application.MapPut($"{baseRoute}/reocurring/{{transactionGroupId}}",
+            application.MapPut($"{baseRoute}/transaction-group/{{transactionGroupId}}",
                 async (HttpRequest req, Guid transactionGroupId, [FromBody] CreateTransactionGroup transactionGroup) =>
                 {
                     try
@@ -537,7 +624,7 @@ namespace BudgifyAPI.Transactions.Controller
                         throw;
                     }
                 });
-            application.MapDelete($"{baseRoute}/reocurring/{{transactionGroupId}}",
+            application.MapDelete($"{baseRoute}/transaction-group/{{transactionGroupId}}",
                 async (HttpRequest req, Guid transactionGroupId) =>
                 {
                     try

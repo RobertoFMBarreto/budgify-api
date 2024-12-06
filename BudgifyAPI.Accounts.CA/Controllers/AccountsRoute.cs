@@ -25,8 +25,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                 }
 
             });
-
-            application.MapPut($"{baseRoute}/group/{{userGroupId}}", async (Guid userGroupId, [FromBody] RequestName name) => {
+            application.MapPut($"{baseRoute}/group/manager/{{userGroupId}}", async (Guid userGroupId, [FromBody] RequestName name) => {
                 try
                 {
                     CustomHttpResponse resp = await AccountsInteractorEF.UpdateUserGroup(AccountsPersistence.UpdateUserGroupPersistence, userGroupId, name);
@@ -37,7 +36,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
-            application.MapDelete($"{baseRoute}/group/{{userGroupId}}", async (Guid userGroupId) => {
+            application.MapDelete($"{baseRoute}/group/manager/{{userGroupId}}", async (Guid userGroupId) => {
                 try
                 {
                     CustomHttpResponse resp = await AccountsInteractorEF.DeleteUserGroup(AccountsPersistence.DeleteUserGroupPersistence, userGroupId);
@@ -49,7 +48,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
-            application.MapGet($"{baseRoute}/group/{{userGroupId}}", async (Guid userGroupId) => {
+            application.MapGet($"{baseRoute}/group/admin/{{userGroupId}}", async (Guid userGroupId) => {
                 try
                 {
                     CustomHttpResponse resp = await AccountsInteractorEF.GetGroupsById(AccountsPersistence.GetGroupsByIdPersistence, userGroupId);
@@ -61,7 +60,19 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
-            application.MapPost($"{baseRoute}/user-group", async (HttpRequest req, [FromBody] CreateUser user) =>
+            application.MapGet($"{baseRoute}/group/admin", async () => {
+                try
+                {
+                    CustomHttpResponse resp = await AccountsInteractorEF.GetUserGroup(AccountsPersistence.GetUserGroupPersistence);
+                    return resp;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    throw;
+                }
+            });
+            application.MapPost($"{baseRoute}/user-group/manager", async (HttpRequest req, [FromBody] CreateUser user) =>
             {
                 
 
@@ -87,7 +98,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
-            application.MapDelete($"{baseRoute}/user-group", async (HttpRequest req) => {
+            application.MapDelete($"{baseRoute}/user-group/manager", async (HttpRequest req) => {
                 try
                 {
                     var received_uid  =req.Headers["X-User-Id"];
@@ -173,7 +184,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
-            application.MapDelete($"{baseRoute}/user", async (HttpRequest req) =>
+            application.MapDelete($"{baseRoute}/user/admin", async (HttpRequest req) =>
             {
                 try
                 {
@@ -197,7 +208,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
-            application.MapPut($"{baseRoute}/user", async (HttpRequest req) =>
+            application.MapPut($"{baseRoute}/user/admin", async (HttpRequest req) =>
             {
                 try
                 {
@@ -221,7 +232,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
-            application.MapGet($"{baseRoute}/user", async () =>
+            application.MapGet($"{baseRoute}/user/admin", async () =>
             {
                 try
                 {
@@ -234,7 +245,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
-            application.MapGet($"{baseRoute}/user/", async (HttpRequest req) =>
+            application.MapGet($"{baseRoute}/user/admin", async (HttpRequest req) =>
             {
                 try
                 {

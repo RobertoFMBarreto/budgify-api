@@ -123,7 +123,39 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                     };
                 }
                 string query = $"select * from public.user_group where id_user_group =@userGroupId";
-                var listaUserGroups = await accountsContext.Database.ExecuteSqlRawAsync(query, new NpgsqlParameter("@userGroupId", userGroupId));
+                List<UserGroup> listaUserGroups = await accountsContext.UserGroups.FromSqlRaw(query, new NpgsqlParameter("@userGroupId", userGroupId)).ToListAsync();
+                return new CustomHttpResponse()
+                {
+                    status = 200,
+                    Data = listaUserGroups,
+
+                };
+            }
+            catch (Exception ex)
+            {
+                return new CustomHttpResponse()
+                {
+                    status = 500,
+                    message = ex.Message
+                };
+            }
+        }
+        public static async Task<CustomHttpResponse> GetUserGroupPersistence()
+        {
+            AccountsContext accountsContext = new AccountsContext();
+            try
+            {
+                //var UserExistGroup = await accountsContext.UserGroups.FirstOrDefaultAsync(x => x.IdUserGroup == userGroupId);
+                //if (UserExistGroup == null)
+                //{
+                //    return new CustomHttpResponse()
+                //    {
+                //        message = "An error occourred",
+                //        status = 400,
+                //    };
+                //}
+                string query = $"select * from public.user_group";
+                List<UserGroup> listaUserGroups = await accountsContext.UserGroups.FromSqlRaw(query).ToListAsync();
                 return new CustomHttpResponse()
                 {
                     status = 200,

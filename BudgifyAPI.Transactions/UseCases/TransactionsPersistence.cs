@@ -10,6 +10,7 @@ using String = System.String;
 using System.Security.Cryptography.X509Certificates;
 using BudgifyAPI.Transactions.Entities.Responses;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Reflection.Metadata.Ecma335;
 
 namespace BudgifyAPI.Transactions.UseCases
 {
@@ -640,6 +641,28 @@ namespace BudgifyAPI.Transactions.UseCases
             }
         }
 
+        public static async Task<CustomHttpResponse> GetSubcategoriesPersistence(Guid userId)
+        {
+            TransactionsContext transactionsContext = new TransactionsContext();
+            try
+            {
+                string query = "select * from public.subcategories WHERE id_user = @IdUser";
+                List<Subcategory> listSubcategory = await transactionsContext.Subcategories.FromSqlRaw(query, new NpgsqlParameter("@IdUser", userId)).ToListAsync();
+                return new CustomHttpResponse()
+                {
+                    Data = listSubcategory,
+                    status = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new CustomHttpResponse()
+                {
+                    message = ex.Message,
+                    status = 500
+                };
+            }
+        }
         public static async Task<CustomHttpResponse> AddSubcategoriesPersistence(CreateSubcategory subcategory, Guid userId)
         {
             TransactionsContext transactionsContext = new TransactionsContext();
@@ -738,6 +761,28 @@ namespace BudgifyAPI.Transactions.UseCases
             }
         }
 
+        public static async Task<CustomHttpResponse> GetReocurringPersistence(Guid userId)
+        {
+            TransactionsContext transactionsContext = new TransactionsContext();
+            try
+            {
+                string query = "select * from public.reocurrings WHERE id_user = @IdUser";
+                List<Reocurring> listReocurrings = await transactionsContext.Reocurrings.FromSqlRaw(query, new NpgsqlParameter("@IdUser", userId)).ToListAsync();
+                return new CustomHttpResponse()
+                {
+                    Data = listReocurrings,
+                    status = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new CustomHttpResponse()
+                {
+                    message = ex.Message,
+                    status = 500
+                };
+            }
+        }
         public static async Task<CustomHttpResponse> AddReocurringPersistence(CreateReocurring reocurring, Guid userId)
         {
             TransactionsContext transactionsContext = new TransactionsContext();
@@ -926,6 +971,30 @@ namespace BudgifyAPI.Transactions.UseCases
             }
         }
 
+        public static async Task<CustomHttpResponse> GetTransactionGroupPersistence(Guid userId)
+        {
+            TransactionsContext transactionsContext = new TransactionsContext();
+            try
+            {
+                string query = "select * from public.transaction_group where user_id =@IdUser";
+                List<TransactionGroup> listTransaGroup = await transactionsContext.TransactionGroups.FromSqlRaw(query, new NpgsqlParameter("@IdUser", userId)).ToListAsync();
+                return new CustomHttpResponse()
+                {
+                    Data = listTransaGroup,
+                    status = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return new CustomHttpResponse()
+                {
+                    message = ex.Message,
+                    status = 500
+                };
+
+            }
+        }
         public static async Task<CustomHttpResponse> AddTransactionGroupPersistence(
             CreateTransactionGroup transactionGroup, Guid uid)
         {
