@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
+using BudgifyAPI.Transactions.Entities;
 using BudgifyAPI.Wallets.CA.Entities;
 
 namespace BudgifyAPI.Wallets.CA.UseCases
@@ -10,7 +11,7 @@ namespace BudgifyAPI.Wallets.CA.UseCases
     public static class WalletInteractorEF
     {
 
-        public static async Task<CustomHTTPResponse> RegisterWallet(Func<WalletEntity, Task<CustomHTTPResponse>> walletPersistence, Guid userID, string walletName ) {
+        public static async Task<CustomHttpResponse> RegisterWallet(Func<WalletEntity, Task<CustomHttpResponse>> walletPersistence, Guid userID, string walletName ) {
             var wallet = new WalletEntity() {
                 WalletName = walletName,
                 UserId = userID,
@@ -18,7 +19,7 @@ namespace BudgifyAPI.Wallets.CA.UseCases
             return await walletPersistence( wallet );
         }
     
-        public static async Task<CustomHTTPResponse> DeleteWallet(Func<WalletEntity, Task<CustomHTTPResponse>> walletPersistence, Guid userID, Guid walletID ) {
+        public static async Task<CustomHttpResponse> DeleteWallet(Func<WalletEntity, Task<CustomHttpResponse>> walletPersistence, Guid userID, Guid walletID ) {
             var wallet = new WalletEntity() {
                 UserId = userID,
                 WalletId = walletID,
@@ -26,7 +27,7 @@ namespace BudgifyAPI.Wallets.CA.UseCases
             return await walletPersistence( wallet );
         }
     
-        public static async Task<CustomHTTPResponse> GetWallet(Func<Guid, Task<CustomHTTPResponse>> walletPersistence, Guid userID ) {
+        public static async Task<CustomHttpResponse> GetWallet(Func<Guid, Task<CustomHttpResponse>> walletPersistence, Guid userID ) {
             return await walletPersistence( userID );
         }
     
