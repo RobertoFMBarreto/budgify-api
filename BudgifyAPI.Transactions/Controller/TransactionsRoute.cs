@@ -12,11 +12,11 @@ namespace BudgifyAPI.Transactions.Controller
     {
         public static WebApplication SetRoutes(WebApplication application, string baseRoute)
         {
-            application.MapPost($"{baseRoute}/", async ([FromBody] CreateTransaction transaction) =>
+            application.MapPost($"{baseRoute}/{{transactionGropupId}}", async (DateTime date, Guid transactionGropupId, [FromBody] CreateTransaction transaction, TransactionGroup transactionGroup) =>
             {
                 try
                 {
-                    CustomHttpResponse resp = await TransactionsInteractorEF.AddTransaction(TransactionsPersistence.AddTransactionPersistence, transaction);
+                    CustomHttpResponse resp = await TransactionsInteractorEF.AddTransaction(TransactionsPersistence.AddTransactionPersistence,transaction,transactionGroup,date,transactionGropupId);
                     return resp;
                 }
                 catch (Exception ex)
@@ -65,12 +65,12 @@ namespace BudgifyAPI.Transactions.Controller
                     throw;
                 }
             });
-            application.MapGet($"{baseRoute}/range", async ([FromBody] CreateTransaction transaction) =>
+            application.MapGet($"{baseRoute}/range{{walletId}}", async (Guid walletId, [FromBody] CreateTransaction transaction, DateTime date) =>
             {
                 //!TODO: Mudar para post para receber o range
                 try
                 {
-                    CustomHttpResponse resp = await TransactionsInteractorEF.GetTransactionNoSlidingWindow(TransactionsPersistence.GetTransactionNoSlidingWindowPersistence, transaction);
+                    CustomHttpResponse resp = await TransactionsInteractorEF.GetTransactionNoSlidingWindow(TransactionsPersistence.GetTransactionNoSlidingWindowPersistence, transaction, date, walletId);
                     return resp;
                 }
                 catch (Exception ex)
@@ -279,6 +279,19 @@ namespace BudgifyAPI.Transactions.Controller
                 try
                 {
                     CustomHttpResponse resp = await TransactionsInteractorEF.GetTransactionsGroup(TransactionsPersistence.GetTransactionsGroupPersistence);
+                    return resp;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
+            });
+            application.MapGet($"{baseRoute}/transactionGroupStats/{{transactionGroupId}}", async (Guid transactionGroupId) =>
+            {
+                try
+                {
+                    CustomHttpResponse resp = await TransactionsInteractorEF.GetGroupTransactionStats(TransactionsPersistence.GetGroupTransactionStatsPersistence, transactionGroupId);
                     return resp;
                 }
                 catch (Exception ex)

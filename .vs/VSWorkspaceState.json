@@ -3,7 +3,6 @@
     "",
     "\\BudgifyAPI.Accounts.CA",
     "\\BudgifyAPI.Accounts.CA\\Entities",
-    "\\BudgifyAPI.Accounts.CA\\Entities\\Helpers",
     "\\BudgifyAPI.Accounts.CA\\UsesCases",
     "\\BudgifyAPI.Auth.CA"
   ],

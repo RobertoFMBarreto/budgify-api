@@ -6,9 +6,9 @@ namespace BudgifyAPI.Transactions.UseCases
 {
     public class TransactionsInteractorEF
     {
-        public static async Task<CustomHttpResponse> AddTransaction(Func<CreateTransaction, Task<CustomHttpResponse>> AddTransactionPersistence, CreateTransaction transaction)
+        public static async Task<CustomHttpResponse> AddTransaction(Func<CreateTransaction, TransactionGroup, DateTime, Guid, Task<CustomHttpResponse>> AddTransactionPersistence, CreateTransaction transaction, TransactionGroup transactionGroup, DateTime date, Guid transactionGroupId)
         {
-            return await AddTransactionPersistence(transaction);
+            return await AddTransactionPersistence(transaction, transactionGroup, date, transactionGroupId);
         }
         public static async Task<CustomHttpResponse> GetTrasnactionsInterval(Func<Task<CustomHttpResponse>> GetTrasnactionsIntervalPersistence)
         {
@@ -22,9 +22,9 @@ namespace BudgifyAPI.Transactions.UseCases
         {
             return await GetTransactionSlidingWindowPersistence(transactionGroup, limite, cur_index);
         }
-        public static async Task<CustomHttpResponse> GetTransactionNoSlidingWindow(Func<CreateTransaction, Task<CustomHttpResponse>> GetTransactionNoSlidingWindowPersistence, CreateTransaction transaction)
+        public static async Task<CustomHttpResponse> GetTransactionNoSlidingWindow(Func<CreateTransaction, DateTime, Guid, Task<CustomHttpResponse>> GetTransactionNoSlidingWindowPersistence, CreateTransaction transaction, DateTime date, Guid walletId)
         {
-            return await GetTransactionNoSlidingWindowPersistence(transaction);
+            return await GetTransactionNoSlidingWindowPersistence(transaction, date, walletId);
         }
         public static async Task<CustomHttpResponse> UpdateTrasnactions(Func<Guid, Guid, CreateTransaction, Task<CustomHttpResponse>> UpdateTrasnactionsPersistence, Guid transactionId, Guid walletId, CreateTransaction transaction)
         {
@@ -96,7 +96,10 @@ namespace BudgifyAPI.Transactions.UseCases
         {
             return await GetTransactionsGroupPersistence();
         }
-
+        public static async Task<CustomHttpResponse> GetGroupTransactionStats(Func<Guid, Task<CustomHttpResponse>> GetGroupTransactionStatsPersistence, Guid transactionGroupId)
+        {
+            return await GetGroupTransactionStatsPersistence(transactionGroupId);
+        }
 
 
 
