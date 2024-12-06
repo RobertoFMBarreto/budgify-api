@@ -18,7 +18,7 @@ public static class WalletRoute {
         Guid tempUserID = Guid.NewGuid();
     
     
-        app.MapPost($"{baseRoute}/", async (HttpRequest req,[FromBody] RegisterWalletRequest body) => {
+        app.MapPost($"{baseRoute}/", async (HttpRequest req,[FromBody] WalletRequests body) => {
             try {
                 
                 var received_uid  =req.Headers["X-User-Id"];
@@ -78,7 +78,29 @@ public static class WalletRoute {
                 throw;
             }
         });
-        
+        app.MapPut($"{baseRoute}", async (HttpRequest req, [FromBody] EditWalletRequest body) =>
+        {
+            try
+            {
+                var received_uid = req.Headers["X-User-Id"];
+                if (string.IsNullOrEmpty(received_uid))
+                {
+                    return new CustomHttpResponse() { status = 400, message = "Missing token" };
+
+                }
+
+                var uid = CustomEncryptor.DecryptString(
+                    Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                return await WalletInteractorEF.EditWallet(WalletPersistence.EditWallet, body);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        });
+
+
         app.MapGet($"{baseRoute}/gocardless/banks/{{country}}", async (string country) => {
             try {
                 return await GocardlessInteractor.GetBanksInteractor(GocardlessPersistence.GetBanksPersistence,country);

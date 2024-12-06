@@ -1,5 +1,6 @@
 using BudgifyAPI.Transactions.Entities;
 using BudgifyAPI.Wallets.CA.Entities;
+using BudgifyAPI.Wallets.CA.Entities.Requests;
 using BudgifyAPI.Wallets.CA.Framework.EntityFramework.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -67,6 +68,26 @@ namespace BudgifyAPI.Wallets.CA.UseCases
                 Console.WriteLine(ex);
                 return new CustomHttpResponse(){status = 500, message = "Server Error"};
             }
+        }
+
+        public static async Task<CustomHttpResponse> EditWallet(WalletEntity entity) {
+            WalletsContext context = new WalletsContext();
+
+            try {
+                await entity.Validate();
+
+                Wallet? wallet = await context.Wallets.Where(x => x.IdWallet == entity.WalletId).FirstOrDefaultAsync();
+                if (wallet == null) return new CustomHttpResponse() { status = 400, message = "Wallet not found" };
+                wallet.Name = entity.WalletName;
+                wallet.totalValue = entity.totalValue;
+                return new CustomHttpResponse(){status = 200, Data = wallet};
+           
+        }
+            catch (Exception ex) {
+                Console.WriteLine(ex);
+                return new CustomHttpResponse(){status = 500, message = "Server Error"};
+            }
+
         }
     }
 }

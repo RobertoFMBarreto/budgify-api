@@ -1,3 +1,4 @@
+using BudgifyAPI.Wallets.CA.Entities.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,9 @@ namespace BudgifyAPI.Wallets.CA.Entities
 
         public string? Requisition {get; set;}
 
+        public string? agreementDays { get; set; }
+
+        public float totalValue { get; set; }
         public async Task<bool> Validate() {
             if (string.IsNullOrEmpty(WalletName) || WalletName.Contains(";") || WalletName.Contains(")")) {
                 throw new ArgumentException("Invalid name for wallet");
