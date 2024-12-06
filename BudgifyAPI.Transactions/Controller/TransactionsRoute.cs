@@ -287,6 +287,8 @@ namespace BudgifyAPI.Transactions.Controller
                     throw;
                 }
             });
+            
+            
             return application;
         }
     }
