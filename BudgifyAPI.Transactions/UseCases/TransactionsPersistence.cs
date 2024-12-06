@@ -7,54 +7,89 @@ using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using String = System.String;
+using System.Security.Cryptography.X509Certificates;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BudgifyAPI.Transactions.UseCases
 {
     public class TransactionsPersistence
     {
-        public static async Task<CustomHttpResponse> AddTransactionPersistence(CreateTransaction transaction)
+        public static async Task<CustomHttpResponse> AddTransactionPersistence(CreateTransaction transaction, TransactionGroup transactionGroup, DateTime date, Guid transactionGropupId)
         {
             TransactionsContext transactionsContext = new TransactionsContext();
             try
             {
+                string query = "SELECT @id_transaction_group " +
+                        "FROM public.transaction_group " +
+                        "WHERE @id_transaction_group = null ";
 
-                //string query = "SELECT tg.@id_transaction_ " +
-                //        "FROM public.transactions as t inner join public.transaction_group as tg " +
-                //        "on t.id_transaction_group = tg.id_transaction_group " +
-                //        "WHERE t.date BETWEEN @tg.start_date AND @tg.end_date ";
+                var verify = await transactionsContext.TransactionGroups.FromSqlRaw(query,
+                        new NpgsqlParameter("@id_transaction_group", transactionGropupId)).ToListAsync();
 
-                //var verify = await transactionsContext.TransactionGroups.FromSqlRaw(query,
-                //        new NpgsqlParameter("@start_date", transactionGroup.StartDate),
-                //        new NpgsqlParameter("@end_date", transactionGroup.EndDate), 
-                //        new NpgsqlParameter("@id_transaction", transactionId)).ToListAsync();
+                if (string.IsNullOrEmpty(query))
+                {
+                    return new CustomHttpResponse()
+                    {
+                        message = "Transaction Group does not exist",
+                        status = 400
+                    };
+                }
+                else
+                {
+                    await transactionsContext.AddAsync(new Transaction
+                    {
+                        IdWallet = transaction.IdWallet,
+                        IdTransactionGroup = transactionGropupId,
+                        IdCategory = transaction.IdCategory,
+                        IdSubcategory = transaction.IdSubcategory,
+                        IdReocurring = transaction.IdReocurring,
+                        Date = transaction.Date,
+                        Description = transaction.Description,
+                        Amount = transaction.Amount,
+                        IsPlanned = transaction.IsPlanned,
+                        Latitude = transaction.Latitude,
+                        Longitue = transaction.Longitue,
+                    });
+                    await transactionsContext.SaveChangesAsync();
+                  
+                }
+                string query2 = " SELECT @id_transaction_group " +
+                    "FROM public.transaction_group " +
+                    "WHERE @date BETWEEN @start_date AND @end_date";
+                    
+                var verify2 = await transactionsContext.TransactionGroups.FromSqlRaw(query,
+                    new NpgsqlParameter("@start_date", transactionGroup.StartDate),
+                    new NpgsqlParameter("@end_date", transactionGroup.EndDate),
+                    new NpgsqlParameter("@id_transaction_group", transactionGropupId),
+                    new NpgsqlParameter("@date", date)).FirstOrDefaultAsync();
 
-                //if (string.IsNullOrEmpty(query))
-                //{
-                //    return new CustomHttpResponse()
-                //    {
-                //        message = "Transaction Group does not exist",
-                //        status = 400
-                //    };
-                //}
-                //else
-                //{
-                //    await transactionsContext.AddAsync(new Transaction
-                //    {
-                //        IdWallet = transaction.IdWallet,
-                //        IdTransactionGroup = transactionGroupId,
-                //        IdCategory = transaction.IdCategory,
-                //        IdSubcategory = transaction.IdSubcategory,
-                //        IdReocurring = transaction.IdReocurring,
-                //        Date = transaction.Date,
-                //        Description = transaction.Description,
-                //        Amount = transaction.Amount,
-                //        IsPlanned = transaction.IsPlanned,
-                //        Latitude = transaction.Latitude,
-                //        Longitue = transaction.Longitue,
-                //    });
-                //}
-                
-                
+                if(string.IsNullOrEmpty(query2))
+                {
+                    return new CustomHttpResponse()
+                    {
+                        message = "Transaction Group does not exist",
+                        status = 400
+                    };
+                }
+                else
+                {
+                    await transactionsContext.AddAsync(new Transaction
+                    {
+                        IdWallet = transaction.IdWallet,
+                        IdTransactionGroup = transactionGropupId,
+                        IdCategory = transaction.IdCategory,
+                        IdSubcategory = transaction.IdSubcategory,
+                        IdReocurring = transaction.IdReocurring,
+                        Date = transaction.Date,
+                        Description = transaction.Description,
+                        Amount = transaction.Amount,
+                        IsPlanned = transaction.IsPlanned,
+                        Latitude = transaction.Latitude,
+                        Longitue = transaction.Longitue,
+
+                    });
+                }
+            
                 // tem tranction group? (idTransactionGroup = null?)
                 // sim
                 //  Verificar se o transaction group existe e é do user
@@ -65,6 +100,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 //      Inserir transação com o id do transaction group indicado (Se houver mais do que um adicionamos ao primeiro)
                 //  Não
                 //      Inserir a transação como uma transação normal sem grupo
+
                 await transactionsContext.Transactions.AddAsync(new Transaction
                 {
                     IdWallet = transaction.IdWallet,
@@ -115,7 +151,7 @@ namespace BudgifyAPI.Transactions.UseCases
                                "ORDER BY date DESC";
      
                 
-                List<Transaction> listTransaction = await transactionsContext.Transactions.FromSqlRaw( query,
+                List<Transaction> listTransaction = await transactionsContext.Transactions.FromSqlRaw(query,
                         parameters.ToArray()
                     ).ToListAsync();
                 return new CustomHttpResponse()
@@ -135,7 +171,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 };
             }
         }
-        public static async Task<CustomHttpResponse> GetTransactionSlidingWindowPersistence(TransactionGroup transactionGroup, int limite, int cur_index)
+        public static async Task<CustomHttpResponse> GetTransactionSlidingWindowPersistence(TransactionGroup transactionGroup, int limite, int cur_index, DateTime? firstItemDate = null)
         {
             TransactionsContext transactionsContext = new TransactionsContext();
             //ver
@@ -164,18 +200,51 @@ namespace BudgifyAPI.Transactions.UseCases
                      * 
                      */
                     
+                   if(cur_index == 0)
+                   {
+                       string query2 = "SELECT tg.*, t.amount " +
+                           "FROM public.transactions as t inner join public.transaction_group as tg " +
+                           "on t.id_transaction_group = tg.id_transaction_group " +
+                           "WHERE t.date BETWEEN @tg.start_date AND @tg.end_date " +
+                           "ORDER BY @t.date ASC " +
+                           "LIMIT @limite OFFSET @cur_index";
+
+                       List<Transaction> listTransactions2 = await transactionsContext.Transactions.FromSqlRaw(query2,
+                           new NpgsqlParameter("@start_date", transactionGroup.StartDate),
+                           new NpgsqlParameter("@end_date", transactionGroup.EndDate),
+                           new NpgsqlParameter("@limite", limite),
+                           new NpgsqlParameter("@cur_index", cur_index)).ToListAsync();
+
+                       return new CustomHttpResponse()
+                       {
+                            Data = listTransactions2,
+                            status = 200
+                       };
+                   }
+                    else if (firstItemDate == null)
+                    {
+                        return new CustomHttpResponse()
+                        {
+                            message = "Date of the first item is required for subsequent requests.",
+                            status = 400
+                        };
+                    }
+
                     string query = "SELECT tg.*, t.amount " +
-                        "FROM public.transactions as t inner join public.transaction_group as tg " +
-                        "on t.id_transaction_group = tg.id_transaction_group " +
-                        "WHERE t.date BETWEEN @tg.start_date AND @tg.end_date " +
-                        "ORDER BY @t.date ASC " +
-                        "LIMIT @limite OFFSET @cur_index";
+                            "FROM public.transactions as t " +
+                            "INNER JOIN public.transaction_group as tg " +
+                            "ON t.id_transaction_group = tg.id_transaction_group " +
+                            "WHERE t.date BETWEEN @tg.start_date AND @tg.end_date " +
+                            "ORDER BY @t.date ASC " +
+                            "LIMIT @limite OFFSET @cur_index";
 
                     List<Transaction> listTransactions = await transactionsContext.Transactions.FromSqlRaw(query,
-                        new NpgsqlParameter("@start_date", transactionGroup.StartDate),
-                        new NpgsqlParameter("@end_date", transactionGroup.EndDate),
-                        new NpgsqlParameter("@limite", limite),
-                        new NpgsqlParameter("@cur_index", cur_index)).ToListAsync();
+                        new NpgsqlParameter("start_date", transactionGroup.StartDate),
+                        new NpgsqlParameter("end_date", transactionGroup.EndDate),
+                        new NpgsqlParameter("limite", limite),
+                        new NpgsqlParameter("cur_index", cur_index),
+                        new NpgsqlParameter("last_item_date", firstItemDate)).ToListAsync();
+
                     return new CustomHttpResponse()
                     {
                         Data = listTransactions,
@@ -192,15 +261,23 @@ namespace BudgifyAPI.Transactions.UseCases
                 }
             }
         }
-        public static async Task<CustomHttpResponse> GetTransactionNoSlidingWindowPersistence(CreateTransaction transaction)
+        public static async Task<CustomHttpResponse> GetTransactionNoSlidingWindowPersistence(CreateTransaction transaction, DateTime date, Guid walletId)
         {
             TransactionsContext transactionsContext = new TransactionsContext();
             try
             {
-                //TODO
+                string query = "select * from public.transaction_group as tg " +
+                    "inner join public.transactions as t on t.id_transaction_group = tg.id_transaction_group" +
+                    "where t.id_wallet = @walletId AND @date BETWEEN start_date AND end_date";
+
+                var listTransactions = await transactionsContext.TransactionGroups.FromSqlRaw(query, 
+                    new NpgsqlParameter("@date", date),
+                    new NpgsqlParameter("@walletId",walletId)).ToListAsync();
+
                 return new CustomHttpResponse()
                 {
-
+                    Data = listTransactions,
+                    status = 200
                 };
             }
             catch (Exception ex)
@@ -276,7 +353,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "transaction does not exist",
+                        message = "Transaction does not exist",
                         status = 400
                     };
 
@@ -723,26 +800,73 @@ namespace BudgifyAPI.Transactions.UseCases
                 };
             }
         }
-
-        public static async Task<CustomHttpResponse> GetGroupTransactionStats(TransactionGroup transactionGroup, Guid transactionId)
+        public static async Task<CustomHttpResponse> GetGroupTransactionStatsPersistence(Guid transactionGroupId)
         {
-            return new CustomHttpResponse()
+            TransactionsContext transactionContext = new TransactionsContext(); 
+            try
             {
+                string query = "select " +
+               "COUNT(tg.id_transaction_group) as TOTAL_COUNT, " +
+               "MAX(t.amount) as MAX, MIN(t.amount) as " +
+               "MIN, SUM(t.amount) as TOTAL_SUM, " +
+               "AVG(t.amount) AS MEDIA " +
+               "from public.transaction_group as tg " +
+               "inner join public.transactions as t on tg.id_transaction_group = t.id_transaction_group " +
+               "where tg.id_transaction_group = @transactionGroupId";
 
-            };
-            //TransactionsContext transactionsContext = new TransactionsContext();
-            //try
-            //{
-            //    var existTransaction = await transactionsContext.TransactionGroups.FirstOrDefaultAsync(x => x.IdTransactionGroup == transactionId);
-            //    string query = "";
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);  
-            //    throw;
-            //}
+                var result = transactionContext.TransactionGroups.FromSqlRaw(query, new NpgsqlParameter("@transactionGroupId", transactionGroupId));
+
+                return new CustomHttpResponse()
+                {
+                    Data = result,
+                    status = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return new CustomHttpResponse()
+                {
+                    message = ex.Message,
+                    status = 500
+                };
+                throw;
+            }
         }
+        public static async Task<CustomHttpResponse> GetGroupTransactionStatsRange(Guid transactionGroupId)
+        {
+            TransactionsContext transactionContext = new TransactionsContext();
+            try
+            {
+                string query = "select " +
+               "COUNT(tg.id_transaction_group) as TOTAL_COUNT, " +
+               "MAX(t.amount) as MAX, MIN(t.amount) as " +
+               "MIN, SUM(t.amount) as TOTAL_SUM, " +
+               "AVG(t.amount) AS MEDIA " +
+               "from public.transaction_group as tg " +
+               "inner join public.transactions as t on tg.id_transaction_group = t.id_transaction_group " +
+               "where tg.id_transaction_group = @transactionGroupId tg.start_date <= tg.end_date";
 
+                var result = transactionContext.TransactionGroups.FromSqlRaw(query, 
+                    new NpgsqlParameter("@transactionGroupId", transactionGroupId));
+
+                return new CustomHttpResponse()
+                {
+                    Data = result,
+                    status = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return new CustomHttpResponse()
+                {
+                    message = ex.Message,
+                    status = 500
+                };
+                throw;
+            }
+        }
 
     }
 }
