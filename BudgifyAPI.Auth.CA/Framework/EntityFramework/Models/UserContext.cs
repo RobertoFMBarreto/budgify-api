@@ -20,20 +20,8 @@ public partial class UserContext : DbContext
     public virtual DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        //optionsBuilder.UseNpgsql( Environment.GetEnvironmentVariable(
-        //    "ConnectionStrings_budgify-db"));
-        optionsBuilder.UseNpgsql( getConnectionString());
-    }
-    private static string getConnectionString()
-    {
-        var environmentName =
-            Environment.GetEnvironmentVariable(
-                "ASPNETCORE_ENVIRONMENT");
-
-        var config = new ConfigurationBuilder().AddJsonFile("appsettings" + (String.IsNullOrWhiteSpace(environmentName) ? "" : "." + environmentName) + ".json", false).Build();
-        return config.GetConnectionString("budgify-db");
-    }
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseNpgsql("Server=127.0.0.1;Port=42765;UserId=postgres;Password=budgify;Database=user");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -66,6 +54,9 @@ public partial class UserContext : DbContext
             entity.Property(e => e.IsManager)
                 .HasDefaultValue(false)
                 .HasColumnName("is_manager");
+            entity.Property(e => e.IsSuperAdmin)
+                .HasDefaultValue(false)
+                .HasColumnName("is_super_admin");
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .HasColumnName("name");

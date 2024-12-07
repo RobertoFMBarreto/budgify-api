@@ -6,41 +6,41 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
 {
     public class AccountsInteractorEF
     {
-        public static async Task<CustomHttpResponse> AddUserGroup(Func<RequestName, Task<CustomHttpResponse>> AddUserGroupPersistence, RequestName name)
+        public static async Task<CustomHttpResponse> AddUserGroup(Func<RequestName,Guid, Task<CustomHttpResponse>> AddUserGroupPersistence, RequestName name, Guid userId)
         {
-            return await AddUserGroupPersistence(name);
+            return await AddUserGroupPersistence(name, userId);
         }
-        public static async Task<CustomHttpResponse> UpdateUserGroup(Func<Guid, RequestName, Task <CustomHttpResponse>> UpdateUserGroupPersistence, Guid userGroupId, RequestName name)
+        public static async Task<CustomHttpResponse> UpdateUserGroup(Func<Guid, RequestName,Guid, Task <CustomHttpResponse>> UpdateUserGroupPersistence, Guid userGroupId, RequestName name, Guid idUser)
         {
-            return await UpdateUserGroupPersistence(userGroupId, name);
+            return await UpdateUserGroupPersistence(userGroupId, name, idUser);
         }
-        public static async Task<CustomHttpResponse> DeleteUserGroup(Func<Guid, Task<CustomHttpResponse>> DeleteUserGroupPersistence, Guid userGroupId)
+        public static async Task<CustomHttpResponse> DeleteUserGroup(Func<Guid,Guid, Task<CustomHttpResponse>> DeleteUserGroupPersistence, Guid userGroupId, Guid userId)
         {
-            return await DeleteUserGroupPersistence(userGroupId);
+            return await DeleteUserGroupPersistence(userGroupId,userId);
         }
-        public static async Task<CustomHttpResponse> GetGroupsById(Func<Guid, Task<CustomHttpResponse>> GetGroupsByIdPersistence, Guid userGroupId)
+        public static async Task<CustomHttpResponse> GetGroupsById(Func<Guid,Guid, Task<CustomHttpResponse>> GetGroupsByIdPersistence, Guid userGroupId, Guid userId)
         {
-            return await GetGroupsByIdPersistence(userGroupId);
+            return await GetGroupsByIdPersistence(userGroupId, userId);
         }
-        public static async Task<CustomHttpResponse> GetUserGroup(Func<Task<CustomHttpResponse>> GetUserGroupPersistence)
+        public static async Task<CustomHttpResponse> GetUserGroup(Func<Guid,Task<CustomHttpResponse>> GetUserGroupPersistence, Guid userId)
         {
-            return await GetUserGroupPersistence();
+            return await GetUserGroupPersistence(userId);
         }
-        public static async Task<CustomHttpResponse> AddUserToUserGroup(Func<CreateUser, Guid, Task<CustomHttpResponse>> AddUserToUserGroupPersistence, CreateUser user, Guid userId)
+        public static async Task<CustomHttpResponse> AddUserToUserGroup(Func<Guid, Guid, Guid, Task<CustomHttpResponse>> AddUserToUserGroupPersistence, Guid addUserId,Guid userGroupId, Guid userId)
         {
-            return await AddUserToUserGroupPersistence(user, userId);
+            return await AddUserToUserGroupPersistence(addUserId,userGroupId, userId);
         }
-        public static async Task<CustomHttpResponse> DeleteUserFromUserGroup(Func<Guid, Task<CustomHttpResponse>> DeleteUserFromUserGroupPersistence, Guid userId)
+        public static async Task<CustomHttpResponse> DeleteUserFromUserGroup(Func<Guid,Guid,Guid, Task<CustomHttpResponse>> DeleteUserFromUserGroupPersistence, Guid removeUserId,Guid idUserGroup, Guid userId)
         {
-            return await DeleteUserFromUserGroupPersistence(userId);
+            return await DeleteUserFromUserGroupPersistence(removeUserId, idUserGroup, userId);
         }
-        public static async Task<CustomHttpResponse> AddManagerToUserGroup(Func<User, Guid, Task<CustomHttpResponse>> AddManagerToUserGroupPersistence, User user, Guid userId)
+        public static async Task<CustomHttpResponse> AddManagerToUserGroup(Func<Guid, Guid,Guid, Task<CustomHttpResponse>> AddManagerToUserGroupPersistence, Guid managerId,Guid idUserGroup, Guid userId)
         {
-            return await AddManagerToUserGroupPersistence(user, userId);
+            return await AddManagerToUserGroupPersistence(managerId,idUserGroup, userId);
         }
-       public static async Task<CustomHttpResponse> DeleteManagerToUserGroup(Func<Guid, Task<CustomHttpResponse>>DeleteManagerToUserGroupPersistence,Guid userId)
+       public static async Task<CustomHttpResponse> DeleteManagerToUserGroup(Func<Guid,Guid,Guid, Task<CustomHttpResponse>>DeleteManagerToUserGroupPersistence,Guid removeManagerId,Guid idUserGroup, Guid userId)
         {
-            return await DeleteManagerToUserGroupPersistence(userId);   
+            return await DeleteManagerToUserGroupPersistence(removeManagerId, idUserGroup, userId);   
         }
         public static async Task<CustomHttpResponse> AddUser(Func<CreateUser, Task<CustomHttpResponse>> AddUserPersistence, CreateUser user)
         {

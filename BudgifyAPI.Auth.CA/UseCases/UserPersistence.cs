@@ -43,7 +43,18 @@ public static class UserPersistence
                 };
             }
 
-            string token = PasetoManager.GeneratePasetoToken(user.IdUser);
+            string role = "user";
+            if (user.IsAdmin)
+            {
+                role = "admin";
+            }else if (user.IsManager)
+            {
+                role = "manager";
+            }else if (user.IsSuperAdmin)
+            {
+                role = "superadmin";
+            }
+            string token = PasetoManager.GeneratePasetoToken(user.IdUser, role);
             string refreshToken = PasetoManager.GenerateRefreshPasetoToken(user.IdUser);
             Console.WriteLine(userAgent);
             UserRefreshToken? refToken = await context.UserRefreshTokens.Where(userRefreshToken => userRefreshToken.Device == userAgent)
@@ -252,8 +263,20 @@ public static class UserPersistence
                     status = 400
                 };
             }
+            User user = await context.Users.Where(u=> u.IdUser == userRefresh.IdUser).FirstAsync();
             
-            var token = PasetoManager.GeneratePasetoToken(userRefresh.IdUser);
+            string role = "user";
+            if (user.IsAdmin)
+            {
+                role = "admin";
+            }else if (user.IsManager)
+            {
+                role = "manager";
+            }else if (user.IsSuperAdmin)
+            {
+                role = "superadmin";
+            }
+            var token = PasetoManager.GeneratePasetoToken(userRefresh.IdUser, role);
             
             userRefresh.LastUsage = DateTime.Now;
             context.UserRefreshTokens.Update(userRefresh);

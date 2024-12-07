@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Text;
 using BudgifyAPI.Auth.CA.Framework.EntityFramework.Models;
 using Org.BouncyCastle.Crypto;
@@ -12,7 +13,7 @@ namespace BudgifyAPI.Auth.CA.Entities;
 
 public static class PasetoManager
 {
-    public static string GeneratePasetoToken(Guid userId)
+    public static string GeneratePasetoToken(Guid userId, string role)
     {
 
         var environmentName =
@@ -28,6 +29,7 @@ public static class PasetoManager
             .IssuedAt(DateTime.UtcNow)
             .Expiration(DateTime.UtcNow.AddMinutes(15))
             .Subject(userId.ToString())
+            .AddClaim(ClaimTypes.Role, role)
             .TokenIdentifier(Guid.NewGuid().ToString())
             .Encode();
        
