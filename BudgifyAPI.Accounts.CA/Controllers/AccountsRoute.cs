@@ -245,7 +245,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
-            application.MapGet($"{baseRoute}/user/admin", async (HttpRequest req) =>
+            application.MapGet($"{baseRoute}/user/admin/{{IdUser}}", async (HttpRequest req, Guid IdUser) =>
             {
                 try
                 {
