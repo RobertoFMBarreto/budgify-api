@@ -1,7 +1,6 @@
 {
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:5001",
-    
+    "BaseUrl": "http://localhost:5001"
   },
   "Routes": [
     {
@@ -86,7 +85,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5066
+          "Port": 5080
         }
       ]
     },{

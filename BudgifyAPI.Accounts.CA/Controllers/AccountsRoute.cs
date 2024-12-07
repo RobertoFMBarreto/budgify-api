@@ -13,7 +13,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
     {
         public static WebApplication SetRoutes(WebApplication application, string baseRoute)
         {
-            application.MapPost($"{baseRoute}/user-group", async (HttpRequest req, [FromBody] RequestName name) => {
+            application.MapPost($"{baseRoute}/user/user-group", async (HttpRequest req, [FromBody] RequestName name) => {
                 try
                 {
                     var received_uid = req.Headers["X-User-Id"];
@@ -40,7 +40,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                 }
 
             });
-            application.MapPut($"{baseRoute}/user-group/admin/{{userGroupId}}", async (HttpRequest req, Guid userGroupId, [FromBody] RequestName name) => {
+            application.MapPut($"{baseRoute}/admin/user-group/{{userGroupId}}", async (HttpRequest req, Guid userGroupId, [FromBody] RequestName name) => {
                 try
                 {
                     var received_uid = req.Headers["X-User-Id"];
@@ -66,7 +66,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
-            application.MapDelete($"{baseRoute}/user-group/admin/{{userGroupId}}", async (HttpRequest req, Guid userGroupId) => {
+            application.MapDelete($"{baseRoute}/admin/user-group/{{userGroupId}}", async (HttpRequest req, Guid userGroupId) => {
                 try
                 {
                     var received_uid = req.Headers["X-User-Id"];
@@ -92,7 +92,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
-            application.MapGet($"{baseRoute}/user-group/{{userGroupId}}", async (HttpRequest req, Guid userGroupId) => {
+            application.MapGet($"{baseRoute}/user/user-group/{{userGroupId}}", async (HttpRequest req, Guid userGroupId) => {
                 try
                 {
                     var received_uid = req.Headers["X-User-Id"];
@@ -118,7 +118,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
-            application.MapGet($"{baseRoute}/user-group", async (HttpRequest req) => {
+            application.MapGet($"{baseRoute}/user/user-group", async (HttpRequest req) => {
                 try
                 {
                     var received_uid = req.Headers["X-User-Id"];
@@ -144,7 +144,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
-            application.MapPost($"{baseRoute}/user-group/manager/{{idUserGroup}}/users/{{addUserId}}", async (HttpRequest req,Guid idUserGroup, Guid addUserId) =>
+            application.MapPost($"{baseRoute}/manager/user-group/{{idUserGroup}}/users/{{addUserId}}", async (HttpRequest req,Guid idUserGroup, Guid addUserId) =>
             {
                 
 
@@ -171,7 +171,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
-            application.MapDelete($"{baseRoute}/user-group/manager/{{idUserGroup}}/users/{{addUserId}}", async (HttpRequest req, Guid idUserGroup, Guid removeUserId) => {
+            application.MapDelete($"{baseRoute}/manager/user-group/{{idUserGroup}}/users/{{addUserId}}", async (HttpRequest req, Guid idUserGroup, Guid removeUserId) => {
                 try
                 {
                     var received_uid  =req.Headers["X-User-Id"];
@@ -194,7 +194,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
-            application.MapPost($"{baseRoute}/user-group/admin/{{idUserGroup}}/manager/{{addUserId}}", async (HttpRequest req, Guid idUserGroup, Guid addManagerId) =>
+            application.MapPost($"{baseRoute}/admin/user-group/{{idUserGroup}}/manager/{{addUserId}}", async (HttpRequest req, Guid idUserGroup, Guid addManagerId) =>
             {
                 try
                 {
@@ -218,7 +218,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
-            application.MapDelete($"{baseRoute}/user-group/admin/{{idUserGroup}}/manager/{{addUserId}}", async (HttpRequest req, Guid idUserGroup, Guid removeManagerId) =>
+            application.MapDelete($"{baseRoute}/admin/user-group/{{idUserGroup}}/manager/{{addUserId}}", async (HttpRequest req, Guid idUserGroup, Guid removeManagerId) =>
             {
                 try
                 {
@@ -279,7 +279,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
-            application.MapDelete($"{baseRoute}/admin/user", async (HttpRequest req) =>
+            application.MapDelete($"{baseRoute}/superadmin/user", async (HttpRequest req) =>
             {
                 try
                 {
@@ -303,7 +303,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
-            application.MapPut($"{baseRoute}/admin/user", async (HttpRequest req) =>
+            application.MapPut($"{baseRoute}/superadmin/user", async (HttpRequest req) =>
             {
                 try
                 {
@@ -327,7 +327,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
-            application.MapGet($"{baseRoute}/admin/user", async () =>
+            application.MapGet($"{baseRoute}/superadmin/user", async () =>
             {
                 try
                 {
@@ -340,7 +340,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
-            application.MapGet($"{baseRoute}/admin/user/{{IdUser}}", async (HttpRequest req, Guid IdUser) =>
+            application.MapGet($"{baseRoute}/superadmin/user/{{IdUser}}", async (HttpRequest req, Guid IdUser) =>
             {
                 try
                 {

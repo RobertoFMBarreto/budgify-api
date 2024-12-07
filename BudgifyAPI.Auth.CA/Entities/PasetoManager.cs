@@ -29,7 +29,7 @@ public static class PasetoManager
             .IssuedAt(DateTime.UtcNow)
             .Expiration(DateTime.UtcNow.AddMinutes(15))
             .Subject(userId.ToString())
-            .AddClaim(ClaimTypes.Role, role)
+            .AddClaim("role", role)
             .TokenIdentifier(Guid.NewGuid().ToString())
             .Encode();
        

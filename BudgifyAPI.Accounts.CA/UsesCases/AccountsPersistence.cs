@@ -184,6 +184,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
             AccountsContext accountsContext = new AccountsContext();
             try
             {
+                Console.WriteLine(userId.ToString());
                 var user = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == userId);
                 if (user.IdUserGroup == null)
                 {

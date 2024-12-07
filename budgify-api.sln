@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgifyAPI.Family", "BudgifyAPI.Family\BudgifyAPI.Family.csproj", "{9AFAABA2-D4D0-4469-A46C-4724B1415376}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgifyAPI.Transactions", "BudgifyAPI.Transactions\BudgifyAPI.Transactions.csproj", "{C56720F3-987C-4771-B477-D800C7E56525}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgifyAPI.Auth", "BudgifyAPI.Auth\BudgifyAPI.Auth.csproj", "{B3967666-4555-483D-929B-FD17E7611FC1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgifyAPI.Auth.CA", "BudgifyAPI.Auth.CA\BudgifyAPI.Auth.CA.csproj", "{4CEE4718-9C03-4F0D-954F-E8FF1EF2A74C}"
 EndProject
@@ -26,18 +22,10 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9AFAABA2-D4D0-4469-A46C-4724B1415376}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9AFAABA2-D4D0-4469-A46C-4724B1415376}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9AFAABA2-D4D0-4469-A46C-4724B1415376}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9AFAABA2-D4D0-4469-A46C-4724B1415376}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C56720F3-987C-4771-B477-D800C7E56525}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C56720F3-987C-4771-B477-D800C7E56525}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C56720F3-987C-4771-B477-D800C7E56525}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C56720F3-987C-4771-B477-D800C7E56525}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B3967666-4555-483D-929B-FD17E7611FC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B3967666-4555-483D-929B-FD17E7611FC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B3967666-4555-483D-929B-FD17E7611FC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B3967666-4555-483D-929B-FD17E7611FC1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4CEE4718-9C03-4F0D-954F-E8FF1EF2A74C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4CEE4718-9C03-4F0D-954F-E8FF1EF2A74C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CEE4718-9C03-4F0D-954F-E8FF1EF2A74C}.Release|Any CPU.ActiveCfg = Release|Any CPU

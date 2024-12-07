@@ -46,13 +46,13 @@ public static class UserPersistence
             string role = "user";
             if (user.IsAdmin)
             {
-                role = "admin";
+                role = "(admin|manager)";
             }else if (user.IsManager)
             {
-                role = "manager";
+                role = "(manager)";
             }else if (user.IsSuperAdmin)
             {
-                role = "superadmin";
+                role = "(superadmin)";
             }
             string token = PasetoManager.GeneratePasetoToken(user.IdUser, role);
             string refreshToken = PasetoManager.GenerateRefreshPasetoToken(user.IdUser);
