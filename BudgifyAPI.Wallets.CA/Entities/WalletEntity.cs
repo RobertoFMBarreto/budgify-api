@@ -8,15 +8,14 @@ namespace BudgifyAPI.Wallets.CA.Entities
 {
     public class WalletEntity
     {
-        public Guid UserId {get; set; }
-
         public Guid WalletId {get; set; }
 
         public string? WalletName { get; set; } 
 
-        public string? Requisition {get; set;}
+        public string? IdRequisition {get; set;}
 
-        public string? agreementDays { get; set; }
+        public int? AgreementDays { get; set; }
+        public string? IdAccount { get; set; }
 
         public float totalValue { get; set; }
         public async Task<bool> Validate() {

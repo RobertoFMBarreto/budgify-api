@@ -69,7 +69,6 @@ public static class WalletRoute {
                 var uid = CustomEncryptor.DecryptString(
                     Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
 
-                await GocardlessInteractor.GetBanksInteractor(GocardlessPersistence.GetBanksPersistence,"pt");
                return await WalletInteractorEF.GetWallet(WalletPersistence.GetWallet, Guid.Parse(uid));
             } 
             catch (Exception e)
@@ -91,7 +90,7 @@ public static class WalletRoute {
 
                 var uid = CustomEncryptor.DecryptString(
                     Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
-                return await WalletInteractorEF.EditWallet(WalletPersistence.EditWallet, body);
+                return await WalletInteractorEF.EditWallet(WalletPersistence.EditWallet, body,Guid.Parse(uid));
             }
             catch (Exception e)
             {
@@ -153,16 +152,7 @@ public static class WalletRoute {
             }
         });
         
-        app.MapGet($"{baseRoute}/gocardless/bank/accounts/{{idAccount}}/transactions/", async (HttpRequest req, string idAccount) => {
-            try {
-                return await GocardlessInteractor.GetTransactionsInteractor(GocardlessPersistence.GetTransactionsPersistence, idAccount);
-            } 
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-        });
+        
         
         
         return app;

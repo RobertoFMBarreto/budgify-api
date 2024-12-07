@@ -684,6 +684,30 @@ namespace BudgifyAPI.Transactions.Controller
                 }
             });
             
+            application.MapGet($"{baseRoute}/gocardless/{{idWallet}}/{{idAccount}}/transactions", async (HttpRequest req, Guid idWallet,string idAccount) => {
+                try {
+                    var received_uid = req.Headers["X-User-Id"];
+                    Console.WriteLine($"Received uid: {received_uid}");
+                    if (string.IsNullOrEmpty(received_uid))
+                    {
+                        return new CustomHttpResponse()
+                        {
+                            status = 400,
+                            message = "Bad Request",
+                        };
+                    }
+
+                    var uid = CustomEncryptor.DecryptString(
+                        Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                    return await GocardlessInteractor.GetTransactionsInteractor(GocardlessPersistence.GetTransactionsPersistence, idAccount, Guid.Parse(uid),idWallet);
+                } 
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            });
+            
             return application;
         }
     }

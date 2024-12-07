@@ -32,8 +32,5 @@ public class GocardlessInteractor
     {
         return await getBankDetailsRequisitionPersistence(idRequisition);
     }
-    public static async Task<CustomHttpResponse> GetTransactionsInteractor(Func<string,Task<CustomHttpResponse>> getTransactionsPersistence, string idAccount)
-    {
-        return await getTransactionsPersistence(idAccount);
-    }
+
 }

@@ -35,13 +35,16 @@ public partial class WalletsContext : DbContext
                 .ValueGeneratedNever()
                 .HasColumnName("id_wallet");
             entity.Property(e => e.AgreementDays).HasColumnName("agreement_days");
+            entity.Property(e => e.IdAccount)
+                .HasColumnType("character varying")
+                .HasColumnName("id_account");
+            entity.Property(e => e.IdRequisition)
+                .HasMaxLength(255)
+                .HasColumnName("id_requisition");
             entity.Property(e => e.IdUser).HasColumnName("id_user");
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .HasColumnName("name");
-            entity.Property(e => e.Requisition)
-                .HasMaxLength(255)
-                .HasColumnName("requisition");
         });
 
         OnModelCreatingPartial(modelBuilder);

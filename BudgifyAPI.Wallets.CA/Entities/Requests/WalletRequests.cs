@@ -22,6 +22,11 @@ namespace BudgifyAPI.Wallets.CA.Entities.Requests
         public Guid wallet_id { get; set; }
         public string wallet_name { get; set; }
         public float value { get; set; }
+        
+        public string? IdRequisition {get; set;}
+
+        public int? AgreementDays { get; set; }
+        public string? IdAccount { get; set; }
 
     }
 }

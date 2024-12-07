@@ -8,7 +8,7 @@ namespace BudgifyAPI.Wallets.CA.UseCases
 {
     public static class WalletPersistence
     {
-        public static async Task<CustomHttpResponse> RegisterWallet(WalletEntity walletEntity) {
+        public static async Task<CustomHttpResponse> RegisterWallet(WalletEntity walletEntity, Guid userId) {
             WalletsContext context = new WalletsContext();
             try
             {
@@ -22,7 +22,7 @@ namespace BudgifyAPI.Wallets.CA.UseCases
                     await context.Wallets.AddAsync(new Wallet() {
                         IdWallet = Guid.NewGuid(),
                         Name = walletEntity.WalletName!,
-                        IdUser =walletEntity.UserId
+                        IdUser = userId
                         
                     });
                     await context.SaveChangesAsync();
@@ -36,17 +36,17 @@ namespace BudgifyAPI.Wallets.CA.UseCases
             }
 
         }
-        public static async Task<CustomHttpResponse> DeleteWallet(WalletEntity walletEntity) {
+        public static async Task<CustomHttpResponse> DeleteWallet(WalletEntity walletEntity, Guid userId) {
             WalletsContext context = new WalletsContext();
 
             try {
-                Wallet? wallet = await context.Wallets.Where(x => x.IdWallet == walletEntity.WalletId).FirstOrDefaultAsync();
+                Wallet? wallet = await context.Wallets.Where(x => x.IdWallet == walletEntity.WalletId && x.IdUser == userId).FirstOrDefaultAsync();
                 if (wallet == null) return new CustomHttpResponse(){status = 400, message="Wallet not found"};
-                else {
+
                     context.Wallets.Remove(wallet);
                     await context.SaveChangesAsync();
                     return new CustomHttpResponse(){status = 200, message="Wallet deleted successfully"};
-                }
+                
             }
 
             catch (Exception ex) {
@@ -70,16 +70,20 @@ namespace BudgifyAPI.Wallets.CA.UseCases
             }
         }
 
-        public static async Task<CustomHttpResponse> EditWallet(WalletEntity entity) {
+        public static async Task<CustomHttpResponse> EditWallet(WalletEntity entity, Guid IdUser) {
             WalletsContext context = new WalletsContext();
 
             try {
                 await entity.Validate();
 
-                Wallet? wallet = await context.Wallets.Where(x => x.IdWallet == entity.WalletId).FirstOrDefaultAsync();
+                Wallet? wallet = await context.Wallets.Where(x => x.IdWallet == entity.WalletId && x.IdUser == IdUser).FirstOrDefaultAsync();
                 if (wallet == null) return new CustomHttpResponse() { status = 400, message = "Wallet not found" };
                 wallet.Name = entity.WalletName;
-                wallet.totalValue = entity.totalValue;
+                wallet.AgreementDays = entity.AgreementDays;
+                wallet.IdRequisition = entity.IdRequisition;
+                wallet.IdAccount = entity.IdAccount;
+                context.Wallets.Update(wallet);
+                await context.SaveChangesAsync();
                 return new CustomHttpResponse(){status = 200, Data = wallet};
            
         }

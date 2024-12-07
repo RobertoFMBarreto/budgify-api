@@ -158,25 +158,5 @@ public class GocardlessPersistence
         }
     }
     
-    public static async Task<CustomHttpResponse> GetTransactionsPersistence(string idAccount)
-    {
-        
-        try
-        {
-            Dictionary<string, object> accessResponse = await GetAccessTokenPersistence();
-            string url = $"https://bankaccountdata.gocardless.com/api/v2/accounts/{idAccount}/transactions/";
-            HttpClient client = new HttpClient();
-            var requestMessage =
-                new HttpRequestMessage(HttpMethod.Get, url);
-            requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessResponse["access"].ToString());
-            var response = await client.SendAsync(requestMessage);
-            Dictionary<string,object> transactions = JsonSerializer.Deserialize<Dictionary<string,object>>(response.Content.ReadAsStringAsync().Result);
-            return new CustomHttpResponse(){status =(int)response.StatusCode, Data =transactions };
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-    }
+    
 }
