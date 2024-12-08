@@ -13,7 +13,9 @@
         <PackageReference Include="Google.Protobuf" Version="3.29.0" />
         <PackageReference Include="Grpc.AspNetCore" Version="2.67.0" />
         <PackageReference Include="Grpc.Core" Version="2.46.6" />
-        <PackageReference Include="Grpc.Tools" Version="2.67.0">
+        <PackageReference Include="Grpc.Net.Client" Version="2.67.0" />
+        <PackageReference Include="Grpc.Net.ClientFactory" Version="2.67.0" />
+        <PackageReference Include="Grpc.Tools" Version="2.68.1">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
@@ -62,6 +64,9 @@
     <ItemGroup>
      <Protobuf Include="Entities\grpc\ValidateSession.proto" GrpcServices="Server">
           <Link>Entities\grpc\ValidateSession.proto</Link>
+        </Protobuf>
+      <Protobuf Include="Entities\grpc\ValidateUser.proto" GrpcServices="Client">
+          <Link>Entities\grpc\ValidateUser.proto</Link>
         </Protobuf>
     </ItemGroup>
 

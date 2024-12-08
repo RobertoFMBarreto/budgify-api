@@ -16,8 +16,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5066
+          "Host": "budgify-auth",
+          "Port": 65082
         }
       ]
     },
@@ -39,8 +39,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5066
+          "Host": "budgify-auth",
+          "Port": 65082
         }
       ]
     },
@@ -62,11 +62,12 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7131
+          "Host": "budgify-wallets",
+          "Port": 65088
         }
       ]
-    },{
+    },
+    {
       "UpstreamPathTemplate": "/gateway/accounts/{everything}",
       "UpstreamHttpMethod": ["GET","POST","PUT","DELETE" ],
       "AuthenticationOptions": {
@@ -84,11 +85,12 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5080
+          "Host": "budgify-accounts",
+          "Port": 65084
         }
       ]
-    },{
+    },
+    {
       "UpstreamPathTemplate": "/gateway/transactions/{everything}",
       "UpstreamHttpMethod": ["GET","POST","PUT","DELETE"],
       "AuthenticationOptions": {
@@ -106,8 +108,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5082
+          "Host": "budgify-transactions",
+          "Port": 65086
         }
       ]
     }

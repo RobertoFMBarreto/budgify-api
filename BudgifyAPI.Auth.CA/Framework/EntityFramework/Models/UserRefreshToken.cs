@@ -16,6 +16,4 @@ public partial class UserRefreshToken
     public DateTime CreationDate { get; set; }
 
     public DateTime LastUsage { get; set; }
-
-    public virtual User IdUserNavigation { get; set; } = null!;
 }

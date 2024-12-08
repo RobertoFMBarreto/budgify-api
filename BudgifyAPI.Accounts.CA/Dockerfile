@@ -1,23 +1,19 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER $APP_UID
+﻿FROM mcr.microsoft.com/dotnet/sdk:8.0 AS base 
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 65084
+EXPOSE 65085
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
-WORKDIR /src
-COPY ["BudgifyAPI.Accounts.CA/BudgifyAPI.Accounts.CA.csproj", "BudgifyAPI.Accounts.CA/"]
-RUN dotnet restore "BudgifyAPI.Accounts.CA/BudgifyAPI.Accounts.CA.csproj"
-COPY . .
-WORKDIR "/src/BudgifyAPI.Accounts.CA"
-RUN dotnet build "BudgifyAPI.Accounts.CA.csproj" -c $BUILD_CONFIGURATION -o /app/build
+COPY . ./
+RUN dotnet restore
+RUN dotnet publish -c Release -o out
 
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "BudgifyAPI.Accounts.CA.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
+WORKDIR /build
+COPY --from=base /app/out .
+RUN dotnet dev-certs https --clean
+RUN dotnet dev-certs https --trust
 
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
+
+COPY /certs/shared.crt /usr/local/share/ca-certificates/shared.crt
+RUN update-ca-certificates
 ENTRYPOINT ["dotnet", "BudgifyAPI.Accounts.CA.dll"]

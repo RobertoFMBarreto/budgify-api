@@ -16,8 +16,9 @@ namespace BudgifyAPI.Wallets.CA.Entities
 
         public int? AgreementDays { get; set; }
         public string? IdAccount { get; set; }
+        public bool StoreInCloud { get; set; }
 
-        public float totalValue { get; set; }
+        public float TotalValue { get; set; }
         public async Task<bool> Validate() {
             if (string.IsNullOrEmpty(WalletName) || WalletName.Contains(";") || WalletName.Contains(")")) {
                 throw new ArgumentException("Invalid name for wallet");

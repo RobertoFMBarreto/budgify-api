@@ -16,4 +16,6 @@ public partial class Wallet
     public int? AgreementDays { get; set; }
 
     public string? IdAccount { get; set; }
+
+    public bool StoreInCloud { get; set; }
 }

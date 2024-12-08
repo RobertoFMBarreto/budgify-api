@@ -1,22 +1,20 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS base 
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 65088
+EXPOSE 65089
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
-COPY ["BudgifyAPI.Wallets.CA.csproj", "."]
-RUN dotnet restore "./BudgifyAPI.Wallets.CA.csproj"
-COPY . .
-WORKDIR "/src/."
-RUN dotnet build "BudgifyAPI.Wallets.CA.csproj" -c Release -o /app/build
+COPY . ./
+RUN dotnet restore
+RUN dotnet publish -c Release -o out
 
-FROM build AS publish
-RUN dotnet publish "BudgifyAPI.Wallets.CA.csproj" -c Release -o /app/publish /p:UseAppHost=false
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
+WORKDIR /build
+COPY --from=base /app/out .
+RUN dotnet dev-certs https --clean
+RUN dotnet dev-certs https --trust
 
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
+COPY /certs/shared.crt /usr/local/share/ca-certificates/shared.crt
+RUN update-ca-certificates
+
+
 ENTRYPOINT ["dotnet", "BudgifyAPI.Wallets.CA.dll"]

@@ -2,6 +2,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
 using Authservice;
+using BudgifyAPI.Gateway.UseCases;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
@@ -25,15 +26,9 @@ public class PasetoAuthenticationHandler : AuthenticationHandler<AuthenticationS
         var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
         try
         {
-            var environmentName =
-                Environment.GetEnvironmentVariable(
-                    "ASPNETCORE_ENVIRONMENT");
-            var config = new ConfigurationBuilder()
-                .AddJsonFile(
-                    "appsettings" + (String.IsNullOrWhiteSpace(environmentName) ? "" : "." + environmentName) + ".json",
-                    false).Build();
-
-            Byte[] key = Convert.FromBase64String(config["keys:paseto-key"]);
+            Byte[] key =
+                Convert.FromBase64String( Environment.GetEnvironmentVariable(
+                    "keys__paseto_key"));
 
             var valParams = new PasetoTokenValidationParameters
             {

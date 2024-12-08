@@ -21,7 +21,7 @@ public static class UserRoute
             try
             {
                 CustomHttpResponse resp =
-                    await UserInteractorEF.login(UserPersistence.UserLoginPersistence, body.Email, body.Password,$"{userAgent} / {host}");
+                    await UserInteractorEf.Login(UserPersistence.UserLoginPersistence, body.Email, body.Password,$"{userAgent} / {host}");
                 return resp;
             }
             catch (Exception e)
@@ -35,26 +35,26 @@ public static class UserRoute
         {
             var userAgent = req.Headers["User-Agent"];
             var host = context.Connection.RemoteIpAddress.ToString();
-            var received_uid  =req.Headers["X-User-Id"];
+            var receivedUid  =req.Headers["X-User-Id"];
             if (host.Contains(":"))
             {
                 host = "127.0.0.1";
             }
-            if (string.IsNullOrEmpty(received_uid))
+            if (string.IsNullOrEmpty(receivedUid))
             {
                 return new CustomHttpResponse()
                 {
-                    status = 400,
-                    message = "Missing token",
+                    Status = 400,
+                    Message = "Missing token",
                 };
                 
                 
             }
-            var uid = CustomEncryptor.DecryptString(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+            var uid = CustomEncryptor.DecryptString(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
             try
             {
                 CustomHttpResponse resp =
-                    await UserInteractorEF.logout(UserPersistence.UserLogoutPersistence, uid, $"{userAgent} / {host}");
+                    await UserInteractorEf.Logout(UserPersistence.UserLogoutPersistence, uid, $"{userAgent} / {host}");
                 return resp;
             }
             catch (Exception e)
@@ -63,41 +63,12 @@ public static class UserRoute
                 throw;
             }
         });
-        
-        app.MapPost($"{baseRoute}/register",[AllowAnonymous] async ([FromBody]UserEntity body)=>
-        {
-            try
-            {
-                CustomHttpResponse resp = await UserInteractorEF.register(UserPersistence.UserRegisterPersistence,body );
-                return resp;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-        });
-        
-        app.MapPost($"{baseRoute}/new-password",[AllowAnonymous] async ([FromBody]NewPasswordRequest body)=>
-        {
-            try
-            {
-                CustomHttpResponse resp = await UserInteractorEF.newPassword(UserPersistence.NewPasswordPersistence,body );
-                return resp;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-        });
-        
         
         app.MapPost($"{baseRoute}/new-session-token",[AllowAnonymous] async ([FromBody]NewSessionTokenRequest body)=>
         {
             try
             {
-                CustomHttpResponse resp = await UserInteractorEF.newSessionToken(UserPersistence.NewSessionTokenPersistence,body );
+                CustomHttpResponse resp = await UserInteractorEf.NewSessionToken(UserPersistence.NewSessionTokenPersistence,body );
                 return resp;
             }
             catch (Exception e)

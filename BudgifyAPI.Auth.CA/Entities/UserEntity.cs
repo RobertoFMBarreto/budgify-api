@@ -18,8 +18,8 @@ public class UserEntity
         {
             return new CustomHttpResponse()
             {
-                status = 400,
-                message = "missing fields",
+                Status = 400,
+                Message = "missing fields",
             };
         }
 
@@ -27,14 +27,14 @@ public class UserEntity
         {
             return new CustomHttpResponse()
             {
-                status = 400,
-                message = "missing fields",
+                Status = 400,
+                Message = "missing fields",
             };
         }
 
         return  new CustomHttpResponse()
         {
-            status = 200,
+            Status = 200,
         };;
     }
 }

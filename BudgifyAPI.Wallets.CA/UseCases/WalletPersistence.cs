@@ -16,23 +16,26 @@ namespace BudgifyAPI.Wallets.CA.UseCases
 
                 Wallet? wallet = await context.Wallets.Where(x => x.Name == walletEntity.WalletName).FirstOrDefaultAsync();
                 if (wallet != null) {
-                    return new CustomHttpResponse(){status = 400, message="Wallet with same name already exists!"};
+                    return new CustomHttpResponse(){Status = 400, Message="Wallet with same name already exists!"};
                 }
                 else {
                     await context.Wallets.AddAsync(new Wallet() {
                         IdWallet = Guid.NewGuid(),
                         Name = walletEntity.WalletName!,
-                        IdUser = userId
+                        IdUser = userId,
+                        StoreInCloud = walletEntity.StoreInCloud,
+                        IdAccount = walletEntity.IdAccount,
+                        IdRequisition = walletEntity.IdRequisition,
                         
                     });
                     await context.SaveChangesAsync();
                 }
 
-                return new CustomHttpResponse(){status = 200, message="wallet created successfully"};
+                return new CustomHttpResponse(){Status = 200, Message="wallet created successfully"};
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);
-                return new CustomHttpResponse(){status = 500, message = "Server Error"};
+                return new CustomHttpResponse(){Status = 500, Message = "Server Error"};
             }
 
         }
@@ -41,17 +44,17 @@ namespace BudgifyAPI.Wallets.CA.UseCases
 
             try {
                 Wallet? wallet = await context.Wallets.Where(x => x.IdWallet == walletEntity.WalletId && x.IdUser == userId).FirstOrDefaultAsync();
-                if (wallet == null) return new CustomHttpResponse(){status = 400, message="Wallet not found"};
+                if (wallet == null) return new CustomHttpResponse(){Status = 400, Message="Wallet not found"};
 
                     context.Wallets.Remove(wallet);
                     await context.SaveChangesAsync();
-                    return new CustomHttpResponse(){status = 200, message="Wallet deleted successfully"};
+                    return new CustomHttpResponse(){Status = 200, Message="Wallet deleted successfully"};
                 
             }
 
             catch (Exception ex) {
                 Console.WriteLine(ex);
-                return new CustomHttpResponse(){status = 500, message = "Server Error"};
+                return new CustomHttpResponse(){Status = 500, Message = "Server Error"};
             }
         }
 
@@ -61,35 +64,36 @@ namespace BudgifyAPI.Wallets.CA.UseCases
             try {
                 List<Wallet>? wallet = await context.Wallets.Where(x => x.IdUser == uid).ToListAsync();
 
-                return new CustomHttpResponse(){status = 200, Data = wallet};
+                return new CustomHttpResponse(){Status = 200, Data = wallet};
                     
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);
-                return new CustomHttpResponse(){status = 500, message = "Server Error"};
+                return new CustomHttpResponse(){Status = 500, Message = "Server Error"};
             }
         }
 
-        public static async Task<CustomHttpResponse> EditWallet(WalletEntity entity, Guid IdUser) {
+        public static async Task<CustomHttpResponse> EditWallet(WalletEntity entity, Guid idUser) {
             WalletsContext context = new WalletsContext();
 
             try {
                 await entity.Validate();
 
-                Wallet? wallet = await context.Wallets.Where(x => x.IdWallet == entity.WalletId && x.IdUser == IdUser).FirstOrDefaultAsync();
-                if (wallet == null) return new CustomHttpResponse() { status = 400, message = "Wallet not found" };
+                Wallet? wallet = await context.Wallets.Where(x => x.IdWallet == entity.WalletId && x.IdUser == idUser).FirstOrDefaultAsync();
+                if (wallet == null) return new CustomHttpResponse() { Status = 400, Message = "Wallet not found" };
                 wallet.Name = entity.WalletName;
                 wallet.AgreementDays = entity.AgreementDays;
                 wallet.IdRequisition = entity.IdRequisition;
                 wallet.IdAccount = entity.IdAccount;
+                wallet.StoreInCloud = entity.StoreInCloud;
                 context.Wallets.Update(wallet);
                 await context.SaveChangesAsync();
-                return new CustomHttpResponse(){status = 200, Data = wallet};
+                return new CustomHttpResponse(){Status = 200, Data = wallet};
            
         }
             catch (Exception ex) {
                 Console.WriteLine(ex);
-                return new CustomHttpResponse(){status = 500, message = "Server Error"};
+                return new CustomHttpResponse(){Status = 500, Message = "Server Error"};
             }
 
         }

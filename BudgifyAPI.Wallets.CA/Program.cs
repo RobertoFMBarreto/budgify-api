@@ -1,3 +1,4 @@
+using System.Net;
 using BudgifyAPI.Wallets.CA.Controllers;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
@@ -11,17 +12,17 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddGrpc();
 builder.WebHost.ConfigureKestrel(options =>
 {
-    options.ListenLocalhost(7131, o=>o.Protocols=HttpProtocols.Http1);
-    options.ListenLocalhost(7132, o => { 
+    options.Listen(IPAddress.Any,65088, o=>o.Protocols=HttpProtocols.Http1);
+    options.Listen(IPAddress.Any,65089, o => { 
         o.Protocols = HttpProtocols.Http2;
-        o.UseHttps();
+        o.UseHttps("/app/certs/shared.pfx", "budgify");
     });
 });
 
 var app = builder.Build();
 
 app.MapGrpcService<WalletsGrpcService>();
-WalletRoute.setRoutes(app,"/api/v1/wallets");
+WalletRoute.SetRoutes(app,"/api/v1/wallets");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

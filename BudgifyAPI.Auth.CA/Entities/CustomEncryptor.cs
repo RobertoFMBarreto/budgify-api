@@ -1,3 +1,5 @@
+    using System.Text;
+
     namespace BudgifyAPI.Auth.CA.Entities;
 
     using System.Security.Cryptography;
@@ -9,12 +11,10 @@
             // Convert the plaintext string to a byte array
             byte[] plaintextBytes = System.Text.Encoding.UTF8.GetBytes(plaintext);
     
-            var environmentName =
-                Environment.GetEnvironmentVariable(
-                    "ASPNETCORE_ENVIRONMENT");
-            var config = new ConfigurationBuilder().AddJsonFile("appsettings" + (String.IsNullOrWhiteSpace(environmentName) ? "" : "." + environmentName) + ".json", false).Build();
-
-            Byte[]key = Convert.FromBase64String(config["keys:budgify-key"]);
+            Byte[] key =
+                Convert.FromBase64String( Environment.GetEnvironmentVariable(
+                    "keys__budgify_key"));
+           
     
             // Use the password to encrypt the plaintext
             Aes encryptor = Aes.Create();
@@ -35,12 +35,9 @@
             // Convert the encrypted string to a byte array
             byte[] encryptedBytes = Convert.FromBase64String(encrypted);
     
-            var environmentName =
-                Environment.GetEnvironmentVariable(
-                    "ASPNETCORE_ENVIRONMENT");
-            var config = new ConfigurationBuilder().AddJsonFile("appsettings" + (String.IsNullOrWhiteSpace(environmentName) ? "" : "." + environmentName) + ".json", false).Build();
-
-            Byte[]key = Convert.FromBase64String(config["keys:budgify-key"]);
+            Byte[] key =
+                Convert.FromBase64String( Environment.GetEnvironmentVariable(
+                    "keys__budgify_key"));
     
             // Use the password to encrypt the plaintext
             Aes encryptor = Aes.Create();

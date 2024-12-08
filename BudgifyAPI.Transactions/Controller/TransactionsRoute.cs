@@ -17,21 +17,21 @@ namespace BudgifyAPI.Transactions.Controller
             {
                 try
                 {
-                    var received_uid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {received_uid}");
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid = req.Headers["X-User-Id"];
+                    Console.WriteLine($"Received uid: {receivedUid}");
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Bad Request",
+                            Status = 400,
+                            Message = "Bad Request",
                         };
                     }
 
                     var uid = CustomEncryptor.DecryptString(
-                        Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                        Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
 
-                    CustomHttpResponse resp = await TransactionsInteractorEF.AddTransaction(
+                    CustomHttpResponse resp = await TransactionsInteractorEf.AddTransaction(
                         TransactionsPersistence.AddTransactionPersistence, transaction, Guid.Parse(uid));
                     return resp;
                 }
@@ -45,21 +45,21 @@ namespace BudgifyAPI.Transactions.Controller
             {
                 try
                 {
-                    var received_uid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {received_uid}");
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid = req.Headers["X-User-Id"];
+                    Console.WriteLine($"Received uid: {receivedUid}");
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Bad Request",
+                            Status = 400,
+                            Message = "Bad Request",
                         };
                     }
 
                     var uid = CustomEncryptor.DecryptString(
-                        Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                        Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
                     CustomHttpResponse resp =
-                        await TransactionsInteractorEF.GetTransactions(
+                        await TransactionsInteractorEf.GetTransactions(
                             TransactionsPersistence.GetTransactionsIntervalPersistence, Guid.Parse(uid));
                     return resp;
                 }
@@ -75,20 +75,20 @@ namespace BudgifyAPI.Transactions.Controller
                     
                     try
                     {
-                        var received_uid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {received_uid}");
-                        if (string.IsNullOrEmpty(received_uid))
+                        var receivedUid = req.Headers["X-User-Id"];
+                        Console.WriteLine($"Received uid: {receivedUid}");
+                        if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
                             {
-                                status = 400,
-                                message = "Bad Request",
+                                Status = 400,
+                                Message = "Bad Request",
                             };
                         }
 
                         var uid = CustomEncryptor.DecryptString(
-                            Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
-                        CustomHttpResponse resp = await TransactionsInteractorEF.GetTransactionSlidingWindow(
+                            Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
+                        CustomHttpResponse resp = await TransactionsInteractorEf.GetTransactionSlidingWindow(
                             TransactionsPersistence.GetTransactionSlidingWindowPersistence, limite, curindex, date.Date,
                             Guid.Parse(uid));
                         return resp;
@@ -104,20 +104,20 @@ namespace BudgifyAPI.Transactions.Controller
                 //!TODO: Mudar para post para receber o range
                 try
                 {
-                    var received_uid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {received_uid}");
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid = req.Headers["X-User-Id"];
+                    Console.WriteLine($"Received uid: {receivedUid}");
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Bad Request",
+                            Status = 400,
+                            Message = "Bad Request",
                         };
                     }
 
                     var uid = CustomEncryptor.DecryptString(
-                        Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
-                    CustomHttpResponse resp = await TransactionsInteractorEF.GetTransactionNoSlidingWindow(
+                        Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
+                    CustomHttpResponse resp = await TransactionsInteractorEf.GetTransactionNoSlidingWindow(
                         TransactionsPersistence.GetTransactionNoSlidingWindowPersistence, dates, Guid.Parse(uid));
                     return resp;
                 }
@@ -132,20 +132,20 @@ namespace BudgifyAPI.Transactions.Controller
                 {
                     try
                     {
-                        var received_uid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {received_uid}");
-                        if (string.IsNullOrEmpty(received_uid))
+                        var receivedUid = req.Headers["X-User-Id"];
+                        Console.WriteLine($"Received uid: {receivedUid}");
+                        if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
                             {
-                                status = 400,
-                                message = "Bad Request",
+                                Status = 400,
+                                Message = "Bad Request",
                             };
                         }
 
                         var uid = CustomEncryptor.DecryptString(
-                            Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
-                        CustomHttpResponse resp = await TransactionsInteractorEF.UpdateTransactions(
+                            Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
+                        CustomHttpResponse resp = await TransactionsInteractorEf.UpdateTransactions(
                             TransactionsPersistence.UpdateTransactionsPersistence, transactionId, transaction,
                             Guid.Parse(uid));
                         return resp;
@@ -160,22 +160,22 @@ namespace BudgifyAPI.Transactions.Controller
             {
                 try
                 {
-                    var received_uid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {received_uid}");
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid = req.Headers["X-User-Id"];
+                    Console.WriteLine($"Received uid: {receivedUid}");
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Bad Request",
+                            Status = 400,
+                            Message = "Bad Request",
                         };
                     }
 
                     var uid = CustomEncryptor.DecryptString(
-                        Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                        Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
 
                     CustomHttpResponse resp =
-                        await TransactionsInteractorEF.DeleteTransactions(
+                        await TransactionsInteractorEf.DeleteTransactions(
                             TransactionsPersistence.DeleteTransactionsPersistence, transactionId, Guid.Parse(uid));
                     return resp;
                 }
@@ -189,22 +189,22 @@ namespace BudgifyAPI.Transactions.Controller
             {
                 try
                 {
-                    var received_uid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {received_uid}");
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid = req.Headers["X-User-Id"];
+                    Console.WriteLine($"Received uid: {receivedUid}");
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Bad Request",
+                            Status = 400,
+                            Message = "Bad Request",
                         };
                     }
 
                     var uid = CustomEncryptor.DecryptString(
-                        Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                        Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
 
                     CustomHttpResponse resp =
-                        await TransactionsInteractorEF.GetCategories(TransactionsPersistence.GetCategoriesPersistence,
+                        await TransactionsInteractorEf.GetCategories(TransactionsPersistence.GetCategoriesPersistence,
                             Guid.Parse(uid));
                     return resp;
                 }
@@ -218,21 +218,21 @@ namespace BudgifyAPI.Transactions.Controller
             {
                 try
                 {
-                    var received_uid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {received_uid}");
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid = req.Headers["X-User-Id"];
+                    Console.WriteLine($"Received uid: {receivedUid}");
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Bad Request",
+                            Status = 400,
+                            Message = "Bad Request",
                         };
                     }
 
                     var uid = CustomEncryptor.DecryptString(
-                        Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                        Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
                     CustomHttpResponse resp =
-                        await TransactionsInteractorEF.AddCategories(TransactionsPersistence.AddCategoriesPersistence,
+                        await TransactionsInteractorEf.AddCategories(TransactionsPersistence.AddCategoriesPersistence,
                             categories, Guid.Parse(uid));
                     return resp;
                 }
@@ -247,21 +247,21 @@ namespace BudgifyAPI.Transactions.Controller
                 {
                     try
                     {
-                        var received_uid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {received_uid}");
-                        if (string.IsNullOrEmpty(received_uid))
+                        var receivedUid = req.Headers["X-User-Id"];
+                        Console.WriteLine($"Received uid: {receivedUid}");
+                        if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
                             {
-                                status = 400,
-                                message = "Bad Request",
+                                Status = 400,
+                                Message = "Bad Request",
                             };
                         }
 
                         var uid = CustomEncryptor.DecryptString(
-                            Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                            Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
                         CustomHttpResponse resp =
-                            await TransactionsInteractorEF.UpdateCategories(
+                            await TransactionsInteractorEf.UpdateCategories(
                                 TransactionsPersistence.UpdateCategoriesPersistence, categoryId, name, Guid.Parse(uid));
                         return resp;
                     }
@@ -275,22 +275,22 @@ namespace BudgifyAPI.Transactions.Controller
             {
                 try
                 {
-                    var received_uid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {received_uid}");
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid = req.Headers["X-User-Id"];
+                    Console.WriteLine($"Received uid: {receivedUid}");
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Bad Request",
+                            Status = 400,
+                            Message = "Bad Request",
                         };
                     }
 
                     var uid = CustomEncryptor.DecryptString(
-                        Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                        Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
 
                     CustomHttpResponse resp =
-                        await TransactionsInteractorEF.DeleteCategory(TransactionsPersistence.DeleteCategoryPersistence,
+                        await TransactionsInteractorEf.DeleteCategory(TransactionsPersistence.DeleteCategoryPersistence,
                             categoryId, Guid.Parse(uid));
                     return resp;
                 }
@@ -304,22 +304,22 @@ namespace BudgifyAPI.Transactions.Controller
             {
                 try
                 {
-                    var received_uid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {received_uid}");
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid = req.Headers["X-User-Id"];
+                    Console.WriteLine($"Received uid: {receivedUid}");
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Bad Request",
+                            Status = 400,
+                            Message = "Bad Request",
                         };
                     }
 
                     var uid = CustomEncryptor.DecryptString(
-                        Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                        Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
 
                     CustomHttpResponse resp =
-                        await TransactionsInteractorEF.GetSubcategories(TransactionsPersistence.GetSubcategoriesPersistence,
+                        await TransactionsInteractorEf.GetSubcategories(TransactionsPersistence.GetSubcategoriesPersistence,
                             Guid.Parse(uid));
                     return resp;
                 }
@@ -334,22 +334,22 @@ namespace BudgifyAPI.Transactions.Controller
                 {
                     try
                     {
-                        var received_uid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {received_uid}");
-                        if (string.IsNullOrEmpty(received_uid))
+                        var receivedUid = req.Headers["X-User-Id"];
+                        Console.WriteLine($"Received uid: {receivedUid}");
+                        if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
                             {
-                                status = 400,
-                                message = "Bad Request",
+                                Status = 400,
+                                Message = "Bad Request",
                             };
                         }
 
                         var uid = CustomEncryptor.DecryptString(
-                            Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                            Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
 
                         CustomHttpResponse resp =
-                            await TransactionsInteractorEF.AddSubcategories(
+                            await TransactionsInteractorEf.AddSubcategories(
                                 TransactionsPersistence.AddSubcategoriesPersistence, subcategories, Guid.Parse(uid));
                         return resp;
                     }
@@ -364,21 +364,21 @@ namespace BudgifyAPI.Transactions.Controller
                 {
                     try
                     {
-                        var received_uid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {received_uid}");
-                        if (string.IsNullOrEmpty(received_uid))
+                        var receivedUid = req.Headers["X-User-Id"];
+                        Console.WriteLine($"Received uid: {receivedUid}");
+                        if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
                             {
-                                status = 400,
-                                message = "Bad Request",
+                                Status = 400,
+                                Message = "Bad Request",
                             };
                         }
 
                         var uid = CustomEncryptor.DecryptString(
-                            Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                            Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
                         CustomHttpResponse resp =
-                            await TransactionsInteractorEF.UpdateSubcategories(
+                            await TransactionsInteractorEf.UpdateSubcategories(
                                 TransactionsPersistence.UpdateSubcategoriesPersistence, subcategoryId, name,
                                 Guid.Parse(uid));
                         return resp;
@@ -394,21 +394,21 @@ namespace BudgifyAPI.Transactions.Controller
                 {
                     try
                     {
-                        var received_uid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {received_uid}");
-                        if (string.IsNullOrEmpty(received_uid))
+                        var receivedUid = req.Headers["X-User-Id"];
+                        Console.WriteLine($"Received uid: {receivedUid}");
+                        if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
                             {
-                                status = 400,
-                                message = "Bad Request",
+                                Status = 400,
+                                Message = "Bad Request",
                             };
                         }
 
                         var uid = CustomEncryptor.DecryptString(
-                            Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                            Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
                         CustomHttpResponse resp =
-                            await TransactionsInteractorEF.DeleteSubcategory(
+                            await TransactionsInteractorEf.DeleteSubcategory(
                                 TransactionsPersistence.DeleteSubcategoryPersistence, subcategoryId, Guid.Parse(uid));
                         return resp;
                     }
@@ -422,22 +422,22 @@ namespace BudgifyAPI.Transactions.Controller
             {
                 try
                 {
-                    var received_uid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {received_uid}");
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid = req.Headers["X-User-Id"];
+                    Console.WriteLine($"Received uid: {receivedUid}");
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Bad Request",
+                            Status = 400,
+                            Message = "Bad Request",
                         };
                     }
 
                     var uid = CustomEncryptor.DecryptString(
-                        Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                        Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
 
                     CustomHttpResponse resp =
-                        await TransactionsInteractorEF.GetReocurring(TransactionsPersistence.GetReocurringPersistence,
+                        await TransactionsInteractorEf.GetReocurring(TransactionsPersistence.GetReocurringPersistence,
                             Guid.Parse(uid));
                     return resp;
                 }
@@ -452,22 +452,22 @@ namespace BudgifyAPI.Transactions.Controller
                 {
                     try
                     {
-                        var received_uid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {received_uid}");
-                        if (string.IsNullOrEmpty(received_uid))
+                        var receivedUid = req.Headers["X-User-Id"];
+                        Console.WriteLine($"Received uid: {receivedUid}");
+                        if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
                             {
-                                status = 400,
-                                message = "Bad Request",
+                                Status = 400,
+                                Message = "Bad Request",
                             };
                         }
 
                         var uid = CustomEncryptor.DecryptString(
-                            Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                            Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
 
                         CustomHttpResponse resp =
-                            await TransactionsInteractorEF.AddReocurring(
+                            await TransactionsInteractorEf.AddReocurring(
                                 TransactionsPersistence.AddReocurringPersistence,
                                 reocurring, Guid.Parse(uid));
                         return resp;
@@ -483,20 +483,20 @@ namespace BudgifyAPI.Transactions.Controller
                 {
                     try
                     {
-                        var received_uid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {received_uid}");
-                        if (string.IsNullOrEmpty(received_uid))
+                        var receivedUid = req.Headers["X-User-Id"];
+                        Console.WriteLine($"Received uid: {receivedUid}");
+                        if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
                             {
-                                status = 400,
-                                message = "Bad Request",
+                                Status = 400,
+                                Message = "Bad Request",
                             };
                         }
 
                         var uid = CustomEncryptor.DecryptString(
-                            Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
-                        CustomHttpResponse resp = await TransactionsInteractorEF.UpdateReocurring(
+                            Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
+                        CustomHttpResponse resp = await TransactionsInteractorEf.UpdateReocurring(
                             TransactionsPersistence.UpdateReocurringPersistence, reocurringId, reocurring,
                             Guid.Parse(uid));
                         return resp;
@@ -512,21 +512,21 @@ namespace BudgifyAPI.Transactions.Controller
                 {
                     try
                     {
-                        var received_uid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {received_uid}");
-                        if (string.IsNullOrEmpty(received_uid))
+                        var receivedUid = req.Headers["X-User-Id"];
+                        Console.WriteLine($"Received uid: {receivedUid}");
+                        if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
                             {
-                                status = 400,
-                                message = "Bad Request",
+                                Status = 400,
+                                Message = "Bad Request",
                             };
                         }
 
                         var uid = CustomEncryptor.DecryptString(
-                            Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                            Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
                         CustomHttpResponse resp =
-                            await TransactionsInteractorEF.DeleteReocurring(
+                            await TransactionsInteractorEf.DeleteReocurring(
                                 TransactionsPersistence.DeleteReocurringPersistence, reocurringId, Guid.Parse(uid));
                         return resp;
                     }
@@ -536,55 +536,26 @@ namespace BudgifyAPI.Transactions.Controller
                         throw;
                     }
                 });
-            application.MapGet($"{baseRoute}/group", async (HttpRequest req) =>
-            {
-                try
-                {
-                    var received_uid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {received_uid}");
-                    if (string.IsNullOrEmpty(received_uid))
-                    {
-                        return new CustomHttpResponse()
-                        {
-                            status = 400,
-                            message = "Bad Request",
-                        };
-                    }
-
-                    var uid = CustomEncryptor.DecryptString(
-                        Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
-
-                    CustomHttpResponse resp =
-                        await TransactionsInteractorEF.GetTransactionGroup(TransactionsPersistence.GetTransactionGroupPersistence,
-                            Guid.Parse(uid));
-                    return resp;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    throw;
-                }
-            });
             application.MapPost($"{baseRoute}/transaction-group",
                 async (HttpRequest req, [FromBody] CreateTransactionGroup transactionGroup) =>
                 {
                     try
                     {
-                        var received_uid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {received_uid}");
-                        if (string.IsNullOrEmpty(received_uid))
+                        var receivedUid = req.Headers["X-User-Id"];
+                        Console.WriteLine($"Received uid: {receivedUid}");
+                        if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
                             {
-                                status = 400,
-                                message = "Bad Request",
+                                Status = 400,
+                                Message = "Bad Request",
                             };
                         }
 
                         var uid = CustomEncryptor.DecryptString(
-                            Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                            Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
 
-                        CustomHttpResponse resp = await TransactionsInteractorEF.AddTransactionGroup(
+                        CustomHttpResponse resp = await TransactionsInteractorEf.AddTransactionGroup(
                             TransactionsPersistence.AddTransactionGroupPersistence, transactionGroup, Guid.Parse(uid));
                         return resp;
                     }
@@ -599,21 +570,21 @@ namespace BudgifyAPI.Transactions.Controller
                 {
                     try
                     {
-                        var received_uid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {received_uid}");
-                        if (string.IsNullOrEmpty(received_uid))
+                        var receivedUid = req.Headers["X-User-Id"];
+                        Console.WriteLine($"Received uid: {receivedUid}");
+                        if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
                             {
-                                status = 400,
-                                message = "Bad Request",
+                                Status = 400,
+                                Message = "Bad Request",
                             };
                         }
 
                         var uid = CustomEncryptor.DecryptString(
-                            Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                            Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
 
-                        CustomHttpResponse resp = await TransactionsInteractorEF.UpdateTransactionGroup(
+                        CustomHttpResponse resp = await TransactionsInteractorEf.UpdateTransactionGroup(
                             TransactionsPersistence.UpdateTransactionGroupPersistence, transactionGroupId,
                             transactionGroup, Guid.Parse(uid));
                         return resp;
@@ -629,22 +600,22 @@ namespace BudgifyAPI.Transactions.Controller
                 {
                     try
                     {
-                        var received_uid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {received_uid}");
-                        if (string.IsNullOrEmpty(received_uid))
+                        var receivedUid = req.Headers["X-User-Id"];
+                        Console.WriteLine($"Received uid: {receivedUid}");
+                        if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
                             {
-                                status = 400,
-                                message = "Bad Request",
+                                Status = 400,
+                                Message = "Bad Request",
                             };
                         }
 
                         var uid = CustomEncryptor.DecryptString(
-                            Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                            Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
 
                         CustomHttpResponse resp =
-                            await TransactionsInteractorEF.DeleteTransactionGroup(
+                            await TransactionsInteractorEf.DeleteTransactionGroup(
                                 TransactionsPersistence.DeleteTransactionGroupPersistence, transactionGroupId,
                                 Guid.Parse(uid));
                         return resp;
@@ -659,21 +630,21 @@ namespace BudgifyAPI.Transactions.Controller
             {
                 try
                 {
-                    var received_uid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {received_uid}");
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid = req.Headers["X-User-Id"];
+                    Console.WriteLine($"Received uid: {receivedUid}");
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Bad Request",
+                            Status = 400,
+                            Message = "Bad Request",
                         };
                     }
 
                     var uid = CustomEncryptor.DecryptString(
-                        Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                        Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
                     CustomHttpResponse resp =
-                        await TransactionsInteractorEF.GetTransactionsGroup(TransactionsPersistence
+                        await TransactionsInteractorEf.GetTransactionsGroup(TransactionsPersistence
                             .GetTransactionsGroupPersistence, Guid.Parse(uid));
                     return resp;
                 }
@@ -684,22 +655,22 @@ namespace BudgifyAPI.Transactions.Controller
                 }
             });
             
-            application.MapGet($"{baseRoute}/gocardless/{{idWallet}}/{{idAccount}}/transactions", async (HttpRequest req, Guid idWallet,string idAccount) => {
+            application.MapGet($"{baseRoute}/gocardless/{{idWallet}}/transactions", async (HttpRequest req, Guid idWallet) => {
                 try {
-                    var received_uid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {received_uid}");
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid = req.Headers["X-User-Id"];
+                    Console.WriteLine($"Received uid: {receivedUid}");
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Bad Request",
+                            Status = 400,
+                            Message = "Bad Request",
                         };
                     }
 
                     var uid = CustomEncryptor.DecryptString(
-                        Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
-                    return await GocardlessInteractor.GetTransactionsInteractor(GocardlessPersistence.GetTransactionsPersistence, idAccount, Guid.Parse(uid),idWallet);
+                        Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
+                    return await GocardlessInteractor.GetTransactionsInteractor(GocardlessPersistence.GetTransactionsPersistence, Guid.Parse(uid),idWallet);
                 } 
                 catch (Exception e)
                 {

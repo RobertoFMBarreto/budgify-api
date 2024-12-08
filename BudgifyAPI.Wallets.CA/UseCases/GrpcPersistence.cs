@@ -20,4 +20,18 @@ public static class GrpcPersistence
             return new List<string>();
         }
     }
+    
+    public static async Task<Wallet?> GetWalletByIdPersistence(Guid walletId,Guid uid)
+    {
+        WalletsContext context = new WalletsContext();
+
+        try {
+            Wallet? wallets = await context.Wallets.Where(x => x.IdUser == uid && x.IdWallet == walletId).FirstOrDefaultAsync();
+            return wallets;
+        }
+        catch (Exception ex) {
+            Console.WriteLine(ex);
+            return null;
+        }
+    }
 }

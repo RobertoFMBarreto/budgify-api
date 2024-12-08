@@ -1,0 +1,159 @@
+services:
+  budgify-accounts:
+    image: robertoid/budgify-api-accounts
+    container_name: budgify-api-accounts
+    restart: unless-stopped
+    depends_on:
+      - "budgify-accounts-db"
+    ports:
+      - "65084:65084"
+      - "65085:65085"
+    volumes:
+      - ./certs:/app/certs
+    environment:
+      - ConnectionStrings__budgify_db=VXNlciBJRD1wb3N0Z3JlcztQYXNzd29yZD1idWRnaWZ5O1NlcnZlcj1idWRnaWZ5LWRiLWFjY291bnRzO1BvcnQ9NDI3NjU7RGF0YWJhc2U9QWNjb3VudHM7IEludGVncmF0ZWRTZWN1cml0eT10cnVlO1Bvb2xpbmc9dHJ1ZTs=
+      - keys__paseto_key=T3LdoYhiPmhPAQ5Q02Yi5STvIqcoovduApc/pJYU/E4=
+      - keys__budgify_key=NiEuj9qpcB8fll00ocG43kMmuV3nOsm3Gw4jJCTWT00=
+      - grpc__authservice=aHR0cHM6Ly9idWRnaWZ5LWF1dGg6NjUwODM=
+    networks:
+      - budgify_net_bridge
+  budgify-auth:
+    image: robertoid/budgify-api-auth
+    container_name: budgify-api-auth
+    restart: unless-stopped
+    volumes:
+      - ./certs:/app/certs
+    depends_on:
+      - "budgify-auth-db"
+    ports:
+      - "65082:65082"
+      - "65083:65083"
+    environment:
+      - ConnectionStrings__budgify_db=VXNlciBJRD1wb3N0Z3JlcztQYXNzd29yZD1idWRnaWZ5O1NlcnZlcj1idWRnaWZ5LWRiLWF1dGg7UG9ydD00Mjc2NjtEYXRhYmFzZT1BdXRoZW50aWNhdGlvbjsgSW50ZWdyYXRlZFNlY3VyaXR5PXRydWU7UG9vbGluZz10cnVlOw==
+      - keys__paseto_key=T3LdoYhiPmhPAQ5Q02Yi5STvIqcoovduApc/pJYU/E4=
+      - keys__budgify_key=NiEuj9qpcB8fll00ocG43kMmuV3nOsm3Gw4jJCTWT00=
+      - grpc__accountservice=aHR0cHM6Ly9idWRnaWZ5LWFjY291bnRzOjY1MDg1
+    networks:
+      - budgify_net_bridge
+  budgify-wallets:
+    image: robertoid/budgify-api-wallets
+    container_name: budgify-api-wallets
+    restart: unless-stopped
+    volumes:
+      - ./certs:/app/certs
+    depends_on:
+      - "budgify-wallets-db"
+    ports:
+      - "65088:65088"
+      - "65089:65089"
+    environment:
+      - ConnectionStrings__budgify_db=User ID=postgres;Password=budgify;Server=budgify-db-wallets;Port=42767;Database=Wallets; IntegratedSecurity=true;Pooling=true;
+      - gocardless__secret_id=MzMwMjQ1YzctYjNlZS00YmY3LWJlNjQtMTU0ZWVlNmE1YTky
+      - gocardless__secret_key=ZmQ4YjY2M2VjNWFlNTNiNzQxNmE1ZjM5MTI2NDJmNWM0OTZmMzE4MmE3YTE2ZDAwNGE0YmE2MjFlOTM3MmQ5MWVlMWIzYTg3NWI3YmY0MGY2ZjU4ZjNkZGRlZGFmOWRhNjJhZTE0MmE4YmNkYzcwNWM3NmI1NGY0OWM4ZTM4NjU=
+      - keys__paseto_key=T3LdoYhiPmhPAQ5Q02Yi5STvIqcoovduApc/pJYU/E4=
+      - keys__budgify_key=NiEuj9qpcB8fll00ocG43kMmuV3nOsm3Gw4jJCTWT00=
+    networks:
+      - budgify_net_bridge
+  budgify-transactions:
+    image: robertoid/budgify-api-transactions
+    container_name: budgify-api-transactions
+    restart: unless-stopped
+    volumes:
+      - ./certs:/app/certs
+    depends_on:
+      - "budgify-transactions-db"
+    ports:
+      - "65086:65086"
+      - "65087:65087"
+    environment:
+      - ConnectionStrings__budgify_db=VXNlciBJRD1wb3N0Z3JlcztQYXNzd29yZD1idWRnaWZ5O1NlcnZlcj1idWRnaWZ5LWRiLXRyYW5zYWN0aW9ucztQb3J0PTQyNzY4O0RhdGFiYXNlPVRyYW5zYWN0aW9uczsgSW50ZWdyYXRlZFNlY3VyaXR5PXRydWU7UG9vbGluZz10cnVlOw==
+      - gocardless__secret_id=MzMwMjQ1YzctYjNlZS00YmY3LWJlNjQtMTU0ZWVlNmE1YTky
+      - gocardless__secret_key=ZmQ4YjY2M2VjNWFlNTNiNzQxNmE1ZjM5MTI2NDJmNWM0OTZmMzE4MmE3YTE2ZDAwNGE0YmE2MjFlOTM3MmQ5MWVlMWIzYTg3NWI3YmY0MGY2ZjU4ZjNkZGRlZGFmOWRhNjJhZTE0MmE4YmNkYzcwNWM3NmI1NGY0OWM4ZTM4NjU=
+      - keys__paseto_key=T3LdoYhiPmhPAQ5Q02Yi5STvIqcoovduApc/pJYU/E4=
+      - keys__budgify_key=NiEuj9qpcB8fll00ocG43kMmuV3nOsm3Gw4jJCTWT00=
+      - grpc__walletservice=aHR0cHM6Ly9idWRnaWZ5LXdhbGxldHM6NjUwODk=
+    networks:
+      - budgify_net_bridge
+  budgify-gateway:
+    image: robertoid/budgify-api-gateway
+    container_name: budgify-api-gateway
+    restart: unless-stopped
+    volumes:
+      - ./certs:/app/certs
+    depends_on:
+      - "budgify-accounts"
+      - "budgify-auth"
+      - "budgify-wallets"
+      - "budgify-transactions"
+    ports:
+      - "65080:65080"
+      - "65081:65081"
+    environment:
+      - keys__paseto_key=T3LdoYhiPmhPAQ5Q02Yi5STvIqcoovduApc/pJYU/E4=
+      - keys__budgify_key=NiEuj9qpcB8fll00ocG43kMmuV3nOsm3Gw4jJCTWT00=
+      - grpc__authservice=aHR0cHM6Ly9idWRnaWZ5LWF1dGg6NjUwODM=
+    networks:
+      - budgify_net_bridge
+  budgify-accounts-db:
+    image: postgres:17.2
+    container_name: "budgify-accounts-db"
+    environment:
+      - POSTGRES_PASSWORD=budgify
+      - POSTGRES_DB=Accounts
+    ports:
+      - "42765:5432"
+    restart: unless-stopped
+    volumes:
+      - budgify_accounts_db_data:/var/lib/budgify_accounts_db/db_data
+      - ./sql/create_tables_accounts.sql:/docker-entrypoint-initdb.d/create_tables_accounts.sql
+    networks:
+      - budgify_net_bridge
+  budgify-auth-db:
+    image: postgres:17.2
+    container_name: "budgify-auth-db"
+    environment:
+      - POSTGRES_PASSWORD=budgify
+      - POSTGRES_DB=Authentication
+    ports:
+      - "42766:5432"
+    restart: unless-stopped
+    volumes:
+      - budgify_auth_db_data:/var/lib/budgify_auth_db/db_data
+      - ./sql/create_tables_auth.sql:/docker-entrypoint-initdb.d/create_tables_auth.sql
+    networks:
+      - budgify_net_bridge
+  budgify-wallets-db:
+    image: postgres:17.2
+    container_name: "budgify-wallets-db"
+    environment:
+      - POSTGRES_PASSWORD=budgify
+      - POSTGRES_DB=Wallets
+    ports:
+      - "42767:5432"
+    restart: unless-stopped
+    volumes:
+      - budgify_wallets_db_data:/var/lib/budgify_wallets_db/db_data
+      - ./sql/create_tables_wallets.sql:/docker-entrypoint-initdb.d/create_tables_wallets.sql
+    networks:
+      - budgify_net_bridge
+  budgify-transactions-db:
+    image: postgres:17.2
+    container_name: "budgify-transactions-db"
+    environment:
+      - POSTGRES_PASSWORD=budgify
+      - POSTGRES_DB=Transactions
+    ports:
+      - "42768:5432"
+    restart: unless-stopped
+    volumes:
+      - budgify_transactions_db_data:/var/lib/budgify_transactions_db/db_data
+      - ./sql/create_tables_transactions.sql:/docker-entrypoint-initdb.d/create_tables_transactions.sql
+    networks:
+      - budgify_net_bridge
+networks:
+  budgify_net_bridge:
+volumes:
+  budgify_accounts_db_data:
+  budgify_auth_db_data:
+  budgify_wallets_db_data:
+  budgify_transactions_db_data:

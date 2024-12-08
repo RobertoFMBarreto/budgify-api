@@ -16,11 +16,9 @@ public static class PasetoManager
     public static string GeneratePasetoToken(Guid userId, string role)
     {
 
-        var environmentName =
-            Environment.GetEnvironmentVariable(
-                "ASPNETCORE_ENVIRONMENT");
-        var config = new ConfigurationBuilder().AddJsonFile("appsettings" + (String.IsNullOrWhiteSpace(environmentName) ? "" : "." + environmentName) + ".json", false).Build();
-        Byte[]key = Convert.FromBase64String(config["keys:paseto-key"]);
+        Byte[] key =
+            Convert.FromBase64String( Environment.GetEnvironmentVariable(
+                "keys__paseto_key"));
         
         var token = new PasetoBuilder().Use(ProtocolVersion.V4, Purpose.Local)
             .WithKey(key, Encryption.SymmetricKey)
@@ -39,11 +37,9 @@ public static class PasetoManager
     public static string GenerateRefreshPasetoToken(Guid userId)
     {
 
-        var environmentName =
-            Environment.GetEnvironmentVariable(
-                "ASPNETCORE_ENVIRONMENT");
-        var config = new ConfigurationBuilder().AddJsonFile("appsettings" + (String.IsNullOrWhiteSpace(environmentName) ? "" : "." + environmentName) + ".json", false).Build();
-        Byte[]key = Convert.FromBase64String(config["keys:paseto-key"]);
+        Byte[] key =
+            Convert.FromBase64String( Environment.GetEnvironmentVariable(
+                "keys__paseto_key"));
         
         var token = new PasetoBuilder().Use(ProtocolVersion.V4, Purpose.Local)
             .WithKey(key, Encryption.SymmetricKey)
@@ -60,12 +56,9 @@ public static class PasetoManager
 
     public static PasetoTokenValidationResult DecodePasetoToken(string token)
     {
-        var environmentName =
-            Environment.GetEnvironmentVariable(
-                "ASPNETCORE_ENVIRONMENT");
-        var config = new ConfigurationBuilder().AddJsonFile("appsettings" + (String.IsNullOrWhiteSpace(environmentName) ? "" : "." + environmentName) + ".json", false).Build();
-
-        Byte[]key = Convert.FromBase64String(config["keys:paseto-key"]);
+        Byte[] key =
+            Convert.FromBase64String( Environment.GetEnvironmentVariable(
+                "keys__paseto_key"));
         var valParams = new PasetoTokenValidationParameters
         {
             ValidateLifetime = true,

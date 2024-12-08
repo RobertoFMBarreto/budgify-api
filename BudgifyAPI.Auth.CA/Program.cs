@@ -1,8 +1,12 @@
+using System.Net;
+using System.Text;
 using Authservice;
 using BudgifyAPI.Auth.CA.controllers;
 using BudgifyAPI.Auth.CA.Entities;
+using BudgifyAPI.Auth.CA.UseCases;
 using Grpc.AspNetCore;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Validateuserservice;
 
 
 // Add services to the container.
@@ -66,13 +70,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddGrpc();
+builder.Services.AddGrpc(options =>
+{
+    options.EnableDetailedErrors = true;
+});
 builder.WebHost.ConfigureKestrel(options =>
 {
-    options.ListenLocalhost(5066, o=>o.Protocols=HttpProtocols.Http1);
-    options.ListenLocalhost(5067, o => { 
+    options.Listen(IPAddress.Any,65082, o=>o.Protocols=HttpProtocols.Http1);
+    options.Listen(IPAddress.Any,65083, o => { 
         o.Protocols = HttpProtocols.Http2;
-        o.UseHttps();
+        o.UseHttps("/app/certs/shared.pfx", "budgify");
     });
 });
 

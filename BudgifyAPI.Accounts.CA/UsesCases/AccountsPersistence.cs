@@ -6,6 +6,8 @@ using Npgsql;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Security.Cryptography;
+using Authservice;
+using BudgifyAPI.Auth.CA.Entities.Requests;
 
 namespace BudgifyAPI.Accounts.CA.UsesCases
 {
@@ -21,15 +23,15 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        status = 400,
-                        message = "User already has group",
+                        Status = 400,
+                        Message = "User already has group",
                     };
                 }
 
                 UserGroup userGroup = new UserGroup()
                 {
                     IdUserGroup = Guid.NewGuid(),
-                    Name = name.name,
+                    Name = name.Name,
                 };
                 await accountsContext.UserGroups.AddAsync(userGroup);
                 
@@ -39,16 +41,16 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 await accountsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "User group added successfully",
-                    status = 200
+                    Message = "User group added successfully",
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -62,8 +64,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "Group doesn't exist",
-                        status = 400
+                        Message = "Group doesn't exist",
+                        Status = 400
                     };
                 }
                 
@@ -72,18 +74,18 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        status = 400,
-                        message = "Group doesn't exist",
+                        Status = 400,
+                        Message = "Group doesn't exist",
                     };
                 }
-                userGroupExist.Name = name.name;
+                userGroupExist.Name = name.Name;
                 accountsContext.UserGroups.Update(userGroupExist);
                 await accountsContext.SaveChangesAsync();
 
                 return new CustomHttpResponse()
                 {
-                    message = "User group updated successfully",
-                    status = 200
+                    Message = "User group updated successfully",
+                    Status = 200
                 };
                 
             }
@@ -91,8 +93,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -106,8 +108,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        status = 400,
-                        message = "Group doesn't exist",
+                        Status = 400,
+                        Message = "Group doesn't exist",
                     };
                 }
                 var isFromUser = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == userId && x.IsAdmin == true);
@@ -115,8 +117,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        status = 400,
-                        message = "Group doesn't exist",
+                        Status = 400,
+                        Message = "Group doesn't exist",
                     };
                 }
                 
@@ -126,16 +128,16 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 await accountsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "User group removed successfully",
-                    status = 200
+                    Message = "User group removed successfully",
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
 
@@ -150,8 +152,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        status = 400,
-                        message = "Group doesn't exist",
+                        Status = 400,
+                        Message = "Group doesn't exist",
                     };
                 }
                 var isFromUser = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == userId);
@@ -159,13 +161,13 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        status = 400,
-                        message = "Group doesn't exist",
+                        Status = 400,
+                        Message = "Group doesn't exist",
                     };
                 }
                 return new CustomHttpResponse()
                 {
-                    status = 200,
+                    Status = 200,
                     Data = userGroupExist,
 
                 };
@@ -174,8 +176,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
             {
                 return new CustomHttpResponse()
                 {
-                    status = 500,
-                    message = ex.Message
+                    Status = 500,
+                    Message = ex.Message
                 };
             }
         }
@@ -190,15 +192,15 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        status = 200,
-                        message = "User doesn't have group",
+                        Status = 200,
+                        Message = "User doesn't have group",
                     };
                 }
                 var userGroups = await accountsContext.UserGroups.FirstOrDefaultAsync(x => x.IdUserGroup == user.IdUserGroup);
                 
                 return new CustomHttpResponse()
                 {
-                    status = 200,
+                    Status = 200,
                     Data = userGroups,
 
                 };
@@ -207,8 +209,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
             {
                 return new CustomHttpResponse()
                 {
-                    status = 500,
-                    message = ex.Message
+                    Status = 500,
+                    Message = ex.Message
                 };
             }
         }
@@ -222,8 +224,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "Group does not exist",
-                        status = 400
+                        Message = "Group does not exist",
+                        Status = 400
                     };
                 }
                 var isFromUser = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == userId &&
@@ -232,8 +234,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        status = 400,
-                        message = "Group doesn't exist",
+                        Status = 400,
+                        Message = "Group doesn't exist",
                     };
                 }
                 var userExist = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == addUserId);
@@ -241,16 +243,16 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "User does not exist",
-                        status = 400
+                        Message = "User does not exist",
+                        Status = 400
                     };
                 }
                 if (userExist.IdUserGroup != null)
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "User is already in a user group",
-                        status = 400
+                        Message = "User is already in a user group",
+                        Status = 400
                     };
                 }
                 
@@ -260,16 +262,16 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 var result = accountsContext.Database.ExecuteSqlRawAsync(query, new NpgsqlParameter("@IdUserGroup", userGroupId), new NpgsqlParameter("@IdUser", addUserId));
                 return new CustomHttpResponse()
                 {
-                    message = "User added to a user group successfully",
-                    status = 200
+                    Message = "User added to a user group successfully",
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    status = 500,
-                    message = ex.Message
+                    Status = 500,
+                    Message = ex.Message
                 };
             }
         }
@@ -283,8 +285,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "Group does not exist",
-                        status = 400
+                        Message = "Group does not exist",
+                        Status = 400
                     };
                 }
                 var isFromUser = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == userId &&
@@ -293,8 +295,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        status = 400,
-                        message = "Group doesn't exist",
+                        Status = 400,
+                        Message = "Group doesn't exist",
                     };
                 }
                 var userExist = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == removeUserId);
@@ -302,16 +304,16 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "User does not exist",
-                        status = 400
+                        Message = "User does not exist",
+                        Status = 400
                     };
                 }
                 if (userExist.IdUserGroup != existGroup.IdUserGroup)
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "User is in another group",
-                        status = 400
+                        Message = "User is in another group",
+                        Status = 400
                     };
                 }
                 string query = "update public.user " +
@@ -320,8 +322,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 var result = accountsContext.Database.ExecuteSqlRawAsync(query, new NpgsqlParameter("@IdUser", userId));
                 return new CustomHttpResponse()
                 {
-                    message = "User removed successfully",
-                    status = 200
+                    Message = "User removed successfully",
+                    Status = 200
                 };
 
             }
@@ -329,8 +331,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -344,8 +346,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "User does not exist",
-                        status = 400
+                        Message = "User does not exist",
+                        Status = 400
                     };
                 }
                 var isFromUser = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == userId && x.IsAdmin == true);
@@ -353,8 +355,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        status = 400,
-                        message = "Group doesn't exist",
+                        Status = 400,
+                        Message = "Group doesn't exist",
                     };
                 }
                 var userExist = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == managerId);
@@ -362,16 +364,16 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "User group does not exist",
-                        status = 400
+                        Message = "User group does not exist",
+                        Status = 400
                     };
                 }
                 if (userExist.IdUserGroup != existGroup.IdUserGroup)
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "User is already in a user group",
-                        status = 400
+                        Message = "User is already in a user group",
+                        Status = 400
                     };
                 }
                 string query = "update public.user " +
@@ -385,16 +387,16 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
 
                 return new CustomHttpResponse()
                 {
-                    message = "Manager added successfully",
-                    status = 200
+                    Message = "Manager added successfully",
+                    Status = 200
                 }; 
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -407,8 +409,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 if (userExist == null)
                     return new CustomHttpResponse()
                     {
-                        message = "Manager does not exist",
-                        status = 400
+                        Message = "Manager does not exist",
+                        Status = 400
                     };
                 
                 var existGroup = await accountsContext.UserGroups.FirstOrDefaultAsync(x => x.IdUserGroup == idUserGroup);
@@ -416,8 +418,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "User does not exist",
-                        status = 400
+                        Message = "User does not exist",
+                        Status = 400
                     };
                 }
                 var isFromUser = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == userId && x.IsAdmin == true);
@@ -425,8 +427,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        status = 400,
-                        message = "Group doesn't exist",
+                        Status = 400,
+                        Message = "Group doesn't exist",
                     };
                 }
                 
@@ -434,8 +436,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        status = 400,
-                        message = "User is in another group",
+                        Status = 400,
+                        Message = "User is in another group",
                     };
                 }
                 
@@ -447,8 +449,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 await accountsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Manager removed successfully",
-                    status = 200
+                    Message = "Manager removed successfully",
+                    Status = 200
                 };
 
                 
@@ -457,8 +459,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -472,30 +474,32 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "User already exist",
-                        status = 400
+                        Message = "User already exist",
+                        Status = 400
                     };
                 }
+                string hash = BCrypt.Net.BCrypt.HashPassword(createUser.Password);
                 await accountsContext.Users.AddAsync(new User
                 {
 
                     IdUserGroup = createUser.IdUserGroup,
                     Name = createUser.Name,
                     Email = createUser.Email,
-                    Password = createUser.Password,
+                    Password = hash,
                     DateOfBirth = createUser.DateOfBirth,
                     Genre = createUser.Genre,
                     IsActive = true,
                     IsAdmin = false,
                     IsManager = false,
+                    IsSuperAdmin = false,
                     AllowWalletWatch = createUser.AllowWalletWatch
 
                 });
                 await accountsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "User added successfully",
-                    status = 200
+                    Message = "User added successfully",
+                    Status = 200
                 };
 
             }
@@ -503,11 +507,71 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
+        
+        
+        public static async Task<CustomHttpResponse> NewPasswordPersistence(NewPasswordRequest request)
+        {
+            AccountsContext context = new AccountsContext();
+            try
+            {
+                bool isValid = request.Validate();
+
+                if (!isValid)
+                {
+                    return new CustomHttpResponse()
+                    {
+                        Message = "missing fields",
+                        Status = 400
+                    };
+                }
+            
+                User? user = await context.Users.Where(u => u.Email == request.Email).FirstOrDefaultAsync();
+                if (user == null)
+                {
+                    return new CustomHttpResponse()
+                    {
+                        Message = "Email or password is incorrect",
+                        Status = 400
+                    };
+                }
+            
+                bool isSamePassword = BCrypt.Net.BCrypt.Verify(request.OldPassword, user.Password);
+                if (!isSamePassword)
+                {
+                    return new CustomHttpResponse()
+                    {
+                        Message = "Old password does not match",
+                        Status = 400
+                    };
+                }
+            
+                string hash = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
+                user.Password = hash;
+                await AuthServiceClient.LogoutUser(user.IdUser.ToString());
+                context.Users.Update(user);
+                await context.SaveChangesAsync();
+                return new CustomHttpResponse()
+                {
+                    Message = "success",
+                    Status = 200
+                };
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new CustomHttpResponse()
+                {
+                    Message = e.Message,
+                    Status = 500
+                };
+            }
+        }
+        
         public static async Task<CustomHttpResponse> UpdateUserPersistence(Guid userId, CreateUser createUser)
         {
             AccountsContext accountsContext = new AccountsContext();
@@ -518,8 +582,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "User does not exist",
-                        status = 400
+                        Message = "User does not exist",
+                        Status = 400
                     };
                 }
 
@@ -539,16 +603,16 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 await accountsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "User added successfully",
-                    status = 200
+                    Message = "User added successfully",
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -562,8 +626,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "User does not exist",
-                        status = 400
+                        Message = "User does not exist",
+                        Status = 400
                     };
                 }
                 string query = "update public.user " +
@@ -573,16 +637,16 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 await accountsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "User removed successfully",
-                    status = 200
+                    Message = "User removed successfully",
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -596,8 +660,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "User does not exist",
-                        status = 400
+                        Message = "User does not exist",
+                        Status = 400
                     };
                 }
                 string query = "update public.user " +
@@ -607,16 +671,16 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 await accountsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "User added successfully",
-                    status = 200
+                    Message = "User added successfully",
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -629,7 +693,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 List<User> listUsers = await accountsContext.Users.FromSqlRaw(query).ToListAsync();
                 return new CustomHttpResponse()
                 {
-                    status = 200,
+                    Status = 200,
                     Data = listUsers
                 };
             }
@@ -637,8 +701,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -652,15 +716,15 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "User does not exist",
-                        status = 400
+                        Message = "User does not exist",
+                        Status = 400
                     };
                 }
                 string query = "select * from public.user where id_user = @IdUSer";
                 var user = await accountsContext.Users.FromSqlRaw(query, new NpgsqlParameter("@IdUser", userId)).FirstOrDefaultAsync();
                 return new CustomHttpResponse()
                 {
-                    status = 200,
+                    Status = 200,
                     Data = user
                 };
             }
@@ -668,10 +732,12 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
+        
+        
     }
 }

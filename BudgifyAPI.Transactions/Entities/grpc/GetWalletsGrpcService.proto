@@ -21,9 +21,10 @@ message GetWalletByIdRequest {
 }
 
 message GetWalletByIdResponse {
-  string accountId = 1;
-  bool storeInCloud = 2;
+  optional string accountId = 1;
+  optional bool storeInCloud = 2;
 }
+
 
 
 

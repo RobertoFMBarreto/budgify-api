@@ -2,8 +2,8 @@
 {
     public class CustomHttpResponse
     {
-        public int status { get; set; }
-        public string message { get; set; }
+        public int Status { get; set; }
+        public string Message { get; set; }
         public object Data{ get; set; }
     }
 }

@@ -11,6 +11,7 @@ using Grpc.Net.Client;
      
      public static async Task<bool> ValidateRefreshTokenAsync(string token, string userAgent)
      {
+        
          var channel = GrpcChannel.ForAddress(Encoding.UTF8.GetString(Convert.FromBase64String(Environment.GetEnvironmentVariable(
              "grpc__authservice"))));
          AuthService.AuthServiceClient client = new AuthService.AuthServiceClient(channel);

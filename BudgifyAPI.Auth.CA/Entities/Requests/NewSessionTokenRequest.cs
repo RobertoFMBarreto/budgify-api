@@ -4,7 +4,7 @@ public class NewSessionTokenRequest
 {
     public string RefreshToken { get;  set; }
 
-    public bool validate()
+    public bool Validate()
     {
         return string.IsNullOrWhiteSpace(RefreshToken);
     }

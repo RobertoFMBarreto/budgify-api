@@ -4,8 +4,8 @@ namespace BudgifyAPI.Transactions.UseCases;
 
 public class GocardlessInteractor
 {
-    public static async Task<CustomHttpResponse> GetTransactionsInteractor(Func<Guid,string,Guid,Task<CustomHttpResponse>> getTransactionsPersistence, string idAccount, Guid idUser, Guid idWallet)
+    public static async Task<CustomHttpResponse> GetTransactionsInteractor(Func<Guid,Guid,Task<CustomHttpResponse>> getTransactionsPersistence,  Guid idUser, Guid idWallet)
     {
-        return await getTransactionsPersistence(idWallet, idAccount, idUser);
+        return await getTransactionsPersistence(idWallet, idUser);
     }
 }

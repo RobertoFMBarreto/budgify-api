@@ -15,23 +15,22 @@ public class GocardlessPersistence
         
         try
         {
-            var environmentName =
-                Environment.GetEnvironmentVariable(
-                    "ASPNETCORE_ENVIRONMENT");
-            var config = new ConfigurationBuilder().AddJsonFile("appsettings" + (String.IsNullOrWhiteSpace(environmentName) ? "" : "." + environmentName) + ".json", false).Build();
-
-            Byte[]secret_key_bytes = Convert.FromBase64String(config["gocardless:secret-key"]);
-            string secret_key= Encoding.UTF8.GetString(secret_key_bytes);
+            Byte[] secretKeyBytes =
+                Convert.FromBase64String( Environment.GetEnvironmentVariable(
+                    "gocardless__secret_key"));
+            string secretKey= Encoding.UTF8.GetString(secretKeyBytes);
             
-            Byte[]secret_id_bytes = Convert.FromBase64String(config["gocardless:secret-id"]);
-            string secret_id= Encoding.UTF8.GetString(secret_id_bytes);
+            Byte[] secretIdBytes =
+                Convert.FromBase64String( Environment.GetEnvironmentVariable(
+                    "gocardless__secret_id"));
+            string secretId= Encoding.UTF8.GetString(secretIdBytes);
             
             string url = $"https://bankaccountdata.gocardless.com/api/v2/token/new/";
             HttpClient client = new HttpClient();
             var body = new
             {
-                secret_id = secret_id,
-                secret_key = secret_key,
+                secret_id = secretId,
+                secret_key = secretKey,
             };
             string json = JsonSerializer.Serialize(body);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -63,7 +62,7 @@ public class GocardlessPersistence
             var response = await client.SendAsync(requestMessage);
             List<Dictionary<string,object>> banks = JsonSerializer.Deserialize<List<Dictionary<string,object>>>(response.Content.ReadAsStringAsync().Result);
             
-            return new CustomHttpResponse(){status = (int)response.StatusCode, Data = banks};
+            return new CustomHttpResponse(){Status = (int)response.StatusCode, Data = banks};
         }
         catch (Exception e)
         {
@@ -95,7 +94,7 @@ public class GocardlessPersistence
             var response = await client.SendAsync(requestMessage);
             
             Dictionary<string,object> agreement = JsonSerializer.Deserialize<Dictionary<string,object>>(response.Content.ReadAsStringAsync().Result);
-            return new CustomHttpResponse(){status =(int)response.StatusCode, Data = agreement };
+            return new CustomHttpResponse(){Status =(int)response.StatusCode, Data = agreement };
         }
         catch (Exception e)
         {
@@ -127,7 +126,7 @@ public class GocardlessPersistence
             requestMessage.Content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await client.SendAsync(requestMessage);
             Dictionary<string,object> requisition = JsonSerializer.Deserialize<Dictionary<string,object>>(response.Content.ReadAsStringAsync().Result);
-            return new CustomHttpResponse(){status =(int)response.StatusCode, Data =requisition };
+            return new CustomHttpResponse(){Status =(int)response.StatusCode, Data =requisition };
         }
         catch (Exception e)
         {
@@ -149,7 +148,7 @@ public class GocardlessPersistence
             requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessResponse["access"].ToString());
             var response = await client.SendAsync(requestMessage);
             Dictionary<string,object> bankDetails = JsonSerializer.Deserialize<Dictionary<string,object>>(response.Content.ReadAsStringAsync().Result);
-            return new CustomHttpResponse(){status =(int)response.StatusCode, Data =bankDetails };
+            return new CustomHttpResponse(){Status =(int)response.StatusCode, Data =bankDetails };
         }
         catch (Exception e)
         {

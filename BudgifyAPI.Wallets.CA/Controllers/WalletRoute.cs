@@ -13,24 +13,24 @@ namespace BudgifyAPI.Wallets.CA.Controllers;
 public static class WalletRoute {
 
     
-    public static WebApplication setRoutes(WebApplication app, string baseRoute) {
+    public static WebApplication SetRoutes(WebApplication app, string baseRoute) {
     
-        Guid tempUserID = Guid.NewGuid();
+        Guid tempUserId = Guid.NewGuid();
     
     
         app.MapPost($"{baseRoute}/", async (HttpRequest req,[FromBody] WalletRequests body) => {
             try {
                 
-                var received_uid  =req.Headers["X-User-Id"];
-                if (string.IsNullOrEmpty(received_uid))
+                var receivedUid  =req.Headers["X-User-Id"];
+                if (string.IsNullOrEmpty(receivedUid))
                 {
-                    return new CustomHttpResponse(){status = 400,message = "Missing token"};
+                    return new CustomHttpResponse(){Status = 400,Message = "Missing token"};
                 
                 }
 
                 var uid = CustomEncryptor.DecryptString(
-                    Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
-               return await WalletInteractorEF.RegisterWallet(WalletPersistence.RegisterWallet, Guid.Parse(uid), body.wallet_name);
+                    Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
+               return await WalletInteractorEf.RegisterWallet(WalletPersistence.RegisterWallet, Guid.Parse(uid), body.WalletName);
             } 
             catch (Exception e)
             {
@@ -38,18 +38,18 @@ public static class WalletRoute {
                 throw;
             }
         });
-        app.MapDelete($"{baseRoute}/", async (HttpRequest req,[FromBody] DeleteWalletRequest body) => {
+        app.MapDelete($"{baseRoute}/{{walletId}}", async (HttpRequest req, Guid walletId) => {
             try {
-                var received_uid  =req.Headers["X-User-Id"];
-                if (string.IsNullOrEmpty(received_uid))
+                var receivedUid  =req.Headers["X-User-Id"];
+                if (string.IsNullOrEmpty(receivedUid))
                 {
-                    return new CustomHttpResponse(){status = 400,message = "Missing token"};
+                    return new CustomHttpResponse(){Status = 400,Message = "Missing token"};
                 
                 }
 
                 var uid = CustomEncryptor.DecryptString(
-                    Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
-               return await WalletInteractorEF.DeleteWallet(WalletPersistence.DeleteWallet, Guid.Parse(uid), body.wallet_id);
+                    Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
+               return await WalletInteractorEf.DeleteWallet(WalletPersistence.DeleteWallet, Guid.Parse(uid), walletId);
             } 
             catch (Exception e)
             {
@@ -59,17 +59,17 @@ public static class WalletRoute {
         });
         app.MapGet($"{baseRoute}/", async (HttpRequest req) => {
             try {
-                var received_uid  =req.Headers["X-User-Id"];
-                if (string.IsNullOrEmpty(received_uid))
+                var receivedUid  =req.Headers["X-User-Id"];
+                if (string.IsNullOrEmpty(receivedUid))
                 {
-                    return new CustomHttpResponse(){status = 400,message = "Missing token"};
+                    return new CustomHttpResponse(){Status = 400,Message = "Missing token"};
                 
                 }
 
                 var uid = CustomEncryptor.DecryptString(
-                    Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                    Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
 
-               return await WalletInteractorEF.GetWallet(WalletPersistence.GetWallet, Guid.Parse(uid));
+               return await WalletInteractorEf.GetWallet(WalletPersistence.GetWallet, Guid.Parse(uid));
             } 
             catch (Exception e)
             {
@@ -77,20 +77,20 @@ public static class WalletRoute {
                 throw;
             }
         });
-        app.MapPut($"{baseRoute}", async (HttpRequest req, [FromBody] EditWalletRequest body) =>
+        app.MapPut($"{baseRoute}/", async (HttpRequest req, [FromBody] EditWalletRequest body) =>
         {
             try
             {
-                var received_uid = req.Headers["X-User-Id"];
-                if (string.IsNullOrEmpty(received_uid))
+                var receivedUid = req.Headers["X-User-Id"];
+                if (string.IsNullOrEmpty(receivedUid))
                 {
-                    return new CustomHttpResponse() { status = 400, message = "Missing token" };
+                    return new CustomHttpResponse() { Status = 400, Message = "Missing token" };
 
                 }
 
                 var uid = CustomEncryptor.DecryptString(
-                    Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
-                return await WalletInteractorEF.EditWallet(WalletPersistence.EditWallet, body,Guid.Parse(uid));
+                    Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
+                return await WalletInteractorEf.EditWallet(WalletPersistence.EditWallet, body,Guid.Parse(uid));
             }
             catch (Exception e)
             {
@@ -124,14 +124,14 @@ public static class WalletRoute {
         
         app.MapPost($"{baseRoute}/gocardless/requisition", async (HttpRequest req, [FromBody] CreateRequisitionRequest requisitionRequest) => {
             try {
-                var received_uid  =req.Headers["X-User-Id"];
-                if (string.IsNullOrEmpty(received_uid))
+                var receivedUid  =req.Headers["X-User-Id"];
+                if (string.IsNullOrEmpty(receivedUid))
                 {
-                    return new CustomHttpResponse() { status = 400, message = "Missing token" };
+                    return new CustomHttpResponse() { Status = 400, Message = "Missing token" };
                 }
 
                 var uid = CustomEncryptor.DecryptString(
-                    Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                    Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
                 return await GocardlessInteractor.CreateRequisitionnteractor(GocardlessPersistence.CreateRequisitionPersistence, requisitionRequest,Guid.Parse(uid));
             } 
             catch (Exception e)

@@ -6,6 +6,8 @@ using BudgifyAPI.Accounts.CA.Entities.Requests;
 using Microsoft.AspNetCore.Mvc;
 using BudgifyAPI.Accounts.CA.Framework.EntityFramework.Models;
 using BudgifyAPI.Auth.CA.Entities;
+using BudgifyAPI.Auth.CA.Entities.Requests;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BudgifyAPI.Accounts.CA.Controllers
 {
@@ -16,21 +18,21 @@ namespace BudgifyAPI.Accounts.CA.Controllers
             application.MapPost($"{baseRoute}/user/user-group", async (HttpRequest req, [FromBody] RequestName name) => {
                 try
                 {
-                    var received_uid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {received_uid}");
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid = req.Headers["X-User-Id"];
+                    Console.WriteLine($"Received uid: {receivedUid}");
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Bad Request",
+                            Status = 400,
+                            Message = "Bad Request",
                         };
                     }
 
                     var uid = CustomEncryptor.DecryptString(
-                        Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                        Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
 
-                    CustomHttpResponse resp = await AccountsInteractorEF.AddUserGroup(AccountsPersistence.AddUserGroupPersistence, name, Guid.Parse(uid));
+                    CustomHttpResponse resp = await AccountsInteractorEf.AddUserGroup(AccountsPersistence.AddUserGroupPersistence, name, Guid.Parse(uid));
                     return resp;
                 }
                 catch (Exception ex)
@@ -43,21 +45,21 @@ namespace BudgifyAPI.Accounts.CA.Controllers
             application.MapPut($"{baseRoute}/admin/user-group/{{userGroupId}}", async (HttpRequest req, Guid userGroupId, [FromBody] RequestName name) => {
                 try
                 {
-                    var received_uid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {received_uid}");
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid = req.Headers["X-User-Id"];
+                    Console.WriteLine($"Received uid: {receivedUid}");
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Bad Request",
+                            Status = 400,
+                            Message = "Bad Request",
                         };
                     }
 
                     var uid = CustomEncryptor.DecryptString(
-                        Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                        Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
 
-                    CustomHttpResponse resp = await AccountsInteractorEF.UpdateUserGroup(AccountsPersistence.UpdateUserGroupPersistence, userGroupId, name, Guid.Parse(uid));
+                    CustomHttpResponse resp = await AccountsInteractorEf.UpdateUserGroup(AccountsPersistence.UpdateUserGroupPersistence, userGroupId, name, Guid.Parse(uid));
                     return resp;
                 }
                 catch (Exception ex)
@@ -69,21 +71,21 @@ namespace BudgifyAPI.Accounts.CA.Controllers
             application.MapDelete($"{baseRoute}/admin/user-group/{{userGroupId}}", async (HttpRequest req, Guid userGroupId) => {
                 try
                 {
-                    var received_uid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {received_uid}");
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid = req.Headers["X-User-Id"];
+                    Console.WriteLine($"Received uid: {receivedUid}");
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Bad Request",
+                            Status = 400,
+                            Message = "Bad Request",
                         };
                     }
 
                     var uid = CustomEncryptor.DecryptString(
-                        Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                        Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
 
-                    CustomHttpResponse resp = await AccountsInteractorEF.DeleteUserGroup(AccountsPersistence.DeleteUserGroupPersistence, userGroupId, Guid.Parse(uid));
+                    CustomHttpResponse resp = await AccountsInteractorEf.DeleteUserGroup(AccountsPersistence.DeleteUserGroupPersistence, userGroupId, Guid.Parse(uid));
                     return resp;
                 }
                 catch (Exception ex)
@@ -95,21 +97,21 @@ namespace BudgifyAPI.Accounts.CA.Controllers
             application.MapGet($"{baseRoute}/user/user-group/{{userGroupId}}", async (HttpRequest req, Guid userGroupId) => {
                 try
                 {
-                    var received_uid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {received_uid}");
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid = req.Headers["X-User-Id"];
+                    Console.WriteLine($"Received uid: {receivedUid}");
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Bad Request",
+                            Status = 400,
+                            Message = "Bad Request",
                         };
                     }
 
                     var uid = CustomEncryptor.DecryptString(
-                        Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                        Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
 
-                    CustomHttpResponse resp = await AccountsInteractorEF.GetGroupsById(AccountsPersistence.GetGroupsByIdPersistence, userGroupId, Guid.Parse(uid));
+                    CustomHttpResponse resp = await AccountsInteractorEf.GetGroupsById(AccountsPersistence.GetGroupsByIdPersistence, userGroupId, Guid.Parse(uid));
                     return resp;
                 }
                 catch (Exception ex)
@@ -121,21 +123,21 @@ namespace BudgifyAPI.Accounts.CA.Controllers
             application.MapGet($"{baseRoute}/user/user-group", async (HttpRequest req) => {
                 try
                 {
-                    var received_uid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {received_uid}");
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid = req.Headers["X-User-Id"];
+                    Console.WriteLine($"Received uid: {receivedUid}");
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Bad Request",
+                            Status = 400,
+                            Message = "Bad Request",
                         };
                     }
 
                     var uid = CustomEncryptor.DecryptString(
-                        Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
+                        Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
 
-                    CustomHttpResponse resp = await AccountsInteractorEF.GetUserGroup(AccountsPersistence.GetUserGroupPersistence,Guid.Parse(uid));
+                    CustomHttpResponse resp = await AccountsInteractorEf.GetUserGroup(AccountsPersistence.GetUserGroupPersistence,Guid.Parse(uid));
                     return resp;
                 }
                 catch (Exception ex)
@@ -151,18 +153,18 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                 try
                 {
                     
-                    var received_uid  =req.Headers["X-User-Id"];
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid  =req.Headers["X-User-Id"];
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Missing token",
+                            Status = 400,
+                            Message = "Missing token",
                         };
                 
                     }
-                    var uid = CustomEncryptor.DecryptString(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
-                    CustomHttpResponse resp = await AccountsInteractorEF.AddUserToUserGroup(AccountsPersistence.AddUserToUserGroupPersistence, addUserId,idUserGroup, Guid.Parse(uid));
+                    var uid = CustomEncryptor.DecryptString(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
+                    CustomHttpResponse resp = await AccountsInteractorEf.AddUserToUserGroup(AccountsPersistence.AddUserToUserGroupPersistence, addUserId,idUserGroup, Guid.Parse(uid));
                     return resp;
                 }
                 catch (Exception ex)
@@ -174,18 +176,18 @@ namespace BudgifyAPI.Accounts.CA.Controllers
             application.MapDelete($"{baseRoute}/manager/user-group/{{idUserGroup}}/users/{{addUserId}}", async (HttpRequest req, Guid idUserGroup, Guid removeUserId) => {
                 try
                 {
-                    var received_uid  =req.Headers["X-User-Id"];
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid  =req.Headers["X-User-Id"];
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Missing token",
+                            Status = 400,
+                            Message = "Missing token",
                         };
                 
                     }
-                    var uid = CustomEncryptor.DecryptString(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
-                    CustomHttpResponse resp = await AccountsInteractorEF.DeleteUserFromUserGroup(AccountsPersistence.DeleteUserFromUserGroupPersistence,removeUserId,idUserGroup,Guid.Parse(uid));
+                    var uid = CustomEncryptor.DecryptString(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
+                    CustomHttpResponse resp = await AccountsInteractorEf.DeleteUserFromUserGroup(AccountsPersistence.DeleteUserFromUserGroupPersistence,removeUserId,idUserGroup,Guid.Parse(uid));
                     return resp;
                 }
                 catch (Exception ex)
@@ -198,18 +200,18 @@ namespace BudgifyAPI.Accounts.CA.Controllers
             {
                 try
                 {
-                    var received_uid  =req.Headers["X-User-Id"];
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid  =req.Headers["X-User-Id"];
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Missing token",
+                            Status = 400,
+                            Message = "Missing token",
                         };
                 
                     }
-                    var uid = CustomEncryptor.DecryptString(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
-                    CustomHttpResponse resp = await AccountsInteractorEF.AddManagerToUserGroup(AccountsPersistence.AddManagerToUserGroupPersistence, addManagerId, idUserGroup, Guid.Parse(uid));
+                    var uid = CustomEncryptor.DecryptString(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
+                    CustomHttpResponse resp = await AccountsInteractorEf.AddManagerToUserGroup(AccountsPersistence.AddManagerToUserGroupPersistence, addManagerId, idUserGroup, Guid.Parse(uid));
                     return resp;
                 }
                 catch (Exception ex)
@@ -222,18 +224,18 @@ namespace BudgifyAPI.Accounts.CA.Controllers
             {
                 try
                 {
-                    var received_uid  =req.Headers["X-User-Id"];
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid  =req.Headers["X-User-Id"];
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Missing token",
+                            Status = 400,
+                            Message = "Missing token",
                         };
                 
                     }
-                    var uid = CustomEncryptor.DecryptString(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
-                    CustomHttpResponse resp = await AccountsInteractorEF.DeleteManagerToUserGroup(AccountsPersistence.DeleteManagerToUserGroupPersistence, removeManagerId, idUserGroup, Guid.Parse(uid));
+                    var uid = CustomEncryptor.DecryptString(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
+                    CustomHttpResponse resp = await AccountsInteractorEf.DeleteManagerToUserGroup(AccountsPersistence.DeleteManagerToUserGroupPersistence, removeManagerId, idUserGroup, Guid.Parse(uid));
                     return resp;
                 }
                 catch (Exception ex)
@@ -246,7 +248,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
             {
                 try
                 {
-                    CustomHttpResponse resp = await AccountsInteractorEF.AddUser(AccountsPersistence.AddUserPersistence, user);
+                    CustomHttpResponse resp = await AccountsInteractorEf.AddUser(AccountsPersistence.AddUserPersistence, user);
                     return resp;
                 }
                 catch (Exception ex)
@@ -255,22 +257,35 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
+            application.MapPost($"{baseRoute}/new-password",[AllowAnonymous] async ([FromBody]NewPasswordRequest body)=>
+            {
+                try
+                {
+                    CustomHttpResponse resp = await AccountsInteractorEf.NewPassword(AccountsPersistence.NewPasswordPersistence,body );
+                    return resp;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            });
             application.MapPut($"{baseRoute}/user", async (HttpRequest req, [FromBody] CreateUser user) =>
             {
                 try
                 {
-                    var received_uid  =req.Headers["X-User-Id"];
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid  =req.Headers["X-User-Id"];
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Missing token",
+                            Status = 400,
+                            Message = "Missing token",
                         };
                 
                     }
-                    var uid = CustomEncryptor.DecryptString(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
-                    CustomHttpResponse resp = await AccountsInteractorEF.UpdateUser(AccountsPersistence.UpdateUserPersistence, Guid.Parse(uid), user);
+                    var uid = CustomEncryptor.DecryptString(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
+                    CustomHttpResponse resp = await AccountsInteractorEf.UpdateUser(AccountsPersistence.UpdateUserPersistence, Guid.Parse(uid), user);
                     return resp;
                 }
                 catch (Exception ex)
@@ -283,18 +298,18 @@ namespace BudgifyAPI.Accounts.CA.Controllers
             {
                 try
                 {
-                    var received_uid  =req.Headers["X-User-Id"];
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid  =req.Headers["X-User-Id"];
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Missing token",
+                            Status = 400,
+                            Message = "Missing token",
                         };
                 
                     }
-                    var uid = CustomEncryptor.DecryptString(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
-                    CustomHttpResponse resp = await AccountsInteractorEF.DeleteUser(AccountsPersistence.DeleteUserPersistence, Guid.Parse(uid));
+                    var uid = CustomEncryptor.DecryptString(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
+                    CustomHttpResponse resp = await AccountsInteractorEf.DeleteUser(AccountsPersistence.DeleteUserPersistence, Guid.Parse(uid));
                     return resp;
                 }
                 catch (Exception ex)
@@ -307,18 +322,18 @@ namespace BudgifyAPI.Accounts.CA.Controllers
             {
                 try
                 {
-                    var received_uid  = req.Headers["X-User-Id"];
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid  = req.Headers["X-User-Id"];
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Missing token",
+                            Status = 400,
+                            Message = "Missing token",
                         };
                 
                     }
-                    var uid = CustomEncryptor.DecryptString(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
-                    CustomHttpResponse resp = await AccountsInteractorEF.ActiveUser(AccountsPersistence.ActiveUserPersistence, Guid.Parse(uid));
+                    var uid = CustomEncryptor.DecryptString(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
+                    CustomHttpResponse resp = await AccountsInteractorEf.ActiveUser(AccountsPersistence.ActiveUserPersistence, Guid.Parse(uid));
                     return resp;
                 }
                 catch (Exception ex)
@@ -331,7 +346,7 @@ namespace BudgifyAPI.Accounts.CA.Controllers
             {
                 try
                 {
-                    CustomHttpResponse resp = await AccountsInteractorEF.GetUsers(AccountsPersistence.GetUsersPersistence);
+                    CustomHttpResponse resp = await AccountsInteractorEf.GetUsers(AccountsPersistence.GetUsersPersistence);
                     return resp;
                 }
                 catch (Exception ex)
@@ -340,22 +355,22 @@ namespace BudgifyAPI.Accounts.CA.Controllers
                     throw;
                 }
             });
-            application.MapGet($"{baseRoute}/superadmin/user/{{IdUser}}", async (HttpRequest req, Guid IdUser) =>
+            application.MapGet($"{baseRoute}/superadmin/user/{{idUser}}", async (HttpRequest req, Guid idUser) =>
             {
                 try
                 {
-                    var received_uid  =req.Headers["X-User-Id"];
-                    if (string.IsNullOrEmpty(received_uid))
+                    var receivedUid  =req.Headers["X-User-Id"];
+                    if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Missing token",
+                            Status = 400,
+                            Message = "Missing token",
                         };
                 
                     }
-                    var uid = CustomEncryptor.DecryptString(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(received_uid)));
-                    CustomHttpResponse resp = await AccountsInteractorEF.GetUserById(AccountsPersistence.GetUserByIdPersistence, IdUser);
+                    var uid = CustomEncryptor.DecryptString(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
+                    CustomHttpResponse resp = await AccountsInteractorEf.GetUserById(AccountsPersistence.GetUserByIdPersistence, idUser);
                     return resp;
                 }
                 catch (Exception ex)

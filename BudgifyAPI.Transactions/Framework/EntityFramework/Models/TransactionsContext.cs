@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 
 namespace BudgifyAPI.Transactions.Framework.EntityFramework.Models;
@@ -26,8 +27,8 @@ public partial class TransactionsContext : DbContext
     public virtual DbSet<TransactionGroup> TransactionGroups { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Server=127.0.0.1;Port=42765;UserId=postgres;Password=budgify;Database=Transactions");
+        => optionsBuilder.UseNpgsql(Encoding.UTF8.GetString( Convert.FromBase64String( Environment.GetEnvironmentVariable(
+            "ConnectionString__budgify_db"))));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

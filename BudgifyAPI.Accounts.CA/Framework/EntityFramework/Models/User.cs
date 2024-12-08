@@ -26,4 +26,6 @@ public partial class User
     public bool IsManager { get; set; }
 
     public bool AllowWalletWatch { get; set; }
+
+    public bool IsSuperAdmin { get; set; }
 }

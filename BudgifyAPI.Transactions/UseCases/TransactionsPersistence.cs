@@ -31,8 +31,8 @@ namespace BudgifyAPI.Transactions.UseCases
                     {
                         return new CustomHttpResponse()
                         {
-                            message = "Transaction Group does not exist",
-                            status = 400
+                            Message = "Transaction Group does not exist",
+                            Status = 400
                         };
                     }
                     
@@ -41,8 +41,8 @@ namespace BudgifyAPI.Transactions.UseCases
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Category does not exist"
+                            Status = 400,
+                            Message = "Category does not exist"
                         };
                     }
                 
@@ -51,8 +51,8 @@ namespace BudgifyAPI.Transactions.UseCases
                     {
                         return new CustomHttpResponse()
                         {
-                            status = 400,
-                            message = "Sub category does not exist"
+                            Status = 400,
+                            Message = "Sub category does not exist"
                         };
                     }
 
@@ -73,8 +73,8 @@ namespace BudgifyAPI.Transactions.UseCases
                     await transactionsContext.SaveChangesAsync();
                     return new CustomHttpResponse()
                     {
-                        message = "Transaction added success",
-                        status = 200,
+                        Message = "Transaction added success",
+                        Status = 200,
                     };
                 }
                 else
@@ -105,8 +105,8 @@ namespace BudgifyAPI.Transactions.UseCases
 
                         return new CustomHttpResponse()
                         {
-                            message = "Transaction added success",
-                            status = 200
+                            Message = "Transaction added success",
+                            Status = 200
                         };
                     }
 
@@ -127,8 +127,8 @@ namespace BudgifyAPI.Transactions.UseCases
                     await transactionsContext.SaveChangesAsync();
                     return new CustomHttpResponse()
                     {
-                        message = "Transaction added success",
-                        status = 200
+                        Message = "Transaction added success",
+                        Status = 200
                     };
                 }
 
@@ -149,8 +149,8 @@ namespace BudgifyAPI.Transactions.UseCases
                 Console.WriteLine(ex);
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -181,7 +181,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 return new CustomHttpResponse()
                 {
                     Data = listTransaction,
-                    status = 200
+                    Status = 200
                 };
             }
             catch (Exception ex)
@@ -189,13 +189,13 @@ namespace BudgifyAPI.Transactions.UseCases
                 Console.WriteLine(ex);
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
 
-        public static async Task<CustomHttpResponse> GetTransactionSlidingWindowPersistence(int limite, int cur_index,
+        public static async Task<CustomHttpResponse> GetTransactionSlidingWindowPersistence(int limite, int curIndex,
             Guid userId, DateTime? firstItemDate = null)
         {
             TransactionsContext transactionsContext = new TransactionsContext();
@@ -211,10 +211,10 @@ namespace BudgifyAPI.Transactions.UseCases
                         .ToList();
                     var parameterNames = string.Join(", ", parameters.Select(p => p.ParameterName));
                     parameters.AddRange([
-                        new NpgsqlParameter("@Limite", limite), new NpgsqlParameter("@CurIndex", cur_index)
+                        new NpgsqlParameter("@Limite", limite), new NpgsqlParameter("@CurIndex", curIndex)
                     ]);
 
-                    if (cur_index == 0)
+                    if (curIndex == 0)
                     {
                         string queryAllTransactions = "SELECT * " +
                                                       "FROM public.transactions as t " +
@@ -267,7 +267,7 @@ namespace BudgifyAPI.Transactions.UseCases
                                 Transactions = listTransactions,
                                 TransactionGroups = transactionGroups,
                             },
-                            status = 200
+                            Status = 200
                         };
                     }
                     else
@@ -276,8 +276,8 @@ namespace BudgifyAPI.Transactions.UseCases
                         {
                             return new CustomHttpResponse()
                             {
-                                message = "Date of the first item is required for subsequent requests.",
-                                status = 400
+                                Message = "Date of the first item is required for subsequent requests.",
+                                Status = 400
                             };
                         }
 
@@ -292,7 +292,7 @@ namespace BudgifyAPI.Transactions.UseCases
                         List<Transaction> listTransactions = await transactionsContext.Transactions.FromSqlRaw(
                             queryTransactions,
                             new NpgsqlParameter("Limite", limite),
-                            new NpgsqlParameter("CurIndex", cur_index),
+                            new NpgsqlParameter("CurIndex", curIndex),
                             new NpgsqlParameter("FirstItemDate", firstItemDate),
                             parameters.ToArray()).ToListAsync();
 
@@ -322,7 +322,7 @@ namespace BudgifyAPI.Transactions.UseCases
                                 Transactions = listTransactions,
                                 TransactionGroups = transactionGroups,
                             },
-                            status = 200
+                            Status = 200
                         };
                     }
                 }
@@ -331,15 +331,15 @@ namespace BudgifyAPI.Transactions.UseCases
                     Console.WriteLine(ex);
                     return new CustomHttpResponse()
                     {
-                        message = ex.Message,
-                        status = 500
+                        Message = ex.Message,
+                        Status = 500
                     };
                 }
             }
         }
 
-        public static async Task<CustomHttpResponse> GetTransactionNoSlidingWindowPersistence(DateTime start_date,
-            DateTime end_date, Guid userId)
+        public static async Task<CustomHttpResponse> GetTransactionNoSlidingWindowPersistence(DateTime startDate,
+            DateTime endDate, Guid userId)
         {
             TransactionsContext transactionsContext = new TransactionsContext();
             try
@@ -352,7 +352,7 @@ namespace BudgifyAPI.Transactions.UseCases
                     .ToList();
                 var parameterNames = string.Join(", ", parameters.Select(p => p.ParameterName));
 
-                parameters.AddRange([new NpgsqlParameter("@IdUser", userId), new NpgsqlParameter("@StartDate", start_date),new NpgsqlParameter("@EndDate", end_date),]);
+                parameters.AddRange([new NpgsqlParameter("@IdUser", userId), new NpgsqlParameter("@StartDate", startDate),new NpgsqlParameter("@EndDate", endDate),]);
                 string queryAllTransactions = "SELECT * " +
                                               "FROM public.transactions as t " +
                                               $"WHERE id_wallet IN ({parameterNames}) AND t.date BETWEEN @StartDAte AND @EndDate " +
@@ -401,15 +401,15 @@ namespace BudgifyAPI.Transactions.UseCases
                         Transactions = listTransactions,
                         TransactionGroups = transactionGroups,
                     },
-                    status = 200
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -429,8 +429,8 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "Transaction does not exist",
-                        status = 400
+                        Message = "Transaction does not exist",
+                        Status = 400
                     };
                 }
                 
@@ -439,8 +439,8 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        status = 400,
-                        message = "Category does not exist"
+                        Status = 400,
+                        Message = "Category does not exist"
                     };
                 }
                 
@@ -449,8 +449,8 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        status = 400,
-                        message = "Sub category does not exist"
+                        Status = 400,
+                        Message = "Sub category does not exist"
                     };
                 }
 
@@ -470,16 +470,16 @@ namespace BudgifyAPI.Transactions.UseCases
 
                 return new CustomHttpResponse()
                 {
-                    message = "Transaction updated successfully",
-                    status = 200
+                    Message = "Transaction updated successfully",
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -499,8 +499,8 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "Transaction does not exist",
-                        status = 400
+                        Message = "Transaction does not exist",
+                        Status = 400
                     };
                 }
 
@@ -508,16 +508,16 @@ namespace BudgifyAPI.Transactions.UseCases
                 await transactionsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Transaction removed successfully",
-                    status = 200
+                    Message = "Transaction removed successfully",
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -532,15 +532,15 @@ namespace BudgifyAPI.Transactions.UseCases
                 return new CustomHttpResponse()
                 {
                     Data = listCategory,
-                    status = 200
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -558,16 +558,16 @@ namespace BudgifyAPI.Transactions.UseCases
                 await transactionsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Category added successfully",
-                    status = 200
+                    Message = "Category added successfully",
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -583,8 +583,8 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "Category does not exist",
-                        status = 400
+                        Message = "Category does not exist",
+                        Status = 400
                     };
                 }
 
@@ -593,16 +593,16 @@ namespace BudgifyAPI.Transactions.UseCases
                 await transactionsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Categor updated successfully",
-                    status = 200
+                    Message = "Categor updated successfully",
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -618,8 +618,8 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "Category does not exist",
-                        status = 400
+                        Message = "Category does not exist",
+                        Status = 400
                     };
                 }
 
@@ -627,16 +627,16 @@ namespace BudgifyAPI.Transactions.UseCases
                 await transactionsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Category removed successfully",
-                    status = 200
+                    Message = "Category removed successfully",
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -651,15 +651,15 @@ namespace BudgifyAPI.Transactions.UseCases
                 return new CustomHttpResponse()
                 {
                     Data = listSubcategory,
-                    status = 200
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -677,16 +677,16 @@ namespace BudgifyAPI.Transactions.UseCases
                 await transactionsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Subcategory added successfully",
-                    status = 200
+                    Message = "Subcategory added successfully",
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -703,8 +703,8 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "Subcategory does not exist",
-                        status = 400
+                        Message = "Subcategory does not exist",
+                        Status = 400
                     };
                 }
 
@@ -713,16 +713,16 @@ namespace BudgifyAPI.Transactions.UseCases
                 await transactionsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Subategory updated successfully",
-                    status = 200
+                    Message = "Subategory updated successfully",
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -738,8 +738,8 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "A subcategory does not exist",
-                        status = 400
+                        Message = "A subcategory does not exist",
+                        Status = 400
                     };
                 }
 
@@ -747,16 +747,16 @@ namespace BudgifyAPI.Transactions.UseCases
                 await transactionsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Subcategory removed successfully",
-                    status = 200
+                    Message = "Subcategory removed successfully",
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -771,15 +771,15 @@ namespace BudgifyAPI.Transactions.UseCases
                 return new CustomHttpResponse()
                 {
                     Data = listReocurrings,
-                    status = 200
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -796,8 +796,8 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        status = 400,
-                        message = "Wallet does not exist"
+                        Status = 400,
+                        Message = "Wallet does not exist"
                     };
                 }
                 
@@ -806,8 +806,8 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        status = 400,
-                        message = "Category does not exist"
+                        Status = 400,
+                        Message = "Category does not exist"
                     };
                 }
                 
@@ -816,8 +816,8 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        status = 400,
-                        message = "Sub category does not exist"
+                        Status = 400,
+                        Message = "Sub category does not exist"
                     };
                 }
                 
@@ -837,16 +837,16 @@ namespace BudgifyAPI.Transactions.UseCases
                 });
                 return new CustomHttpResponse()
                 {
-                    message = "Reocurring added successfully",
-                    status = 200
+                    Message = "Reocurring added successfully",
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -868,8 +868,8 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "Reocurring does not exist",
-                        status = 400
+                        Message = "Reocurring does not exist",
+                        Status = 400
                     };
                 }
                 
@@ -879,8 +879,8 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        status = 400,
-                        message = "Wallet does not exist"
+                        Status = 400,
+                        Message = "Wallet does not exist"
                     };
                 }
                 
@@ -889,8 +889,8 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        status = 400,
-                        message = "Category does not exist"
+                        Status = 400,
+                        Message = "Category does not exist"
                     };
                 }
                 
@@ -899,8 +899,8 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        status = 400,
-                        message = "Sub category does not exist"
+                        Status = 400,
+                        Message = "Sub category does not exist"
                     };
                 }
 
@@ -920,16 +920,16 @@ namespace BudgifyAPI.Transactions.UseCases
                 await transactionsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Reocurring updated successfully",
-                    status = 200
+                    Message = "Reocurring updated successfully",
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -948,8 +948,8 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "Reocurring does not exist",
-                        status = 400
+                        Message = "Reocurring does not exist",
+                        Status = 400
                     };
                 }
 
@@ -957,16 +957,16 @@ namespace BudgifyAPI.Transactions.UseCases
                 await transactionsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Reocurring removed successfully",
-                    status = 200
+                    Message = "Reocurring removed successfully",
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -981,7 +981,7 @@ namespace BudgifyAPI.Transactions.UseCases
                 return new CustomHttpResponse()
                 {
                     Data = listTransaGroup,
-                    status = 200
+                    Status = 200
                 };
             }
             catch (Exception ex)
@@ -989,8 +989,8 @@ namespace BudgifyAPI.Transactions.UseCases
                 Console.WriteLine(ex.Message);
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
 
             }
@@ -1012,16 +1012,16 @@ namespace BudgifyAPI.Transactions.UseCases
                 await transactionsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Transaction Group added successfully",
-                    status = 200
+                    Message = "Transaction Group added successfully",
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -1039,8 +1039,8 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "Transaction Group does not exist",
-                        status = 400
+                        Message = "Transaction Group does not exist",
+                        Status = 400
                     };
                 }
 
@@ -1052,16 +1052,16 @@ namespace BudgifyAPI.Transactions.UseCases
                 await transactionsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Transaction group updated successfully",
-                    status = 200
+                    Message = "Transaction group updated successfully",
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -1078,8 +1078,8 @@ namespace BudgifyAPI.Transactions.UseCases
                 {
                     return new CustomHttpResponse()
                     {
-                        message = "Transaction Group does not exist",
-                        status = 400
+                        Message = "Transaction Group does not exist",
+                        Status = 400
                     };
                 }
 
@@ -1087,16 +1087,16 @@ namespace BudgifyAPI.Transactions.UseCases
                 await transactionsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    message = "Transaction Group removed successfully",
-                    status = 200
+                    Message = "Transaction Group removed successfully",
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }
@@ -1112,15 +1112,15 @@ namespace BudgifyAPI.Transactions.UseCases
                 return new CustomHttpResponse()
                 {
                     Data = listTransacationgroup,
-                    status = 200
+                    Status = 200
                 };
             }
             catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
-                    message = ex.Message,
-                    status = 500
+                    Message = ex.Message,
+                    Status = 500
                 };
             }
         }

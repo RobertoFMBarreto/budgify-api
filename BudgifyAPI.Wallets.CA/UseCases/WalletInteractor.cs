@@ -9,7 +9,7 @@ using BudgifyAPI.Wallets.CA.Entities.Requests;
 
 namespace BudgifyAPI.Wallets.CA.UseCases
 {
-    public static class WalletInteractorEF
+    public static class WalletInteractorEf
     {
 
         public static async Task<CustomHttpResponse> RegisterWallet(Func<WalletEntity, Guid, Task<CustomHttpResponse>> walletPersistence, Guid userId, string walletName ) {
@@ -30,18 +30,18 @@ namespace BudgifyAPI.Wallets.CA.UseCases
             return await walletPersistence( userId );
         }
 
-        public static async Task<CustomHttpResponse> EditWallet(Func<WalletEntity,Guid, Task<CustomHttpResponse>> walletPersistence, EditWalletRequest req, Guid IdUser)
+        public static async Task<CustomHttpResponse> EditWallet(Func<WalletEntity,Guid, Task<CustomHttpResponse>> walletPersistence, EditWalletRequest req, Guid idUser)
         {
             var wallet = new WalletEntity()
             {
-                WalletId = req.wallet_id,
-                WalletName = req.wallet_name,
-                totalValue = req.value,
+                WalletId = req.WalletId,
+                WalletName = req.WalletName,
+                TotalValue = req.Value,
                 AgreementDays = req.AgreementDays,
                 IdRequisition = req.IdRequisition,
                 IdAccount = req.IdAccount,
             };
-            return await walletPersistence( wallet, IdUser);
+            return await walletPersistence( wallet, idUser);
         }
     
     }
