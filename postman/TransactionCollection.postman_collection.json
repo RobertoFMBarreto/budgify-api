@@ -1,0 +1,762 @@
+{
+	"info": {
+		"_postman_id": "2cf749fe-9f58-4ba3-a0a5-bff49dd304c8",
+		"name": "TransactionCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14061868",
+		"_collection_link": "https://engenheirosesi-ipca.postman.co/workspace/Team-Workspace~3126cc04-caeb-4c74-843d-3769c0fd0fb0/collection/14061868-2cf749fe-9f58-4ba3-a0a5-bff49dd304c8?action=share&source=collection_link&creator=14061868"
+	},
+	"item": [
+		{
+			"name": "TransactionGroup",
+			"item": [
+				{
+					"name": "GetGroups",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.EDDYTR1aKspvSSE-twQ7WTlZ0plXKBRchLmAVbZQ9tniDql40OIJGKGeeF0SljNeR9MXaZKlOlA144V-M4r-pJ5DAGZiutqCSghjVphhaYEWvfHFDD4vk4rVSxLli3sjswYZHSPJ-jaQ8LflRlRM_3YHTN8zPHmdAyJslYmk22-iA7CzL4ey4W1ULd1GI7jJ9ByoTHj6XpOeLNu5OrpPOmDsWO0fFN0Ou9k2byHibqend8pMQOG69VTuCiMw0sfZwOuh7sdR6Yu_yRbHmC7nznIm_Lt1HFtmEKWVYzWHUZEPn-yQI-PhYp7f45qgf2l3ifHFwMAUWqtGqUo0addymrK1P_676LNs8DPsjlp-deOs-drYhV38EcFVg-UsexATv-3v2DOYGHUnKobwcEIcFLfCoPW-SVyTgBr1BC7f8E24XhDhKgFRrsEoPcJUQAXV",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseRouteTransactions}}{{transactions-route}}/transaction-group",
+							"host": [
+								"{{baseRouteTransactions}}{{transactions-route}}"
+							],
+							"path": [
+								"transaction-group"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddTransactionGroup",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.EDDYTR1aKspvSSE-twQ7WTlZ0plXKBRchLmAVbZQ9tniDql40OIJGKGeeF0SljNeR9MXaZKlOlA144V-M4r-pJ5DAGZiutqCSghjVphhaYEWvfHFDD4vk4rVSxLli3sjswYZHSPJ-jaQ8LflRlRM_3YHTN8zPHmdAyJslYmk22-iA7CzL4ey4W1ULd1GI7jJ9ByoTHj6XpOeLNu5OrpPOmDsWO0fFN0Ou9k2byHibqend8pMQOG69VTuCiMw0sfZwOuh7sdR6Yu_yRbHmC7nznIm_Lt1HFtmEKWVYzWHUZEPn-yQI-PhYp7f45qgf2l3ifHFwMAUWqtGqUo0addymrK1P_676LNs8DPsjlp-deOs-drYhV38EcFVg-UsexATv-3v2DOYGHUnKobwcEIcFLfCoPW-SVyTgBr1BC7f8E24XhDhKgFRrsEoPcJUQAXV",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"description\": \"teste\",\r\n  \"startDate\": \"2024-12-08T00:15:29.079Z\",\r\n  \"endDate\": \"2024-12-09T00:15:29.079Z\",\r\n  \"plannedAmount\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteTransactions}}{{transactions-route}}/transaction-group",
+							"host": [
+								"{{baseRouteTransactions}}{{transactions-route}}"
+							],
+							"path": [
+								"transaction-group"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateTransactionGroup",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.EDDYTR1aKspvSSE-twQ7WTlZ0plXKBRchLmAVbZQ9tniDql40OIJGKGeeF0SljNeR9MXaZKlOlA144V-M4r-pJ5DAGZiutqCSghjVphhaYEWvfHFDD4vk4rVSxLli3sjswYZHSPJ-jaQ8LflRlRM_3YHTN8zPHmdAyJslYmk22-iA7CzL4ey4W1ULd1GI7jJ9ByoTHj6XpOeLNu5OrpPOmDsWO0fFN0Ou9k2byHibqend8pMQOG69VTuCiMw0sfZwOuh7sdR6Yu_yRbHmC7nznIm_Lt1HFtmEKWVYzWHUZEPn-yQI-PhYp7f45qgf2l3ifHFwMAUWqtGqUo0addymrK1P_676LNs8DPsjlp-deOs-drYhV38EcFVg-UsexATv-3v2DOYGHUnKobwcEIcFLfCoPW-SVyTgBr1BC7f8E24XhDhKgFRrsEoPcJUQAXV",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"description\": \"teste1\",\r\n  \"startDate\": \"2024-12-08T00:16:40.779Z\",\r\n  \"endDate\": \"2024-12-08T00:20:40.779Z\",\r\n  \"plannedAmount\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteTransactions}}{{transactions-route}}/transaction-group/ce160cee-7181-4f8b-9d28-fce9d7e1e1fa",
+							"host": [
+								"{{baseRouteTransactions}}{{transactions-route}}"
+							],
+							"path": [
+								"transaction-group",
+								"ce160cee-7181-4f8b-9d28-fce9d7e1e1fa"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteTransactionGroup",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseRouteTransactions}}{{transactions-route}}/transaction-group/transactionGroupId",
+							"host": [
+								"{{baseRouteTransactions}}{{transactions-route}}"
+							],
+							"path": [
+								"transaction-group",
+								"transactionGroupId"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reocurring",
+			"item": [
+				{
+					"name": "GetReocurring",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.FL511qRKKvz0D6Pe_CI2FxSezHoRkHtR_DY5Adi2y1ra7dXWthLII2QkUD9Khor8fEj-19udKvDdiFKOw8To3TL9UYRUzhMl5JNSSD3t2Ni_pWG1K2h1chd4GXK8Zu-mfzak6Y1UtRjDYwMclEzkbheqAENJ5HGIWpnIQL3cu7ADwphHZzoq0ktXtYlfverjo2bvUYDBRy0mhZ5z__D90yOINaBPbywZxl_TXWCN8FslhmUvpKW0WXI5XZEiFP-v23RmDVWQKWaapcN2koEUpSkIYakXU068nLCDZKCL0xcq2fIJxMck43ncIE3vZvIlQfvp8vDn5TbLkvTsA7_XzOZtQbvTAlbIie-aIMxcMWPMJKMBFVJzpFG4aPtmlZtCGv4-BPSg8owNWEGM2NA6FplzkWt0ie93cpbF7NzXitBKlvhgQBJUgexYfx_8R6DE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseRouteTransactions}}{{transactions-route}}/reocurring",
+							"host": [
+								"{{baseRouteTransactions}}{{transactions-route}}"
+							],
+							"path": [
+								"reocurring"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddReocurring",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.MZ1et9vN82MU5xfq8zk2GazToqt78gM_ZTKFt0GA8jvrNIrEV--S_3tzULxxNLKzhRWIkCKoexX-kKjcn3oc_XjHCD8dtjn6mo1lVw2c4OpYU2ReOtWBd1Kd5kFBiTU2Vlw85WHqQ8rYrJ7UbzBxS_iMR-PcPeDYQblUkZrmiV9Ib7o48XnX7jpHxR8DdPL1Lhu4A0e4R0sxjLpML2BMvwfyBuAZCcHlN7uEXUDE-esfU_CbgEcf1XPKqK24OC9bdVi42N8MypdA2uio4nrRnPevZp_fEWMHMN6mLRl3bwL4pV_JgqC2kF7FPzBTx-yZ755Azxa1ztS5Tj6c5rCnN5lGKp1EHQgJdJ2TYbKL-8_xqztWX-Xy2Wbjvubg0aRYNsK9_q2sI7gUYHlQoXYM3YV64QgJ0Ho-yDIOI7Kxk6LrpExS_eEHXq-s9lOWcLqr",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idWallet\": \"6de7e9b9-20d8-4f52-acd1-c9735e1f6c59\",\r\n  \"idCategory\": null,\r\n  \"idSubcategory\": null,\r\n  \"description\": \"string\",\r\n  \"amount\": 0,\r\n  \"dayOfWeek\": 0,\r\n  \"startDate\": \"2024-12-08T00:10:32.026Z\",\r\n  \"isYearly\": true,\r\n  \"isMonthly\": true,\r\n  \"isWeekly\": true,\r\n  \"isActive\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteTransactions}}{{transactions-route}}/reocurring",
+							"host": [
+								"{{baseRouteTransactions}}{{transactions-route}}"
+							],
+							"path": [
+								"reocurring"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateReocurring",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.MZ1et9vN82MU5xfq8zk2GazToqt78gM_ZTKFt0GA8jvrNIrEV--S_3tzULxxNLKzhRWIkCKoexX-kKjcn3oc_XjHCD8dtjn6mo1lVw2c4OpYU2ReOtWBd1Kd5kFBiTU2Vlw85WHqQ8rYrJ7UbzBxS_iMR-PcPeDYQblUkZrmiV9Ib7o48XnX7jpHxR8DdPL1Lhu4A0e4R0sxjLpML2BMvwfyBuAZCcHlN7uEXUDE-esfU_CbgEcf1XPKqK24OC9bdVi42N8MypdA2uio4nrRnPevZp_fEWMHMN6mLRl3bwL4pV_JgqC2kF7FPzBTx-yZ755Azxa1ztS5Tj6c5rCnN5lGKp1EHQgJdJ2TYbKL-8_xqztWX-Xy2Wbjvubg0aRYNsK9_q2sI7gUYHlQoXYM3YV64QgJ0Ho-yDIOI7Kxk6LrpExS_eEHXq-s9lOWcLqr",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idWallet\": \"6de7e9b9-20d8-4f52-acd1-c9735e1f6c59\",\r\n  \"idCategory\": null,\r\n  \"idSubcategory\": null,\r\n  \"description\": \"teste\",\r\n  \"amount\": 0,\r\n  \"dayOfWeek\": 0,\r\n  \"startDate\": \"2024-12-08T00:11:45.302Z\",\r\n  \"isYearly\": true,\r\n  \"isMonthly\": true,\r\n  \"isWeekly\": true,\r\n  \"isActive\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteTransactions}}{{transactions-route}}/reocurring/0e713a43-797c-4141-a61d-2b16d71dd4e2",
+							"host": [
+								"{{baseRouteTransactions}}{{transactions-route}}"
+							],
+							"path": [
+								"reocurring",
+								"0e713a43-797c-4141-a61d-2b16d71dd4e2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteReocurring",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.MZ1et9vN82MU5xfq8zk2GazToqt78gM_ZTKFt0GA8jvrNIrEV--S_3tzULxxNLKzhRWIkCKoexX-kKjcn3oc_XjHCD8dtjn6mo1lVw2c4OpYU2ReOtWBd1Kd5kFBiTU2Vlw85WHqQ8rYrJ7UbzBxS_iMR-PcPeDYQblUkZrmiV9Ib7o48XnX7jpHxR8DdPL1Lhu4A0e4R0sxjLpML2BMvwfyBuAZCcHlN7uEXUDE-esfU_CbgEcf1XPKqK24OC9bdVi42N8MypdA2uio4nrRnPevZp_fEWMHMN6mLRl3bwL4pV_JgqC2kF7FPzBTx-yZ755Azxa1ztS5Tj6c5rCnN5lGKp1EHQgJdJ2TYbKL-8_xqztWX-Xy2Wbjvubg0aRYNsK9_q2sI7gUYHlQoXYM3YV64QgJ0Ho-yDIOI7Kxk6LrpExS_eEHXq-s9lOWcLqr",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseRouteTransactions}}{{transactions-route}}/reocurring/0e713a43-797c-4141-a61d-2b16d71dd4e2",
+							"host": [
+								"{{baseRouteTransactions}}{{transactions-route}}"
+							],
+							"path": [
+								"reocurring",
+								"0e713a43-797c-4141-a61d-2b16d71dd4e2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "AddCategories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.MZ1et9vN82MU5xfq8zk2GazToqt78gM_ZTKFt0GA8jvrNIrEV--S_3tzULxxNLKzhRWIkCKoexX-kKjcn3oc_XjHCD8dtjn6mo1lVw2c4OpYU2ReOtWBd1Kd5kFBiTU2Vlw85WHqQ8rYrJ7UbzBxS_iMR-PcPeDYQblUkZrmiV9Ib7o48XnX7jpHxR8DdPL1Lhu4A0e4R0sxjLpML2BMvwfyBuAZCcHlN7uEXUDE-esfU_CbgEcf1XPKqK24OC9bdVi42N8MypdA2uio4nrRnPevZp_fEWMHMN6mLRl3bwL4pV_JgqC2kF7FPzBTx-yZ755Azxa1ztS5Tj6c5rCnN5lGKp1EHQgJdJ2TYbKL-8_xqztWX-Xy2Wbjvubg0aRYNsK9_q2sI7gUYHlQoXYM3YV64QgJ0Ho-yDIOI7Kxk6LrpExS_eEHXq-s9lOWcLqr",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"teste\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteTransactions}}{{transactions-route}}/categories",
+							"host": [
+								"{{baseRouteTransactions}}{{transactions-route}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCategories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.MZ1et9vN82MU5xfq8zk2GazToqt78gM_ZTKFt0GA8jvrNIrEV--S_3tzULxxNLKzhRWIkCKoexX-kKjcn3oc_XjHCD8dtjn6mo1lVw2c4OpYU2ReOtWBd1Kd5kFBiTU2Vlw85WHqQ8rYrJ7UbzBxS_iMR-PcPeDYQblUkZrmiV9Ib7o48XnX7jpHxR8DdPL1Lhu4A0e4R0sxjLpML2BMvwfyBuAZCcHlN7uEXUDE-esfU_CbgEcf1XPKqK24OC9bdVi42N8MypdA2uio4nrRnPevZp_fEWMHMN6mLRl3bwL4pV_JgqC2kF7FPzBTx-yZ755Azxa1ztS5Tj6c5rCnN5lGKp1EHQgJdJ2TYbKL-8_xqztWX-Xy2Wbjvubg0aRYNsK9_q2sI7gUYHlQoXYM3YV64QgJ0Ho-yDIOI7Kxk6LrpExS_eEHXq-s9lOWcLqr",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseRouteTransactions}}{{transactions-route}}/categories",
+							"host": [
+								"{{baseRouteTransactions}}{{transactions-route}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateCategories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.MZ1et9vN82MU5xfq8zk2GazToqt78gM_ZTKFt0GA8jvrNIrEV--S_3tzULxxNLKzhRWIkCKoexX-kKjcn3oc_XjHCD8dtjn6mo1lVw2c4OpYU2ReOtWBd1Kd5kFBiTU2Vlw85WHqQ8rYrJ7UbzBxS_iMR-PcPeDYQblUkZrmiV9Ib7o48XnX7jpHxR8DdPL1Lhu4A0e4R0sxjLpML2BMvwfyBuAZCcHlN7uEXUDE-esfU_CbgEcf1XPKqK24OC9bdVi42N8MypdA2uio4nrRnPevZp_fEWMHMN6mLRl3bwL4pV_JgqC2kF7FPzBTx-yZ755Azxa1ztS5Tj6c5rCnN5lGKp1EHQgJdJ2TYbKL-8_xqztWX-Xy2Wbjvubg0aRYNsK9_q2sI7gUYHlQoXYM3YV64QgJ0Ho-yDIOI7Kxk6LrpExS_eEHXq-s9lOWcLqr",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"teste1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteTransactions}}{{transactions-route}}/categories/b3da433f-61b4-4de0-b759-4b528fb35e83",
+							"host": [
+								"{{baseRouteTransactions}}{{transactions-route}}"
+							],
+							"path": [
+								"categories",
+								"b3da433f-61b4-4de0-b759-4b528fb35e83"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteCategories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.MZ1et9vN82MU5xfq8zk2GazToqt78gM_ZTKFt0GA8jvrNIrEV--S_3tzULxxNLKzhRWIkCKoexX-kKjcn3oc_XjHCD8dtjn6mo1lVw2c4OpYU2ReOtWBd1Kd5kFBiTU2Vlw85WHqQ8rYrJ7UbzBxS_iMR-PcPeDYQblUkZrmiV9Ib7o48XnX7jpHxR8DdPL1Lhu4A0e4R0sxjLpML2BMvwfyBuAZCcHlN7uEXUDE-esfU_CbgEcf1XPKqK24OC9bdVi42N8MypdA2uio4nrRnPevZp_fEWMHMN6mLRl3bwL4pV_JgqC2kF7FPzBTx-yZ755Azxa1ztS5Tj6c5rCnN5lGKp1EHQgJdJ2TYbKL-8_xqztWX-Xy2Wbjvubg0aRYNsK9_q2sI7gUYHlQoXYM3YV64QgJ0Ho-yDIOI7Kxk6LrpExS_eEHXq-s9lOWcLqr",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseRouteTransactions}}{{transactions-route}}/categories/b3da433f-61b4-4de0-b759-4b528fb35e83",
+							"host": [
+								"{{baseRouteTransactions}}{{transactions-route}}"
+							],
+							"path": [
+								"categories",
+								"b3da433f-61b4-4de0-b759-4b528fb35e83"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subcategories",
+			"item": [
+				{
+					"name": "GetSubcategories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.MZ1et9vN82MU5xfq8zk2GazToqt78gM_ZTKFt0GA8jvrNIrEV--S_3tzULxxNLKzhRWIkCKoexX-kKjcn3oc_XjHCD8dtjn6mo1lVw2c4OpYU2ReOtWBd1Kd5kFBiTU2Vlw85WHqQ8rYrJ7UbzBxS_iMR-PcPeDYQblUkZrmiV9Ib7o48XnX7jpHxR8DdPL1Lhu4A0e4R0sxjLpML2BMvwfyBuAZCcHlN7uEXUDE-esfU_CbgEcf1XPKqK24OC9bdVi42N8MypdA2uio4nrRnPevZp_fEWMHMN6mLRl3bwL4pV_JgqC2kF7FPzBTx-yZ755Azxa1ztS5Tj6c5rCnN5lGKp1EHQgJdJ2TYbKL-8_xqztWX-Xy2Wbjvubg0aRYNsK9_q2sI7gUYHlQoXYM3YV64QgJ0Ho-yDIOI7Kxk6LrpExS_eEHXq-s9lOWcLqr",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseRouteTransactions}}{{transactions-route}}/subcategories",
+							"host": [
+								"{{baseRouteTransactions}}{{transactions-route}}"
+							],
+							"path": [
+								"subcategories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddSubcategory",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.MZ1et9vN82MU5xfq8zk2GazToqt78gM_ZTKFt0GA8jvrNIrEV--S_3tzULxxNLKzhRWIkCKoexX-kKjcn3oc_XjHCD8dtjn6mo1lVw2c4OpYU2ReOtWBd1Kd5kFBiTU2Vlw85WHqQ8rYrJ7UbzBxS_iMR-PcPeDYQblUkZrmiV9Ib7o48XnX7jpHxR8DdPL1Lhu4A0e4R0sxjLpML2BMvwfyBuAZCcHlN7uEXUDE-esfU_CbgEcf1XPKqK24OC9bdVi42N8MypdA2uio4nrRnPevZp_fEWMHMN6mLRl3bwL4pV_JgqC2kF7FPzBTx-yZ755Azxa1ztS5Tj6c5rCnN5lGKp1EHQgJdJ2TYbKL-8_xqztWX-Xy2Wbjvubg0aRYNsK9_q2sI7gUYHlQoXYM3YV64QgJ0Ho-yDIOI7Kxk6LrpExS_eEHXq-s9lOWcLqr",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idCategory\": \"b3da433f-61b4-4de0-b759-4b528fb35e83\",\r\n  \"name\": \"teste\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteTransactions}}{{transactions-route}}/subcategories",
+							"host": [
+								"{{baseRouteTransactions}}{{transactions-route}}"
+							],
+							"path": [
+								"subcategories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateSubcategories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.MZ1et9vN82MU5xfq8zk2GazToqt78gM_ZTKFt0GA8jvrNIrEV--S_3tzULxxNLKzhRWIkCKoexX-kKjcn3oc_XjHCD8dtjn6mo1lVw2c4OpYU2ReOtWBd1Kd5kFBiTU2Vlw85WHqQ8rYrJ7UbzBxS_iMR-PcPeDYQblUkZrmiV9Ib7o48XnX7jpHxR8DdPL1Lhu4A0e4R0sxjLpML2BMvwfyBuAZCcHlN7uEXUDE-esfU_CbgEcf1XPKqK24OC9bdVi42N8MypdA2uio4nrRnPevZp_fEWMHMN6mLRl3bwL4pV_JgqC2kF7FPzBTx-yZ755Azxa1ztS5Tj6c5rCnN5lGKp1EHQgJdJ2TYbKL-8_xqztWX-Xy2Wbjvubg0aRYNsK9_q2sI7gUYHlQoXYM3YV64QgJ0Ho-yDIOI7Kxk6LrpExS_eEHXq-s9lOWcLqr",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"teste2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteTransactions}}{{transactions-route}}/subcategories/7f4c5017-5f71-4573-b502-638143540bd8",
+							"host": [
+								"{{baseRouteTransactions}}{{transactions-route}}"
+							],
+							"path": [
+								"subcategories",
+								"7f4c5017-5f71-4573-b502-638143540bd8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteSubcategories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.MZ1et9vN82MU5xfq8zk2GazToqt78gM_ZTKFt0GA8jvrNIrEV--S_3tzULxxNLKzhRWIkCKoexX-kKjcn3oc_XjHCD8dtjn6mo1lVw2c4OpYU2ReOtWBd1Kd5kFBiTU2Vlw85WHqQ8rYrJ7UbzBxS_iMR-PcPeDYQblUkZrmiV9Ib7o48XnX7jpHxR8DdPL1Lhu4A0e4R0sxjLpML2BMvwfyBuAZCcHlN7uEXUDE-esfU_CbgEcf1XPKqK24OC9bdVi42N8MypdA2uio4nrRnPevZp_fEWMHMN6mLRl3bwL4pV_JgqC2kF7FPzBTx-yZ755Azxa1ztS5Tj6c5rCnN5lGKp1EHQgJdJ2TYbKL-8_xqztWX-Xy2Wbjvubg0aRYNsK9_q2sI7gUYHlQoXYM3YV64QgJ0Ho-yDIOI7Kxk6LrpExS_eEHXq-s9lOWcLqr",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseRouteTransactions}}{{transactions-route}}/subcategories/7f4c5017-5f71-4573-b502-638143540bd8",
+							"host": [
+								"{{baseRouteTransactions}}{{transactions-route}}"
+							],
+							"path": [
+								"subcategories",
+								"7f4c5017-5f71-4573-b502-638143540bd8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "AddTransaction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.EDDYTR1aKspvSSE-twQ7WTlZ0plXKBRchLmAVbZQ9tniDql40OIJGKGeeF0SljNeR9MXaZKlOlA144V-M4r-pJ5DAGZiutqCSghjVphhaYEWvfHFDD4vk4rVSxLli3sjswYZHSPJ-jaQ8LflRlRM_3YHTN8zPHmdAyJslYmk22-iA7CzL4ey4W1ULd1GI7jJ9ByoTHj6XpOeLNu5OrpPOmDsWO0fFN0Ou9k2byHibqend8pMQOG69VTuCiMw0sfZwOuh7sdR6Yu_yRbHmC7nznIm_Lt1HFtmEKWVYzWHUZEPn-yQI-PhYp7f45qgf2l3ifHFwMAUWqtGqUo0addymrK1P_676LNs8DPsjlp-deOs-drYhV38EcFVg-UsexATv-3v2DOYGHUnKobwcEIcFLfCoPW-SVyTgBr1BC7f8E24XhDhKgFRrsEoPcJUQAXV",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idWallet\": \"6de7e9b9-20d8-4f52-acd1-c9735e1f6c59\",\r\n  \"idCategory\": null,\r\n  \"idSubcategory\": null,\r\n  \"idTransactionGroup\": null,\r\n  \"idReocurring\": null,\r\n  \"date\": \"2024-12-07T23:50:13.724Z\",\r\n  \"description\": \"teste\",\r\n  \"amount\": 50,\r\n  \"isPlanned\": false,\r\n  \"latitude\": 0,\r\n  \"longitue\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteTransactions}}{{transactions-route}}",
+							"host": [
+								"{{baseRouteTransactions}}{{transactions-route}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTransactions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.EDDYTR1aKspvSSE-twQ7WTlZ0plXKBRchLmAVbZQ9tniDql40OIJGKGeeF0SljNeR9MXaZKlOlA144V-M4r-pJ5DAGZiutqCSghjVphhaYEWvfHFDD4vk4rVSxLli3sjswYZHSPJ-jaQ8LflRlRM_3YHTN8zPHmdAyJslYmk22-iA7CzL4ey4W1ULd1GI7jJ9ByoTHj6XpOeLNu5OrpPOmDsWO0fFN0Ou9k2byHibqend8pMQOG69VTuCiMw0sfZwOuh7sdR6Yu_yRbHmC7nznIm_Lt1HFtmEKWVYzWHUZEPn-yQI-PhYp7f45qgf2l3ifHFwMAUWqtGqUo0addymrK1P_676LNs8DPsjlp-deOs-drYhV38EcFVg-UsexATv-3v2DOYGHUnKobwcEIcFLfCoPW-SVyTgBr1BC7f8E24XhDhKgFRrsEoPcJUQAXV",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseRouteTransactions}}{{transactions-route}}",
+							"host": [
+								"{{baseRouteTransactions}}{{transactions-route}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTransactionsSlidingwindow",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.EDDYTR1aKspvSSE-twQ7WTlZ0plXKBRchLmAVbZQ9tniDql40OIJGKGeeF0SljNeR9MXaZKlOlA144V-M4r-pJ5DAGZiutqCSghjVphhaYEWvfHFDD4vk4rVSxLli3sjswYZHSPJ-jaQ8LflRlRM_3YHTN8zPHmdAyJslYmk22-iA7CzL4ey4W1ULd1GI7jJ9ByoTHj6XpOeLNu5OrpPOmDsWO0fFN0Ou9k2byHibqend8pMQOG69VTuCiMw0sfZwOuh7sdR6Yu_yRbHmC7nznIm_Lt1HFtmEKWVYzWHUZEPn-yQI-PhYp7f45qgf2l3ifHFwMAUWqtGqUo0addymrK1P_676LNs8DPsjlp-deOs-drYhV38EcFVg-UsexATv-3v2DOYGHUnKobwcEIcFLfCoPW-SVyTgBr1BC7f8E24XhDhKgFRrsEoPcJUQAXV",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"date\":\"2024-12-10T23:50:13.724Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteTransactions}}{{transactions-route}}/10/0",
+							"host": [
+								"{{baseRouteTransactions}}{{transactions-route}}"
+							],
+							"path": [
+								"10",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTransactionsRange",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.EDDYTR1aKspvSSE-twQ7WTlZ0plXKBRchLmAVbZQ9tniDql40OIJGKGeeF0SljNeR9MXaZKlOlA144V-M4r-pJ5DAGZiutqCSghjVphhaYEWvfHFDD4vk4rVSxLli3sjswYZHSPJ-jaQ8LflRlRM_3YHTN8zPHmdAyJslYmk22-iA7CzL4ey4W1ULd1GI7jJ9ByoTHj6XpOeLNu5OrpPOmDsWO0fFN0Ou9k2byHibqend8pMQOG69VTuCiMw0sfZwOuh7sdR6Yu_yRbHmC7nznIm_Lt1HFtmEKWVYzWHUZEPn-yQI-PhYp7f45qgf2l3ifHFwMAUWqtGqUo0addymrK1P_676LNs8DPsjlp-deOs-drYhV38EcFVg-UsexATv-3v2DOYGHUnKobwcEIcFLfCoPW-SVyTgBr1BC7f8E24XhDhKgFRrsEoPcJUQAXV",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"startDate\": \"2024-12-06T23:56:08.606Z\",\r\n  \"endDate\": \"2024-12-08T23:56:08.606Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteTransactions}}{{transactions-route}}/range",
+							"host": [
+								"{{baseRouteTransactions}}{{transactions-route}}"
+							],
+							"path": [
+								"range"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateTransaction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.EDDYTR1aKspvSSE-twQ7WTlZ0plXKBRchLmAVbZQ9tniDql40OIJGKGeeF0SljNeR9MXaZKlOlA144V-M4r-pJ5DAGZiutqCSghjVphhaYEWvfHFDD4vk4rVSxLli3sjswYZHSPJ-jaQ8LflRlRM_3YHTN8zPHmdAyJslYmk22-iA7CzL4ey4W1ULd1GI7jJ9ByoTHj6XpOeLNu5OrpPOmDsWO0fFN0Ou9k2byHibqend8pMQOG69VTuCiMw0sfZwOuh7sdR6Yu_yRbHmC7nznIm_Lt1HFtmEKWVYzWHUZEPn-yQI-PhYp7f45qgf2l3ifHFwMAUWqtGqUo0addymrK1P_676LNs8DPsjlp-deOs-drYhV38EcFVg-UsexATv-3v2DOYGHUnKobwcEIcFLfCoPW-SVyTgBr1BC7f8E24XhDhKgFRrsEoPcJUQAXV",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idWallet\": \"6de7e9b9-20d8-4f52-acd1-c9735e1f6c59\",\r\n  \"idCategory\": null,\r\n  \"idSubcategory\": null,\r\n  \"idTransactionGroup\": null,\r\n  \"idReocurring\": null,\r\n  \"date\": \"2024-12-08T23:56:34.562Z\",\r\n  \"description\": \"string\",\r\n  \"amount\": 0,\r\n  \"isPlanned\": true,\r\n  \"latitude\": 0,\r\n  \"longitue\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteTransactions}}{{transactions-route}}/b8159f4c-5ccb-4ce5-a5db-4160bfdbbbe6",
+							"host": [
+								"{{baseRouteTransactions}}{{transactions-route}}"
+							],
+							"path": [
+								"b8159f4c-5ccb-4ce5-a5db-4160bfdbbbe6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetGoCardlessTransactions",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseRouteTransactions}}{{transactions-route}}/gocardless/6de7e9b9-20d8-4f52-acd1-c9735e1f6c59/transactions",
+							"host": [
+								"{{baseRouteTransactions}}{{transactions-route}}"
+							],
+							"path": [
+								"gocardless",
+								"6de7e9b9-20d8-4f52-acd1-c9735e1f6c59",
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteTransactions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.EDDYTR1aKspvSSE-twQ7WTlZ0plXKBRchLmAVbZQ9tniDql40OIJGKGeeF0SljNeR9MXaZKlOlA144V-M4r-pJ5DAGZiutqCSghjVphhaYEWvfHFDD4vk4rVSxLli3sjswYZHSPJ-jaQ8LflRlRM_3YHTN8zPHmdAyJslYmk22-iA7CzL4ey4W1ULd1GI7jJ9ByoTHj6XpOeLNu5OrpPOmDsWO0fFN0Ou9k2byHibqend8pMQOG69VTuCiMw0sfZwOuh7sdR6Yu_yRbHmC7nznIm_Lt1HFtmEKWVYzWHUZEPn-yQI-PhYp7f45qgf2l3ifHFwMAUWqtGqUo0addymrK1P_676LNs8DPsjlp-deOs-drYhV38EcFVg-UsexATv-3v2DOYGHUnKobwcEIcFLfCoPW-SVyTgBr1BC7f8E24XhDhKgFRrsEoPcJUQAXV",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseRouteTransactions}}{{transactions-route}}/b8159f4c-5ccb-4ce5-a5db-4160bfdbbbe6",
+							"host": [
+								"{{baseRouteTransactions}}{{transactions-route}}"
+							],
+							"path": [
+								"b8159f4c-5ccb-4ce5-a5db-4160bfdbbbe6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

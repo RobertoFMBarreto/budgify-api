@@ -202,15 +202,13 @@ public static class UserPersistence
             if (!token.IsValid)
                 return false;
             var uid = token.Paseto.Payload["sub"].ToString();
-            Console.WriteLine($"uid: {uid}");
-            Console.WriteLine(request.Agent);
             UserRefreshToken? user = await context.UserRefreshTokens.Where(u=> u.IdUser == Guid.Parse(uid) && u.Device == request.Agent).FirstOrDefaultAsync();
-            Console.WriteLine(user==null?"User not found":"User found");
+
             if(user == null)
                 return false;
 
             var result = PasetoManager.DecodePasetoToken(CustomEncryptor.DecryptString(user.Token));
-            Console.WriteLine($"Result: {result}");
+
             return result.IsValid;
         }
         catch (Exception e)

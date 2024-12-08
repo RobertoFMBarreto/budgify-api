@@ -22,7 +22,7 @@ public class PasetoAuthenticationHandler : AuthenticationHandler<AuthenticationS
     {
 
         if (Request.Path.ToString() == "/gateway/accounts/user" && Request.Path == "POST")
-        { 
+        {
             List<Claim> claims = new List<Claim>();
             var identity = new ClaimsIdentity(claims, Scheme.Name);
             var principal = new ClaimsPrincipal(identity);
@@ -37,7 +37,7 @@ public class PasetoAuthenticationHandler : AuthenticationHandler<AuthenticationS
         try
         {
             Byte[] key =
-                Convert.FromBase64String( Environment.GetEnvironmentVariable(
+                Convert.FromBase64String(Environment.GetEnvironmentVariable(
                     "keys__paseto_key"));
 
             var valParams = new PasetoTokenValidationParameters
@@ -46,7 +46,6 @@ public class PasetoAuthenticationHandler : AuthenticationHandler<AuthenticationS
                 ValidateIssuer = true,
                 ValidIssuer = "https://github.com/RobertoFMBarreto/budgify-api"
             };
-            Console.WriteLine(token);
             var result = new PasetoBuilder().Use(ProtocolVersion.V4, Purpose.Local)
                 .WithKey(key, Encryption.SymmetricKey).Decode(token, valParams);
             if (!result.IsValid)
@@ -67,7 +66,7 @@ public class PasetoAuthenticationHandler : AuthenticationHandler<AuthenticationS
             if (!validateRefToken)
                 return AuthenticateResult.Fail("Invalid Session");
 
-            
+
             List<string> allowedRoles = new List<string>();
             string path = Request.Path.ToString();
             if (path.Contains("/accounts/superadmin"))

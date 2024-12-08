@@ -11,8 +11,6 @@ public class ValidateUserServiceHandler : Validateuserservice.ValidateUserServic
     public override async Task<ValidateUserResponse> ValidateUserService(ValidateUserRequest request,
         ServerCallContext context)
     {
-        
-        Console.WriteLine("Validating user");
         User? user = null;
         if (!string.IsNullOrEmpty(request.Uid))
         {

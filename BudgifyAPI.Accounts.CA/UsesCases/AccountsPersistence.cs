@@ -360,7 +360,6 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                         Message = "Group doesn't exist",
                     };
                 }
-                Console.WriteLine(managerId);
                 var userExist = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == managerId);
                 if (userExist == null)
                 {

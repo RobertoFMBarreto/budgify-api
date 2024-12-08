@@ -1,0 +1,230 @@
+{
+	"info": {
+		"_postman_id": "d0c6e056-ae99-45bb-8653-799a6ca83593",
+		"name": "WalletCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14061868",
+		"_collection_link": "https://engenheirosesi-ipca.postman.co/workspace/Team-Workspace~3126cc04-caeb-4c74-843d-3769c0fd0fb0/collection/14061868-d0c6e056-ae99-45bb-8653-799a6ca83593?action=share&source=collection_link&creator=14061868"
+	},
+	"item": [
+		{
+			"name": "Wallet",
+			"item": [
+				{
+					"name": "AddWallet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.g8IJDWSi9zSoC_LI-C9GdSUD8FV4LzvunGzWoH27aE3CCYj3zlfMG7ClLRVUIBeJ3LySTccpH25flHU0NS1knUcqYcsgrDwormZg3tbVwF98_wM1txBh1k0IJe2CGoskvLMQIjqbcXMyz280erKnOLWE8iBkZHFbW8RpOM1H04_qHaYVFgsWVx9PnvmMmpLZEPPMkZMB-5Q00HtnxLiOEcJGZoDabR3-mhSGIXnyE3Jrd-FoE6CLl0hTgeRIVenMLdanXfg5OlS0i5GmEa36p45RlOxspErzkG4Jb1y1O43wN-n4Y6FWO4q4b4tVptQqqvP3k8LEBStPeg7FGpXQTI-dhidgdzNA4FSwTyx4boPqSgZf0ib0wGvmBYDnLU73AIJGxF-8a7AJMZaMb6rPpnuaU6u9RzeLKAJ2xV2xVlYUrALyt8HzzwVutRCEmcYS",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"walletName\": \"teste\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteWallets}}{{wallet-route}}",
+							"host": [
+								"{{baseRouteWallets}}{{wallet-route}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetWallet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.g8IJDWSi9zSoC_LI-C9GdSUD8FV4LzvunGzWoH27aE3CCYj3zlfMG7ClLRVUIBeJ3LySTccpH25flHU0NS1knUcqYcsgrDwormZg3tbVwF98_wM1txBh1k0IJe2CGoskvLMQIjqbcXMyz280erKnOLWE8iBkZHFbW8RpOM1H04_qHaYVFgsWVx9PnvmMmpLZEPPMkZMB-5Q00HtnxLiOEcJGZoDabR3-mhSGIXnyE3Jrd-FoE6CLl0hTgeRIVenMLdanXfg5OlS0i5GmEa36p45RlOxspErzkG4Jb1y1O43wN-n4Y6FWO4q4b4tVptQqqvP3k8LEBStPeg7FGpXQTI-dhidgdzNA4FSwTyx4boPqSgZf0ib0wGvmBYDnLU73AIJGxF-8a7AJMZaMb6rPpnuaU6u9RzeLKAJ2xV2xVlYUrALyt8HzzwVutRCEmcYS",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseRouteWallets}}{{wallet-route}}",
+							"host": [
+								"{{baseRouteWallets}}{{wallet-route}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateWallet",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.g8IJDWSi9zSoC_LI-C9GdSUD8FV4LzvunGzWoH27aE3CCYj3zlfMG7ClLRVUIBeJ3LySTccpH25flHU0NS1knUcqYcsgrDwormZg3tbVwF98_wM1txBh1k0IJe2CGoskvLMQIjqbcXMyz280erKnOLWE8iBkZHFbW8RpOM1H04_qHaYVFgsWVx9PnvmMmpLZEPPMkZMB-5Q00HtnxLiOEcJGZoDabR3-mhSGIXnyE3Jrd-FoE6CLl0hTgeRIVenMLdanXfg5OlS0i5GmEa36p45RlOxspErzkG4Jb1y1O43wN-n4Y6FWO4q4b4tVptQqqvP3k8LEBStPeg7FGpXQTI-dhidgdzNA4FSwTyx4boPqSgZf0ib0wGvmBYDnLU73AIJGxF-8a7AJMZaMb6rPpnuaU6u9RzeLKAJ2xV2xVlYUrALyt8HzzwVutRCEmcYS",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"walletId\": \"6de7e9b9-20d8-4f52-acd1-c9735e1f6c59\",\r\n  \"walletName\": \"teste1\",\r\n  \"value\": 0,\r\n  \"idRequisition\": null,\r\n  \"agreementDays\": 0,\r\n  \"idAccount\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteWallets}}{{wallet-route}}",
+							"host": [
+								"{{baseRouteWallets}}{{wallet-route}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteWallet",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseRouteWallets}}{{wallet-route}}",
+							"host": [
+								"{{baseRouteWallets}}{{wallet-route}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GoCardless",
+			"item": [
+				{
+					"name": "GetGoCardlessByCountry",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseRouteWallets}}{{wallet-route}}/gocardless/banks/country",
+							"host": [
+								"{{baseRouteWallets}}{{wallet-route}}"
+							],
+							"path": [
+								"gocardless",
+								"banks",
+								"country"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddGoCardlessAgrrement",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"intitution\": \"string\",\r\n  \"maxHistoricalDays\": \"string\",\r\n  \"accesValidForDays\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteWallets}}{{wallet-route}}/gocardless/agreement",
+							"host": [
+								"{{baseRouteWallets}}{{wallet-route}}"
+							],
+							"path": [
+								"gocardless",
+								"agreement"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddGoCardlessRequisition",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"redirect\": \"string\",\r\n  \"institutionId\": \"string\",\r\n  \"agreement\": \"string\",\r\n  \"userLanguage\": \"string\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteWallets}}{{wallet-route}}/gocardless/requisition",
+							"host": [
+								"{{baseRouteWallets}}{{wallet-route}}"
+							],
+							"path": [
+								"gocardless",
+								"requisition"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetGoCardlessByIdRequisition",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseRouteWallets}}{{wallet-route}}/gocardless/bank/accounts/6de7e9b9-20d8-4f52-acd1-c9735e1f6c59",
+							"host": [
+								"{{baseRouteWallets}}{{wallet-route}}"
+							],
+							"path": [
+								"gocardless",
+								"bank",
+								"accounts",
+								"6de7e9b9-20d8-4f52-acd1-c9735e1f6c59"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

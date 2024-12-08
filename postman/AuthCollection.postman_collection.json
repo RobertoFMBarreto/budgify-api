@@ -1,0 +1,96 @@
+{
+	"info": {
+		"_postman_id": "0d423caf-9687-4423-b6f6-5ba9a4319d4e",
+		"name": "AuthCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14061868",
+		"_collection_link": "https://engenheirosesi-ipca.postman.co/workspace/Team-Workspace~3126cc04-caeb-4c74-843d-3769c0fd0fb0/collection/14061868-0d423caf-9687-4423-b6f6-5ba9a4319d4e?action=share&source=collection_link&creator=14061868"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"test1e@teste.com\",\r\n  \"password\": \"teste\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseRouteAuth}}{{auth-route}}/login",
+					"host": [
+						"{{baseRouteAuth}}{{auth-route}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer v4.local.oWCqtkw4Rj93wLuJ6ymiEz-YJcEGrde6sFs1oOoWh1k__CHCpwaquy2wszAB4zo9yF3McKWmi9mJ6L0hLiDdC7dBQ0JZXuB3TyiN3HD-r-CScfoUsAJyQiogbj7UaKY1m4md27f-1S8Jjukq-mRykzMbLy6rVyp2u51oanBzOBIodqHRIaV04-37hIIHByFvaf4zNJJCilOLwhitLDZ9mDGs01KX1lK1tOhHHU-8nvk69P57G2YjkHkPvyRNUkmLFnUk4bPiW0mHbYDuGEVld-p9IzvPCXDCSyevrmwN7Kx6u8r9XNFHzfe-yF426KyNpR0h0hzLLQ-523Gimy1hNEPaAWJJI5B-ZqJG-UbLYAVmXr3OXNrDnMTV1PTD7YWUGSA8gHoDsjfFybEJVHf57aVq6j70jszzGQ7o0sD0ZAKy6Y1zLPCBX6ZLzhuYrhlb",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseRouteAuth}}{{auth-route}}/logout",
+					"host": [
+						"{{baseRouteAuth}}{{auth-route}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "newSessionToken",
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"refreshToken\": \"string\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseRouteAuth}}{{auth-route}}/new-session-token",
+					"host": [
+						"{{baseRouteAuth}}{{auth-route}}"
+					],
+					"path": [
+						"new-session-token"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -5,7 +5,7 @@ using Grpc.Core;
 
 namespace BudgifyAPI.Auth.CA.Entities;
 
-public class AuthServiceHandler: Authservice.AuthService.AuthServiceBase
+public class AuthServiceHandler : Authservice.AuthService.AuthServiceBase
 {
     public override async Task<LogoutUserResponse> LogoutUser(LogoutUserRequest request, ServerCallContext context)
     {
@@ -19,7 +19,6 @@ public class AuthServiceHandler: Authservice.AuthService.AuthServiceBase
     public override async Task<ValidateTokenResponse> ValidateRefreshToken(ValidateTokenRequest request, ServerCallContext context)
     {
         var isValid = await ValidateToken(request);
-        Console.WriteLine($"Sending :{isValid}");
         return new ValidateTokenResponse
         {
             IsValid = isValid,
@@ -28,6 +27,6 @@ public class AuthServiceHandler: Authservice.AuthService.AuthServiceBase
 
     private async Task<bool> ValidateToken(ValidateTokenRequest request)
     {
-        return await UserInteractorEf.ValidateSession(UserPersistence.ValidateSessionPersistence,request);
+        return await UserInteractorEf.ValidateSession(UserPersistence.ValidateSessionPersistence, request);
     }
 }

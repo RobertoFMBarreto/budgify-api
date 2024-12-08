@@ -1,0 +1,574 @@
+{
+	"info": {
+		"_postman_id": "0f3e17fe-60ee-4130-89ec-e509bd97d527",
+		"name": "AccountsCollection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14061868",
+		"_collection_link": "https://engenheirosesi-ipca.postman.co/workspace/Team-Workspace~3126cc04-caeb-4c74-843d-3769c0fd0fb0/collection/14061868-0f3e17fe-60ee-4130-89ec-e509bd97d527?action=share&source=collection_link&creator=14061868"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "AddUserGroup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(200);",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.zwYl93lcJ8sCj-EKXkRGmlcJs-8B2Gs1nzOYjmuHaeEmiz4HH24XAguI-hzZcR-JRe_ITdRG14tCAmKp7SSep-tsRO1fg83-zQNiRNGCLV8jOODXsjUlyZQQVHVgg19yfDmikpyThAXgw4-EgXItbDsE7RLMdl53kCXPApAFPd7vcHnYorW9vzBoBSn19qR5yAKSqZrlr7x2en7lA8suKiGZoOO8zoANY-pUYl41rphwbBsPEfXIv4paIpElbZuptKQsDDlz5y0FpwcK2ow08tws6Ng937xj06JaE6lInyN0oVvFTXBehYoqP1vEFY9s_HVNEYZvWR4qbQ2DezFI8SfeyPgitxg2fuxOeihcU_mbJS12w6hCl-JIt0vzs5nY35_G1qzFVIveB0VB1ZG3RaZzU2n6caUSpshM2Ofh71wDkOCS4LV3bhAI-M0djLu7aw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"teste\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteAccounts}}{{accounts-route}}/user/user-group",
+							"host": [
+								"{{baseRouteAccounts}}{{accounts-route}}"
+							],
+							"path": [
+								"user",
+								"user-group"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserGroupById",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseRouteAccounts}}{{accounts-route}}/user/user-group/userGroupId",
+							"host": [
+								"{{baseRouteAccounts}}{{accounts-route}}"
+							],
+							"path": [
+								"user",
+								"user-group",
+								"userGroupId"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserGroup",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.zwYl93lcJ8sCj-EKXkRGmlcJs-8B2Gs1nzOYjmuHaeEmiz4HH24XAguI-hzZcR-JRe_ITdRG14tCAmKp7SSep-tsRO1fg83-zQNiRNGCLV8jOODXsjUlyZQQVHVgg19yfDmikpyThAXgw4-EgXItbDsE7RLMdl53kCXPApAFPd7vcHnYorW9vzBoBSn19qR5yAKSqZrlr7x2en7lA8suKiGZoOO8zoANY-pUYl41rphwbBsPEfXIv4paIpElbZuptKQsDDlz5y0FpwcK2ow08tws6Ng937xj06JaE6lInyN0oVvFTXBehYoqP1vEFY9s_HVNEYZvWR4qbQ2DezFI8SfeyPgitxg2fuxOeihcU_mbJS12w6hCl-JIt0vzs5nY35_G1qzFVIveB0VB1ZG3RaZzU2n6caUSpshM2Ofh71wDkOCS4LV3bhAI-M0djLu7aw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseRouteAccounts}}{{accounts-route}}/user/user-group",
+							"host": [
+								"{{baseRouteAccounts}}{{accounts-route}}"
+							],
+							"path": [
+								"user",
+								"user-group"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function(){",
+									"    pm.response.to.have.status(200);",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"teste\",\r\n  \"email\": \"teste2@teste.com\",\r\n  \"password\": \"teste\",\r\n  \"dateOfBirth\": \"2024-12-01\",\r\n  \"genre\": 0,\r\n  \"allowWalletWatch\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteAccounts}}{{accounts-route}}/user",
+							"host": [
+								"{{baseRouteAccounts}}{{accounts-route}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "newPassowrd",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.o0yLK0MDFazdAe3kMNwKn99SKGAkEUyGzI9fsKNPb-tsxm9bx405bqsHfwt-irCDAi6d80sTsFO_OzNweUkKQMLTxcgJt7g9QfKy0A45ej2PL_pLfwEORraK7kZ3toHT0Yh2s6KnaIzsT3lj9-DZuHoSrvW22Yk1l16vsayXCWavKtQ8-Tm9PPtvxE30yWw9ZUBEa9McOw7lnKn-XhUcc4B1RYP-day3xJN-nQAmlyLaV4EyqI3g5GtQY5rUZ2kY1VdXEWlV7-1RK_MpGJrQJU9SM3LkM_uqCv5Ief7U2PwFduTuxRg91lsZvmfIQlVunzlL5_VsBoAjt6cAkEiRVr0AWix6gtYzHFN3k7YUIG4J9SAh7SAjEQAb8xl00P373LZRWsb2xxXSa9ZJplKnlvm8jYPEj-EsdyQtoTWHg-o2nbEYrmPINr3zyTtH_iBK",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"teste@teste.com\",\r\n  \"oldPassword\": \"teste\",\r\n  \"newPassword\": \"teste1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteAuth}}{{accounts-route}}/new-password",
+							"host": [
+								"{{baseRouteAuth}}{{accounts-route}}"
+							],
+							"path": [
+								"new-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.o0yLK0MDFazdAe3kMNwKn99SKGAkEUyGzI9fsKNPb-tsxm9bx405bqsHfwt-irCDAi6d80sTsFO_OzNweUkKQMLTxcgJt7g9QfKy0A45ej2PL_pLfwEORraK7kZ3toHT0Yh2s6KnaIzsT3lj9-DZuHoSrvW22Yk1l16vsayXCWavKtQ8-Tm9PPtvxE30yWw9ZUBEa9McOw7lnKn-XhUcc4B1RYP-day3xJN-nQAmlyLaV4EyqI3g5GtQY5rUZ2kY1VdXEWlV7-1RK_MpGJrQJU9SM3LkM_uqCv5Ief7U2PwFduTuxRg91lsZvmfIQlVunzlL5_VsBoAjt6cAkEiRVr0AWix6gtYzHFN3k7YUIG4J9SAh7SAjEQAb8xl00P373LZRWsb2xxXSa9ZJplKnlvm8jYPEj-EsdyQtoTWHg-o2nbEYrmPINr3zyTtH_iBK",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idUserGroup\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n  \"name\": \"string\",\r\n  \"email\": \"teste@teste.com\",\r\n  \"password\": \"teste\",\r\n  \"dateOfBirth\": \"2024-12-01\",\r\n  \"genre\": 0,\r\n  \"allowWalletWatch\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteAccounts}}{{accounts-route}}/user",
+							"host": [
+								"{{baseRouteAccounts}}{{accounts-route}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Manager",
+			"item": [
+				{
+					"name": "AddUserToUSerGroup",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.1WVMEAzjs8J5Bhk_2wWW3U6HS7jeSBjaEoCbCV-vJfdVE7A5nxmbcj-BA33gPjEYJFFcwyus-NfVj-SfwD-tdo5kYzrREu3wfCdlidU-7LRCbcDLOWS1lGLYYsExyr-2uutLmalwK6D2lPrNuLK8uz4A2bimjv8Sf8sUA5oGOHHSsgaqepf_56WPmlHO7o_sPSLeCpPpAJBbc6vbAJo8slwRryT9ci2LKqBDtkHNS_s0PVoaqdiHck0CiZge1DDIu7YfZHF-S8-FqTOZHfpQuVH4hEadwmWHchfV8cK20QlAh39D0vPY2HzkrEZ3COJaC3h6cIYUiJ6X55sHlyDDQx98Mm_bhb21PFaBEPD4AtMS2oTHjFb8wja_gH-HsDIURiJD6sVuc_Nfh5ICWX-tHNwtIPZXUQ0Pp_c0XeumN9A9jRbrhJw9HnCRNu7JfkbuYg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": \"c51ce3ec-287f-4b7a-aaf5-03665d8d32c4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteAccounts}}{{accounts-route}}/manager/user-group/users",
+							"host": [
+								"{{baseRouteAccounts}}{{accounts-route}}"
+							],
+							"path": [
+								"manager",
+								"user-group",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUserFromUserGroup",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.1WVMEAzjs8J5Bhk_2wWW3U6HS7jeSBjaEoCbCV-vJfdVE7A5nxmbcj-BA33gPjEYJFFcwyus-NfVj-SfwD-tdo5kYzrREu3wfCdlidU-7LRCbcDLOWS1lGLYYsExyr-2uutLmalwK6D2lPrNuLK8uz4A2bimjv8Sf8sUA5oGOHHSsgaqepf_56WPmlHO7o_sPSLeCpPpAJBbc6vbAJo8slwRryT9ci2LKqBDtkHNS_s0PVoaqdiHck0CiZge1DDIu7YfZHF-S8-FqTOZHfpQuVH4hEadwmWHchfV8cK20QlAh39D0vPY2HzkrEZ3COJaC3h6cIYUiJ6X55sHlyDDQx98Mm_bhb21PFaBEPD4AtMS2oTHjFb8wja_gH-HsDIURiJD6sVuc_Nfh5ICWX-tHNwtIPZXUQ0Pp_c0XeumN9A9jRbrhJw9HnCRNu7JfkbuYg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": \"c51ce3ec-287f-4b7a-aaf5-03665d8d32c4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteAccounts}}{{accounts-route}}/manager/user-group/users",
+							"host": [
+								"{{baseRouteAccounts}}{{accounts-route}}"
+							],
+							"path": [
+								"manager",
+								"user-group",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "UpdateUserGroup",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.lgpFWLA31aAeG-df3E4bhJGPle1wVvZeSmDNxVNDgPaqsJ2-MbqbH11veLQAE-jRUkdbIpDhcwmJ3pXO76ELfUn62_ycBU8l3F2slNfeuG6eL7wn8qGQp-SJXnWWw1g94tVVur4qubt-02w0V95AGTEhVLO8NgFCMM3U75iHEuHmFbsoF4MEntTOsmqmLtkxdA9KlJex-iYrmVe5LXkN898lZmWK9LN67q9Svg7yF5PNWVObyMJMgNRYlt41jnbWVYRcbOo4Z7T22iDwZAb9laUGPbt1JRpa741dbV1-oChkBlr02vC_EofEscOWSK85ENGpsCcjdJpp5oURP-Kt_T_2oKaeYCIRQ_IMEynvTC1tLlJOZpNZjU6z527b-Soddmr3dBGCkwF0LIrI5uEcV3p4r42FnSRq5XSMF06QUJeC0oxh20QqtAIh7QfCcyg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"teste1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteAccounts}}{{accounts-route}}/admin/user-group/1759d764-e1e1-4fc1-b7cf-1c3881547306",
+							"host": [
+								"{{baseRouteAccounts}}{{accounts-route}}"
+							],
+							"path": [
+								"admin",
+								"user-group",
+								"1759d764-e1e1-4fc1-b7cf-1c3881547306"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUserGroup",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.McvgTRs4i6O3AGZJDGq10Flvp7wk8-QagWioDKLj_aVxPvMNTmFbWVdV7iig-lqAac-up03acyLVjnfDlu8nRE6R_wSUWW79llPlh6yYJ20Ng_1nH_pAjUUPqL7hWOhLM3TunhMnYPIVskkCNluuACV7dQDYd05-V4s6WTqWK97osB4jpQsdqB6YbfbbUQceettKcv_9YrM6QyY_yXUpuSHBYkXeSg7frV-vuluD9oglZKmj7uhgEL-ljf_mRgOOgeSf6NJfW8QG5Ly3opSHj7qQs4aAm0cZ7acXilIrkBwSBbk52TXHblbwPEUfy_DNDGmY0iFln_EA75HD-8yrMeTU3zBdDAdw1JpQj4yWyOqKcuPVXZzajtpOlxhm_H8Q00wYHCd1C5FyZu14LkRanWHFgnBrVtVEqBwtn1ekV_Cc5i7jg_vgGongnrBx0G4Uiw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseRouteAccounts}}{{accounts-route}}/admin/user-group/1759d764-e1e1-4fc1-b7cf-1c3881547306",
+							"host": [
+								"{{baseRouteAccounts}}{{accounts-route}}"
+							],
+							"path": [
+								"admin",
+								"user-group",
+								"1759d764-e1e1-4fc1-b7cf-1c3881547306"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddManagerToUserGroup",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.A3zhBCvLbmj1Hb-H9XqsH5N_RlYCjHKmgc7zMqPiLvlQc3uPTbatrEEyplUgg6P96NQ5N25kc2KtyXfomDaosgqoRGyukWX44xdH45LTimDIRj0SA1gXavxa34OpH3cwXnTwqQ0DZ2LqxvBXLb4kWWHupSFpJys7Wfirshi1WuDeFHUNNhm6YuKNYbgIuYsZ9dTNkde08KvwluX_sTYzC17U9SCkD0q8AcbdcdvBjDdDr2TdiKrXpIdc_Q_6l0LlibdpFyDgKU6hIPmtBX0v8nEwOIJhRPEG7ItOfg9TeYugcEcgNC056ZC5Z9DEHxARPy5GXljy0NoBqcLkY4SiNF96RwK2PJ-Rwlc135Tn6LPafUuG7NmvhZZRXl5jwRsoj4pXLZq8wS0idG7TSH2mn5O_MIZ-TBrEYLw97LQk-b-vMpYO9ZHlQlzP0OlRDou2qw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": \"c51ce3ec-287f-4b7a-aaf5-03665d8d32c4\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteAccounts}}{{accounts-route}}/admin/user-group/manager",
+							"host": [
+								"{{baseRouteAccounts}}{{accounts-route}}"
+							],
+							"path": [
+								"admin",
+								"user-group",
+								"manager"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteManagerFromUserGroup",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.1WVMEAzjs8J5Bhk_2wWW3U6HS7jeSBjaEoCbCV-vJfdVE7A5nxmbcj-BA33gPjEYJFFcwyus-NfVj-SfwD-tdo5kYzrREu3wfCdlidU-7LRCbcDLOWS1lGLYYsExyr-2uutLmalwK6D2lPrNuLK8uz4A2bimjv8Sf8sUA5oGOHHSsgaqepf_56WPmlHO7o_sPSLeCpPpAJBbc6vbAJo8slwRryT9ci2LKqBDtkHNS_s0PVoaqdiHck0CiZge1DDIu7YfZHF-S8-FqTOZHfpQuVH4hEadwmWHchfV8cK20QlAh39D0vPY2HzkrEZ3COJaC3h6cIYUiJ6X55sHlyDDQx98Mm_bhb21PFaBEPD4AtMS2oTHjFb8wja_gH-HsDIURiJD6sVuc_Nfh5ICWX-tHNwtIPZXUQ0Pp_c0XeumN9A9jRbrhJw9HnCRNu7JfkbuYg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\":\"c51ce3ec-287f-4b7a-aaf5-03665d8d32c4\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseRouteAccounts}}{{accounts-route}}/admin/user-group/manager",
+							"host": [
+								"{{baseRouteAccounts}}{{accounts-route}}"
+							],
+							"path": [
+								"admin",
+								"user-group",
+								"manager"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SuperAdmin",
+			"item": [
+				{
+					"name": "DeleteUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.yUOJ9qNhHTPKej8LiD4_PHk6WT--qYy3hCOvpVDb2aX6EH54w0ty7CXhSlVIvN-TvFHhTQIS1B70cPmdmKP4mjK14ANUToNlX9mR0iwSXw0btv6w-5iupLU3fFs6dW_jTEX005iD5tb0NMPo6CKtddXFYyn283nysK9AfYECL-o5DoIJtjMeUfdFp7BKeWIDEvljGKJQVVIetMHoEBnwLWa-eBMMV2nFhbZ-3MduHjNxje5jjmy6C3HQMSJsWrD9vFEiE_Ks5otINbrByPDPsOLA99eIWnK-EXEw7JkHMX54phIIpn-4kfzZ2igL_saUNGmd2Laoz259mxLioy9N3BH8Jo8aLMau9Cf_Y7iROHgyT6on1VTJDadkdc4Skt9UcPdfdlyie9UTU1n3FK8HGiBCQOzR9OF2vzOVde4a_PGdLP8DhjMXfP01hzyCtwXYdzicG3fl",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseRouteAccounts}}{{accounts-route}}/superadmin/user/c51ce3ec-287f-4b7a-aaf5-03665d8d32c4",
+							"host": [
+								"{{baseRouteAccounts}}{{accounts-route}}"
+							],
+							"path": [
+								"superadmin",
+								"user",
+								"c51ce3ec-287f-4b7a-aaf5-03665d8d32c4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ActivateUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.yUOJ9qNhHTPKej8LiD4_PHk6WT--qYy3hCOvpVDb2aX6EH54w0ty7CXhSlVIvN-TvFHhTQIS1B70cPmdmKP4mjK14ANUToNlX9mR0iwSXw0btv6w-5iupLU3fFs6dW_jTEX005iD5tb0NMPo6CKtddXFYyn283nysK9AfYECL-o5DoIJtjMeUfdFp7BKeWIDEvljGKJQVVIetMHoEBnwLWa-eBMMV2nFhbZ-3MduHjNxje5jjmy6C3HQMSJsWrD9vFEiE_Ks5otINbrByPDPsOLA99eIWnK-EXEw7JkHMX54phIIpn-4kfzZ2igL_saUNGmd2Laoz259mxLioy9N3BH8Jo8aLMau9Cf_Y7iROHgyT6on1VTJDadkdc4Skt9UcPdfdlyie9UTU1n3FK8HGiBCQOzR9OF2vzOVde4a_PGdLP8DhjMXfP01hzyCtwXYdzicG3fl",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseRouteAccounts}}{{accounts-route}}/superadmin/user/c51ce3ec-287f-4b7a-aaf5-03665d8d32c4",
+							"host": [
+								"{{baseRouteAccounts}}{{accounts-route}}"
+							],
+							"path": [
+								"superadmin",
+								"user",
+								"c51ce3ec-287f-4b7a-aaf5-03665d8d32c4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUsers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "Bearer v4.local.oF6CIKG2PaliiCjoPe5cC5greE44FXZtaKfNzjaKwRav2Gg2wKieDArEd9sqgUzbfAxZacNy0AUswhEG7_cTgS-PX4rdpI0FRwWDCY3eD6L1IrsRWfu62-8f9HRrmXcpBgAVkoc-rtoudxhvm3KaRNFVitxp_OtVF4hpVi0lAJvuGx0UrNCgjEYJFmMxRItqAwSsUJ6kMHkyH0rvoQ4f9wrNv-2vA6ju8J_1-RFzB_5CTJgsFjmy7D2BaIvce2QDM9hV_MTB4OJ__UT9VTt4z4YylJ-AE4tofQzAcJX8oeJiMhc7BgdJdceFFLERhUwGCPgz1NIiAQJ-ZgG93-3FPzEoANHgd39ES6a8WcpLBiRnnPAXmD-bijVHfk7WnvaE5H8dfqw8kQOb3V472pTSJP-69RjnGTldMX35RcPMCia6JrImiCfEFRn75YN_S-MVxQxYxVLh",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseRouteAccounts}}{{accounts-route}}/superadmin/user",
+							"host": [
+								"{{baseRouteAccounts}}{{accounts-route}}"
+							],
+							"path": [
+								"superadmin",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserById",
+					"request": {
+						"auth": {
+							"type": "bearer"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseRouteAccounts}}{{accounts-route}}/superadmin/user/IdUser",
+							"host": [
+								"{{baseRouteAccounts}}{{accounts-route}}"
+							],
+							"path": [
+								"superadmin",
+								"user",
+								"IdUser"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
