@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package authservice;
+
+service AuthService {
+  // Valida o refresh token
+  rpc ValidateRefreshToken(ValidateTokenRequest) returns (ValidateTokenResponse);
+  rpc LogoutUser(LogoutUserRequest) returns (LogoutUserResponse);
+}
+
+message ValidateTokenRequest {
+  string token = 1;
+  string agent = 2;
+}
+
+message ValidateTokenResponse {
+  bool is_valid = 1;
+}
+
+message LogoutUserRequest {
+  string uid = 1;
+}
+
+
+message LogoutUserResponse {
+  bool done = 1;
+}

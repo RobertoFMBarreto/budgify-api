@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package validateuserservice;
+
+service ValidateUserService {
+  // Valida o refresh token
+  rpc ValidateUserService(ValidateUserRequest) returns (ValidateUserResponse);
+}
+
+message ValidateUserRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message ValidateUserResponse {
+  bool is_valid = 1;
+  string uid = 2;
+  bool is_admin = 3;
+  bool is_manager = 4;
+  bool is_superadmin = 5;
+}
+
+

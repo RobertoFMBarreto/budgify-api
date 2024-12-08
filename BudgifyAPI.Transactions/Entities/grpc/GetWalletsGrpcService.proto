@@ -3,8 +3,8 @@ syntax = "proto3";
 package getwalletsgrpcservice;
 
 service GetWalletsGrpcService {
-  // Valida o refresh token
   rpc GetWallets(GetWalletsRequest) returns (GetWalletsResponse);
+  rpc GetWalletByID(GetWalletByIdRequest) returns (GetWalletByIdResponse);
 }
 
 message GetWalletsRequest {
@@ -14,5 +14,16 @@ message GetWalletsRequest {
 message GetWalletsResponse {
   repeated string walletId = 1;
 }
+
+message GetWalletByIdRequest {
+  string walletId = 1;
+  string uid = 2;
+}
+
+message GetWalletByIdResponse {
+  string accountId = 1;
+  bool storeInCloud = 2;
+}
+
 
 
