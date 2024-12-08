@@ -12,7 +12,7 @@ public class ValidateUserServiceHandler : Validateuserservice.ValidateUserServic
         ServerCallContext context)
     {
         
-        Console.WriteLine($"Validating user: {request.Uid}");
+        Console.WriteLine("Validating user");
         User? user = null;
         if (!string.IsNullOrEmpty(request.Uid))
         {

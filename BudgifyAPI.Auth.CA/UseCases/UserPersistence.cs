@@ -1,3 +1,4 @@
+using System.Text;
 using Authservice;
 using BudgifyAPI.Auth.CA.Entities;
 using BudgifyAPI.Auth.CA.Entities.Requests;
@@ -38,18 +39,18 @@ public static class UserPersistence
             string role = "user";
             if (validateUserResponse.IsAdmin)
             {
-                role = "(admin|manager)";
+                role = "admin";
             }else if (validateUserResponse.IsManager)
             {
-                role = "(manager)";
+                role = "manager";
             }else if (validateUserResponse.IsSuperadmin)
             {
-                role = "(superadmin)";
+                role = "superadmin";
             }
             string token = PasetoManager.GeneratePasetoToken(Guid.Parse(validateUserResponse.Uid), role);
             string refreshToken = PasetoManager.GenerateRefreshPasetoToken(Guid.Parse(validateUserResponse.Uid));
             
-            UserRefreshToken? refToken = await context.UserRefreshTokens.Where(userRefreshToken => userRefreshToken.Device == userAgent)
+            UserRefreshToken? refToken = await context.UserRefreshTokens.Where(userRefreshToken => userRefreshToken.Device == userAgent && userRefreshToken.IdUser == Guid.Parse(validateUserResponse.Uid))
                 .FirstOrDefaultAsync();
             if (refToken == null)
             {
@@ -65,6 +66,9 @@ public static class UserPersistence
             else
             {
                 refreshToken = CustomEncryptor.DecryptString(refToken.Token);
+                refToken.LastUsage = DateTime.Now;
+                context.UserRefreshTokens.Update(refToken);
+                await context.SaveChangesAsync();
             }
             
             await context.SaveChangesAsync();
@@ -98,7 +102,8 @@ public static class UserPersistence
             
             
             UserRefreshToken? refToken = await context.UserRefreshTokens.Where(ur=>ur.Device==device).FirstOrDefaultAsync();
-            context.UserRefreshTokens.Remove(refToken);
+            if(refToken != null)
+                context.UserRefreshTokens.Remove(refToken);
             await context.SaveChangesAsync();
             return new CustomHttpResponse()
             {
@@ -154,13 +159,13 @@ public static class UserPersistence
             string role = "user";
             if (validateUserResponse.IsAdmin)
             {
-                role = "(admin|manager)";
+                role = "admin";
             }else if (validateUserResponse.IsManager)
             {
-                role = "(manager)";
+                role = "manager";
             }else if (validateUserResponse.IsSuperadmin)
             {
-                role = "(superadmin)";
+                role = "superadmin";
             }
             
             var token = PasetoManager.GeneratePasetoToken(userRefresh.IdUser, role);
@@ -172,7 +177,7 @@ public static class UserPersistence
             {
                 Data = new TokenResponse()
                 {
-                    Token = ""//token,
+                    Token = token,
                 },
                 Status = 200
             };
@@ -193,17 +198,19 @@ public static class UserPersistence
         AuthenticationContext context = new AuthenticationContext();
         try
         {
-            var token = PasetoManager.DecodePasetoToken(CustomEncryptor.DecryptString(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(request.Token))));
+            var token = PasetoManager.DecodePasetoToken(CustomEncryptor.DecryptString( Encoding.UTF8.GetString( Convert.FromBase64String(request.Token)) ));
             if (!token.IsValid)
                 return false;
             var uid = token.Paseto.Payload["sub"].ToString();
+            Console.WriteLine($"uid: {uid}");
+            Console.WriteLine(request.Agent);
             UserRefreshToken? user = await context.UserRefreshTokens.Where(u=> u.IdUser == Guid.Parse(uid) && u.Device == request.Agent).FirstOrDefaultAsync();
-            Console.WriteLine(user==null);
+            Console.WriteLine(user==null?"User not found":"User found");
             if(user == null)
                 return false;
 
             var result = PasetoManager.DecodePasetoToken(CustomEncryptor.DecryptString(user.Token));
- 
+            Console.WriteLine($"Result: {result}");
             return result.IsValid;
         }
         catch (Exception e)

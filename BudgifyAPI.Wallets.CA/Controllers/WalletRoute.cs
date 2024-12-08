@@ -15,9 +15,6 @@ public static class WalletRoute {
     
     public static WebApplication SetRoutes(WebApplication app, string baseRoute) {
     
-        Guid tempUserId = Guid.NewGuid();
-    
-    
         app.MapPost($"{baseRoute}/", async (HttpRequest req,[FromBody] WalletRequests body) => {
             try {
                 
@@ -68,7 +65,7 @@ public static class WalletRoute {
 
                 var uid = CustomEncryptor.DecryptString(
                     Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
-
+                Console.WriteLine(uid);
                return await WalletInteractorEf.GetWallet(WalletPersistence.GetWallet, Guid.Parse(uid));
             } 
             catch (Exception e)
@@ -98,8 +95,6 @@ public static class WalletRoute {
                 throw;
             }
         });
-
-
         app.MapGet($"{baseRoute}/gocardless/banks/{{country}}", async (string country) => {
             try {
                 return await GocardlessInteractor.GetBanksInteractor(GocardlessPersistence.GetBanksPersistence,country);
@@ -110,7 +105,6 @@ public static class WalletRoute {
                 throw;
             }
         });
-        
         app.MapPost($"{baseRoute}/gocardless/agreement", async ([FromBody] CreateAgreement createAgreement) => {
             try {
                 return await GocardlessInteractor.CreateAgreementInteractor(GocardlessPersistence.CreateAgreementPersistence,createAgreement);
@@ -121,7 +115,6 @@ public static class WalletRoute {
                 throw;
             }
         });
-        
         app.MapPost($"{baseRoute}/gocardless/requisition", async (HttpRequest req, [FromBody] CreateRequisitionRequest requisitionRequest) => {
             try {
                 var receivedUid  =req.Headers["X-User-Id"];
@@ -140,7 +133,6 @@ public static class WalletRoute {
                 throw;
             }
         });
-        
         app.MapGet($"{baseRoute}/gocardless/bank/accounts/{{idRequisition}}", async (HttpRequest req, string idRequisition) => {
             try {
                 return await GocardlessInteractor.GetBankDetailsRequisitionInteractor(GocardlessPersistence.GetBankDetailsRequisitionPersistence, idRequisition);
@@ -151,9 +143,6 @@ public static class WalletRoute {
                 throw;
             }
         });
-        
-        
-        
         
         return app;
     }

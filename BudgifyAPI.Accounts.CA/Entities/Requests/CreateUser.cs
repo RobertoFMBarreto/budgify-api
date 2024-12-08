@@ -14,12 +14,6 @@
 
         public int Genre { get; set; }
 
-        public bool IsActive { get; set; }
-
-        public bool IsAdmin { get; set; }
-
-        public bool IsManager { get; set; }
-
         public bool AllowWalletWatch { get; set; }
     }
 }

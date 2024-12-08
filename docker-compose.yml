@@ -4,14 +4,14 @@ services:
     container_name: budgify-api-accounts
     restart: unless-stopped
     depends_on:
-      - "budgify-accounts-db"
+      - "budgify-db-accounts"
     ports:
       - "65084:65084"
       - "65085:65085"
     volumes:
       - ./certs:/app/certs
     environment:
-      - ConnectionStrings__budgify_db=VXNlciBJRD1wb3N0Z3JlcztQYXNzd29yZD1idWRnaWZ5O1NlcnZlcj1idWRnaWZ5LWRiLWFjY291bnRzO1BvcnQ9NDI3NjU7RGF0YWJhc2U9QWNjb3VudHM7IEludGVncmF0ZWRTZWN1cml0eT10cnVlO1Bvb2xpbmc9dHJ1ZTs=
+      - ConnectionStrings__budgify_db=VXNlciBJRD1wb3N0Z3JlcztQYXNzd29yZD1idWRnaWZ5O1NlcnZlcj1idWRnaWZ5LWRiLWFjY291bnRzO1BvcnQ9NTQzMjtEYXRhYmFzZT1BY2NvdW50czs=
       - keys__paseto_key=T3LdoYhiPmhPAQ5Q02Yi5STvIqcoovduApc/pJYU/E4=
       - keys__budgify_key=NiEuj9qpcB8fll00ocG43kMmuV3nOsm3Gw4jJCTWT00=
       - grpc__authservice=aHR0cHM6Ly9idWRnaWZ5LWF1dGg6NjUwODM=
@@ -24,12 +24,12 @@ services:
     volumes:
       - ./certs:/app/certs
     depends_on:
-      - "budgify-auth-db"
+      - "budgify-db-auth"
     ports:
       - "65082:65082"
       - "65083:65083"
     environment:
-      - ConnectionStrings__budgify_db=VXNlciBJRD1wb3N0Z3JlcztQYXNzd29yZD1idWRnaWZ5O1NlcnZlcj1idWRnaWZ5LWRiLWF1dGg7UG9ydD00Mjc2NjtEYXRhYmFzZT1BdXRoZW50aWNhdGlvbjsgSW50ZWdyYXRlZFNlY3VyaXR5PXRydWU7UG9vbGluZz10cnVlOw==
+      - ConnectionStrings__budgify_db=VXNlciBJRD1wb3N0Z3JlcztQYXNzd29yZD1idWRnaWZ5O1NlcnZlcj1idWRnaWZ5LWRiLWF1dGg7UG9ydD01NDMyO0RhdGFiYXNlPUF1dGhlbnRpY2F0aW9uOyA=
       - keys__paseto_key=T3LdoYhiPmhPAQ5Q02Yi5STvIqcoovduApc/pJYU/E4=
       - keys__budgify_key=NiEuj9qpcB8fll00ocG43kMmuV3nOsm3Gw4jJCTWT00=
       - grpc__accountservice=aHR0cHM6Ly9idWRnaWZ5LWFjY291bnRzOjY1MDg1
@@ -42,12 +42,12 @@ services:
     volumes:
       - ./certs:/app/certs
     depends_on:
-      - "budgify-wallets-db"
+      - "budgify-db-wallets"
     ports:
       - "65088:65088"
       - "65089:65089"
     environment:
-      - ConnectionStrings__budgify_db=User ID=postgres;Password=budgify;Server=budgify-db-wallets;Port=42767;Database=Wallets; IntegratedSecurity=true;Pooling=true;
+      - ConnectionStrings__budgify_db=VXNlciBJRD1wb3N0Z3JlcztQYXNzd29yZD1idWRnaWZ5O1NlcnZlcj1idWRnaWZ5LWRiLXdhbGxldHM7UG9ydD01NDMyO0RhdGFiYXNlPVdhbGxldHM7IA==
       - gocardless__secret_id=MzMwMjQ1YzctYjNlZS00YmY3LWJlNjQtMTU0ZWVlNmE1YTky
       - gocardless__secret_key=ZmQ4YjY2M2VjNWFlNTNiNzQxNmE1ZjM5MTI2NDJmNWM0OTZmMzE4MmE3YTE2ZDAwNGE0YmE2MjFlOTM3MmQ5MWVlMWIzYTg3NWI3YmY0MGY2ZjU4ZjNkZGRlZGFmOWRhNjJhZTE0MmE4YmNkYzcwNWM3NmI1NGY0OWM4ZTM4NjU=
       - keys__paseto_key=T3LdoYhiPmhPAQ5Q02Yi5STvIqcoovduApc/pJYU/E4=
@@ -61,12 +61,12 @@ services:
     volumes:
       - ./certs:/app/certs
     depends_on:
-      - "budgify-transactions-db"
+      - "budgify-db-transactions"
     ports:
       - "65086:65086"
       - "65087:65087"
     environment:
-      - ConnectionStrings__budgify_db=VXNlciBJRD1wb3N0Z3JlcztQYXNzd29yZD1idWRnaWZ5O1NlcnZlcj1idWRnaWZ5LWRiLXRyYW5zYWN0aW9ucztQb3J0PTQyNzY4O0RhdGFiYXNlPVRyYW5zYWN0aW9uczsgSW50ZWdyYXRlZFNlY3VyaXR5PXRydWU7UG9vbGluZz10cnVlOw==
+      - ConnectionStrings__budgify_db=VXNlciBJRD1wb3N0Z3JlcztQYXNzd29yZD1idWRnaWZ5O1NlcnZlcj1idWRnaWZ5LWRiLXRyYW5zYWN0aW9ucztQb3J0PTU0MzI7RGF0YWJhc2U9VHJhbnNhY3Rpb25zOyA=
       - gocardless__secret_id=MzMwMjQ1YzctYjNlZS00YmY3LWJlNjQtMTU0ZWVlNmE1YTky
       - gocardless__secret_key=ZmQ4YjY2M2VjNWFlNTNiNzQxNmE1ZjM5MTI2NDJmNWM0OTZmMzE4MmE3YTE2ZDAwNGE0YmE2MjFlOTM3MmQ5MWVlMWIzYTg3NWI3YmY0MGY2ZjU4ZjNkZGRlZGFmOWRhNjJhZTE0MmE4YmNkYzcwNWM3NmI1NGY0OWM4ZTM4NjU=
       - keys__paseto_key=T3LdoYhiPmhPAQ5Q02Yi5STvIqcoovduApc/pJYU/E4=
@@ -94,7 +94,7 @@ services:
       - grpc__authservice=aHR0cHM6Ly9idWRnaWZ5LWF1dGg6NjUwODM=
     networks:
       - budgify_net_bridge
-  budgify-accounts-db:
+  budgify-db-accounts:
     image: postgres:17.2
     container_name: "budgify-accounts-db"
     environment:
@@ -108,7 +108,7 @@ services:
       - ./sql/create_tables_accounts.sql:/docker-entrypoint-initdb.d/create_tables_accounts.sql
     networks:
       - budgify_net_bridge
-  budgify-auth-db:
+  budgify-db-auth:
     image: postgres:17.2
     container_name: "budgify-auth-db"
     environment:
@@ -122,7 +122,7 @@ services:
       - ./sql/create_tables_auth.sql:/docker-entrypoint-initdb.d/create_tables_auth.sql
     networks:
       - budgify_net_bridge
-  budgify-wallets-db:
+  budgify-db-wallets:
     image: postgres:17.2
     container_name: "budgify-wallets-db"
     environment:
@@ -136,7 +136,7 @@ services:
       - ./sql/create_tables_wallets.sql:/docker-entrypoint-initdb.d/create_tables_wallets.sql
     networks:
       - budgify_net_bridge
-  budgify-transactions-db:
+  budgify-db-transactions:
     image: postgres:17.2
     container_name: "budgify-transactions-db"
     environment:

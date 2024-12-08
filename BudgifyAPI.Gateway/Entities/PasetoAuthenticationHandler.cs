@@ -20,6 +20,16 @@ public class PasetoAuthenticationHandler : AuthenticationHandler<AuthenticationS
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
+
+        if (Request.Path.ToString() == "/gateway/accounts/user" && Request.Path == "POST")
+        { 
+            List<Claim> claims = new List<Claim>();
+            var identity = new ClaimsIdentity(claims, Scheme.Name);
+            var principal = new ClaimsPrincipal(identity);
+
+            var ticket = new AuthenticationTicket(principal, Scheme.Name);
+            return AuthenticateResult.Success(ticket);
+        }
         if (!Request.Headers.ContainsKey("Authorization"))
             return AuthenticateResult.Fail("Missing Authorization Header");
 
@@ -36,7 +46,7 @@ public class PasetoAuthenticationHandler : AuthenticationHandler<AuthenticationS
                 ValidateIssuer = true,
                 ValidIssuer = "https://github.com/RobertoFMBarreto/budgify-api"
             };
-
+            Console.WriteLine(token);
             var result = new PasetoBuilder().Use(ProtocolVersion.V4, Purpose.Local)
                 .WithKey(key, Encryption.SymmetricKey).Decode(token, valParams);
             if (!result.IsValid)
@@ -54,27 +64,25 @@ public class PasetoAuthenticationHandler : AuthenticationHandler<AuthenticationS
             var validateRefToken =
                 await AuthServiceClient.ValidateRefreshTokenAsync(token,
                     $"{userAgent} / {Context.Connection.RemoteIpAddress}");
-
-            Console.WriteLine(validateRefToken);
             if (!validateRefToken)
                 return AuthenticateResult.Fail("Invalid Session");
 
-
+            
             List<string> allowedRoles = new List<string>();
             string path = Request.Path.ToString();
-            if (path.Contains("superadmin"))
+            if (path.Contains("/accounts/superadmin"))
             {
                 allowedRoles.AddRange(["superadmin"]);
             }
-            else if (path.Contains("admin"))
+            else if (path.Contains("/accounts/admin"))
             {
                 allowedRoles.AddRange(["admin"]);
             }
-            else if (path.Contains("manager"))
+            else if (path.Contains("/accounts/manager"))
             {
                 allowedRoles.AddRange(["admin", "manager"]);
             }
-            else if (path.Contains("user"))
+            else if (path.Contains("/accounts/user"))
             {
                 allowedRoles.AddRange(["admin", "manager", "user"]);
             }

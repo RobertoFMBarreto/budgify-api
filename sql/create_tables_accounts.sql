@@ -2,10 +2,10 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 17.0 (Debian 17.0-1.pgdg120+1)
+-- Dumped from database version 17.2 (Debian 17.2-1.pgdg120+1)
 -- Dumped by pg_dump version 17.0
 
--- Started on 2024-12-07 20:19:07 WET
+-- Started on 2024-12-08 23:21:10 WET
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -20,7 +20,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 2 (class 3079 OID 16611)
+-- TOC entry 2 (class 3079 OID 16385)
 -- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -41,7 +41,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 218 (class 1259 OID 16606)
+-- TOC entry 218 (class 1259 OID 16396)
 -- Name: __EFMigrationsHistory; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -54,7 +54,7 @@ CREATE TABLE public."__EFMigrationsHistory" (
 ALTER TABLE public."__EFMigrationsHistory" OWNER TO postgres;
 
 --
--- TOC entry 219 (class 1259 OID 16622)
+-- TOC entry 219 (class 1259 OID 16399)
 -- Name: user; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -77,7 +77,7 @@ CREATE TABLE public."user" (
 ALTER TABLE public."user" OWNER TO postgres;
 
 --
--- TOC entry 220 (class 1259 OID 16632)
+-- TOC entry 220 (class 1259 OID 16409)
 -- Name: user_group; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -90,7 +90,7 @@ CREATE TABLE public.user_group (
 ALTER TABLE public.user_group OWNER TO postgres;
 
 --
--- TOC entry 3381 (class 0 OID 16606)
+-- TOC entry 3381 (class 0 OID 16396)
 -- Dependencies: 218
 -- Data for Name: __EFMigrationsHistory; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -100,7 +100,7 @@ INSERT INTO public."__EFMigrationsHistory" ("MigrationId", "ProductVersion") VAL
 
 
 --
--- TOC entry 3382 (class 0 OID 16622)
+-- TOC entry 3382 (class 0 OID 16399)
 -- Dependencies: 219
 -- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -108,7 +108,7 @@ INSERT INTO public."__EFMigrationsHistory" ("MigrationId", "ProductVersion") VAL
 
 
 --
--- TOC entry 3383 (class 0 OID 16632)
+-- TOC entry 3383 (class 0 OID 16409)
 -- Dependencies: 220
 -- Data for Name: user_group; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -116,7 +116,7 @@ INSERT INTO public."__EFMigrationsHistory" ("MigrationId", "ProductVersion") VAL
 
 
 --
--- TOC entry 3235 (class 2606 OID 16610)
+-- TOC entry 3235 (class 2606 OID 16414)
 -- Name: __EFMigrationsHistory PK___EFMigrationsHistory; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -124,7 +124,7 @@ ALTER TABLE ONLY public."__EFMigrationsHistory"
     ADD CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId");
 
 
--- Completed on 2024-12-07 20:19:07 WET
+-- Completed on 2024-12-08 23:21:10 WET
 
 --
 -- PostgreSQL database dump complete

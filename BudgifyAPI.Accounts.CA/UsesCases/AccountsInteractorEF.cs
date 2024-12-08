@@ -29,21 +29,21 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
         {
             return await getUserGroupPersistence(userId);
         }
-        public static async Task<CustomHttpResponse> AddUserToUserGroup(Func<Guid, Guid, Guid, Task<CustomHttpResponse>> addUserToUserGroupPersistence, Guid addUserId,Guid userGroupId, Guid userId)
+        public static async Task<CustomHttpResponse> AddUserToUserGroup(Func<Guid, Guid, Task<CustomHttpResponse>> addUserToUserGroupPersistence, Guid addUserId, Guid userId)
         {
-            return await addUserToUserGroupPersistence(addUserId,userGroupId, userId);
+            return await addUserToUserGroupPersistence(addUserId, userId);
         }
-        public static async Task<CustomHttpResponse> DeleteUserFromUserGroup(Func<Guid,Guid,Guid, Task<CustomHttpResponse>> deleteUserFromUserGroupPersistence, Guid removeUserId,Guid idUserGroup, Guid userId)
+        public static async Task<CustomHttpResponse> DeleteUserFromUserGroup(Func<Guid,Guid, Task<CustomHttpResponse>> deleteUserFromUserGroupPersistence, Guid removeUserId, Guid userId)
         {
-            return await deleteUserFromUserGroupPersistence(removeUserId, idUserGroup, userId);
+            return await deleteUserFromUserGroupPersistence(removeUserId, userId);
         }
-        public static async Task<CustomHttpResponse> AddManagerToUserGroup(Func<Guid, Guid,Guid, Task<CustomHttpResponse>> addManagerToUserGroupPersistence, Guid managerId,Guid idUserGroup, Guid userId)
+        public static async Task<CustomHttpResponse> AddManagerToUserGroup(Func<Guid,Guid, Task<CustomHttpResponse>> addManagerToUserGroupPersistence, Guid managerId, Guid userId)
         {
-            return await addManagerToUserGroupPersistence(managerId,idUserGroup, userId);
+            return await addManagerToUserGroupPersistence(managerId, userId);
         }
-       public static async Task<CustomHttpResponse> DeleteManagerToUserGroup(Func<Guid,Guid,Guid, Task<CustomHttpResponse>>deleteManagerToUserGroupPersistence,Guid removeManagerId,Guid idUserGroup, Guid userId)
+       public static async Task<CustomHttpResponse> DeleteManagerToUserGroup(Func<Guid,Guid, Task<CustomHttpResponse>>deleteManagerToUserGroupPersistence,Guid removeManagerId, Guid userId)
         {
-            return await deleteManagerToUserGroupPersistence(removeManagerId, idUserGroup, userId);   
+            return await deleteManagerToUserGroupPersistence(removeManagerId, userId);   
         }
         public static async Task<CustomHttpResponse> AddUser(Func<CreateUser, Task<CustomHttpResponse>> addUserPersistence, CreateUser user)
         {
@@ -56,7 +56,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
         {
             return await newPasswordPersistence(newPasswordRequest);
         }
-        public static async Task<CustomHttpResponse> UpdateUser(Func<Guid, CreateUser, Task<CustomHttpResponse>> updateUserPersistence, Guid userId, CreateUser user)
+        public static async Task<CustomHttpResponse> UpdateUser(Func<Guid, UpdateUser, Task<CustomHttpResponse>> updateUserPersistence, Guid userId, UpdateUser user)
         {
             return await updateUserPersistence(userId, user);
         }

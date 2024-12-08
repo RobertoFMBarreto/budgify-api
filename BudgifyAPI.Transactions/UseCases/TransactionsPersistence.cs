@@ -36,24 +36,33 @@ namespace BudgifyAPI.Transactions.UseCases
                         };
                     }
                     
-                    var validateCat = await transactionsContext.Categories.FirstOrDefaultAsync(x => x.IdCategory == transaction.IdCategory && x.IdUser == userId);
-                    if (validateCat == null)
+                    if (transaction.IdCategory != null)
                     {
-                        return new CustomHttpResponse()
+                        var validateCat = await transactionsContext.Categories.FirstOrDefaultAsync(x =>
+                            x.IdCategory == transaction.IdCategory && x.IdUser == userId);
+                        if (validateCat == null)
                         {
-                            Status = 400,
-                            Message = "Category does not exist"
-                        };
+                            return new CustomHttpResponse()
+                            {
+                                Status = 400,
+                                Message = "Category does not exist"
+                            };
+                        }
                     }
-                
-                    var validateSubCat = await transactionsContext.Subcategories.FirstOrDefaultAsync(x => x.IdSubcategory == transaction.IdSubcategory && x.IdCategory == transaction.IdCategory && x.IdUser == userId);
-                    if (validateSubCat == null)
+
+                    if (transaction.IdCategory != null && transaction.IdSubcategory != null)
                     {
-                        return new CustomHttpResponse()
+                        var validateSubCat = await transactionsContext.Subcategories.FirstOrDefaultAsync(x =>
+                            x.IdSubcategory == transaction.IdSubcategory && x.IdCategory == transaction.IdCategory &&
+                            x.IdUser == userId);
+                        if (validateSubCat == null)
                         {
-                            Status = 400,
-                            Message = "Sub category does not exist"
-                        };
+                            return new CustomHttpResponse()
+                            {
+                                Status = 400,
+                                Message = "Sub category does not exist"
+                            };
+                        }
                     }
 
                     await transactionsContext.AddAsync(new Transaction
@@ -239,26 +248,30 @@ namespace BudgifyAPI.Transactions.UseCases
                         List<Transaction> listTransactions = await transactionsContext.Transactions.FromSqlRaw(
                             queryTransactions,
                             parameters.ToArray()).ToListAsync();
+                        List<TransactionGroup> transactionGroups=new List<TransactionGroup>();
+                        if (listAllTransactions.Count != 0)
+                        {
+                            var firsttransDate = listAllTransactions.First().Date;
+                            var lastTransDate = listAllTransactions.Last().Date;
 
-                        var firsttransDate = listAllTransactions.First().Date;
-                        var lastTransDate = listAllTransactions.Last().Date;
-
-                        parameters.AddRange([
-                            new NpgsqlParameter("@IdUser", userId), new NpgsqlParameter("@StartDate", lastTransDate),
-                            new NpgsqlParameter("@EndDate", firsttransDate)
-                        ]);
-                        string queryTransactionGroup = "SELECT tg.* " +
-                                                       "FROM public.transaction_group as tg " +
-                                                       "INNER JOIN public.transactions as t  ON t.id_transaction_group = tg.id_transaction_group " +
-                                                       "WHERE tg.id_user = @IdUser " +
-                                                       $"AND t.date BETWEEN @StartDate AND @EndDate " +
-                                                       "Group BY tg.id_transaction_group " +
-                                                       "LIMIT @Limite OFFSET @CurIndex";
+                            parameters.AddRange([
+                                new NpgsqlParameter("@IdUser", userId),
+                                new NpgsqlParameter("@StartDate", lastTransDate),
+                                new NpgsqlParameter("@EndDate", firsttransDate)
+                            ]);
+                            string queryTransactionGroup = "SELECT tg.* " +
+                                                           "FROM public.transaction_group as tg " +
+                                                           "INNER JOIN public.transactions as t  ON t.id_transaction_group = tg.id_transaction_group " +
+                                                           "WHERE tg.id_user = @IdUser " +
+                                                           $"AND t.date BETWEEN @StartDate AND @EndDate " +
+                                                           "Group BY tg.id_transaction_group " +
+                                                           "LIMIT @Limite OFFSET @CurIndex";
 
 
-                        List<TransactionGroup> transactionGroups = await transactionsContext.TransactionGroups
-                            .FromSqlRaw(queryTransactionGroup,
-                                parameters.ToArray()).ToListAsync();
+                            transactionGroups.AddRange(await transactionsContext.TransactionGroups
+                                .FromSqlRaw(queryTransactionGroup,
+                                    parameters.ToArray()).ToListAsync());
+                        }
 
                         return new CustomHttpResponse()
                         {
@@ -272,6 +285,20 @@ namespace BudgifyAPI.Transactions.UseCases
                     }
                     else
                     {
+                        parameters.AddRange([
+                            new NpgsqlParameter("@FirstItemDate", firstItemDate)
+                        ]);
+                        string queryAllTransactions = "SELECT * " +
+                                                      "FROM public.transactions as t " +
+                                                      $"WHERE id_wallet IN ({parameterNames}) AND t.date <= @FirstItemDate" +
+                                                      "ORDER BY t.date DESC " +
+                                                      "LIMIT @Limite OFFSET @CurIndex";
+
+
+                        List<Transaction> listAllTransactions = await transactionsContext.Transactions.FromSqlRaw(
+                            queryAllTransactions,
+                            parameters.ToArray()).ToListAsync();
+                        
                         if (firstItemDate == null)
                         {
                             return new CustomHttpResponse()
@@ -291,29 +318,29 @@ namespace BudgifyAPI.Transactions.UseCases
 
                         List<Transaction> listTransactions = await transactionsContext.Transactions.FromSqlRaw(
                             queryTransactions,
-                            new NpgsqlParameter("Limite", limite),
-                            new NpgsqlParameter("CurIndex", curIndex),
-                            new NpgsqlParameter("FirstItemDate", firstItemDate),
                             parameters.ToArray()).ToListAsync();
+                        List<TransactionGroup> transactionGroups=new List<TransactionGroup>();
+                        if (listAllTransactions.Count != 0)
+                        {
+                            var firsttransDate = listAllTransactions.First().Date;
+                            var lastTransDate = listAllTransactions.Last().Date;
 
-                        var firsttransDate = listTransactions.First().Date;
-                        var lastTransDate = listTransactions.Last().Date;
-
-                        parameters.AddRange([
-                            new NpgsqlParameter("@FirstItemDate", firstItemDate),
-                            new NpgsqlParameter("@IdUser", userId), new NpgsqlParameter("@StartDate", lastTransDate),
-                            new NpgsqlParameter("@EndDate", firsttransDate)
-                        ]);
-                        string queryTransactionGroup = "SELECT tg.* " +
-                                                       "FROM public.transaction_group as tg " +
-                                                       "INNER JOIN public.transactions as t  ON t.id_transaction_group = tg.id_transaction_group " +
-                                                       "WHERE t.date <= @FirstItemDate AND tg.id_user = @IdUser " +
-                                                       $"AND t.date BETWEEN @StartDate AND @EndDate " +
-                                                       "Group BY tg.id_transaction_group " +
-                                                       "LIMIT @Limite OFFSET @CurIndex";
-                        List<TransactionGroup> transactionGroups = await transactionsContext.TransactionGroups
-                            .FromSqlRaw(queryTransactionGroup,
-                                parameters.ToArray()).ToListAsync();
+                            parameters.AddRange([
+                                new NpgsqlParameter("@IdUser", userId),
+                                new NpgsqlParameter("@StartDate", lastTransDate),
+                                new NpgsqlParameter("@EndDate", firsttransDate)
+                            ]);
+                            string queryTransactionGroup = "SELECT tg.* " +
+                                                           "FROM public.transaction_group as tg " +
+                                                           "INNER JOIN public.transactions as t  ON t.id_transaction_group = tg.id_transaction_group " +
+                                                           "WHERE t.date <= @FirstItemDate AND tg.id_user = @IdUser " +
+                                                           $"AND t.date BETWEEN @StartDate AND @EndDate " +
+                                                           "Group BY tg.id_transaction_group " +
+                                                           "LIMIT @Limite OFFSET @CurIndex";
+                            transactionGroups.AddRange(await transactionsContext.TransactionGroups
+                                .FromSqlRaw(queryTransactionGroup,
+                                    parameters.ToArray()).ToListAsync());
+                        }
 
                         return new CustomHttpResponse()
                         {
@@ -363,7 +390,7 @@ namespace BudgifyAPI.Transactions.UseCases
                     queryAllTransactions,
                     parameters.ToArray()).ToListAsync();
 
-
+                
                 string queryTransactions = "SELECT * " +
                                            "FROM public.transactions as t " +
                                            "WHERE t.id_transaction_group IS NULL AND t.date BETWEEN @StartDAte AND @EndDate " +
@@ -374,25 +401,28 @@ namespace BudgifyAPI.Transactions.UseCases
                 List<Transaction> listTransactions = await transactionsContext.Transactions.FromSqlRaw(
                     queryTransactions,
                     parameters.ToArray()).ToListAsync();
+                List<TransactionGroup> transactionGroups=new List<TransactionGroup>();
+                if (listAllTransactions.Count != 0)
+                {
+                    var firsttransDate = listAllTransactions.First().Date;
+                    var lastTransDate = listAllTransactions.Last().Date;
 
-                var firsttransDate = listAllTransactions.First().Date;
-                var lastTransDate = listAllTransactions.Last().Date;
-
-                parameters.AddRange([
-                    new NpgsqlParameter("@IdUser", userId), new NpgsqlParameter("@StartDate", lastTransDate),
-                    new NpgsqlParameter("@EndDate", firsttransDate)
-                ]);
-                string queryTransactionGroup = "SELECT tg.* " +
-                                               "FROM public.transaction_group as tg " +
-                                               "INNER JOIN public.transactions as t  ON t.id_transaction_group = tg.id_transaction_group " +
-                                               "WHERE tg.id_user = @IdUser " +
-                                               $"AND t.date BETWEEN @StartDate AND @EndDate " +
-                                               "Group BY tg.id_transaction_group";
+                    parameters.AddRange([
+                        new NpgsqlParameter("@IdUser", userId), new NpgsqlParameter("@StartDate", lastTransDate),
+                        new NpgsqlParameter("@EndDate", firsttransDate)
+                    ]);
+                    string queryTransactionGroup = "SELECT tg.* " +
+                                                   "FROM public.transaction_group as tg " +
+                                                   "INNER JOIN public.transactions as t  ON t.id_transaction_group = tg.id_transaction_group " +
+                                                   "WHERE tg.id_user = @IdUser " +
+                                                   $"AND t.date BETWEEN @StartDate AND @EndDate " +
+                                                   "Group BY tg.id_transaction_group";
 
 
-                List<TransactionGroup> transactionGroups = await transactionsContext.TransactionGroups.FromSqlRaw(
-                    queryTransactionGroup,
-                    parameters.ToArray()).ToListAsync();
+                    transactionGroups.AddRange(await transactionsContext.TransactionGroups.FromSqlRaw(
+                        queryTransactionGroup,
+                        parameters.ToArray()).ToListAsync());
+                }
 
                 return new CustomHttpResponse()
                 {
@@ -433,25 +463,34 @@ namespace BudgifyAPI.Transactions.UseCases
                         Status = 400
                     };
                 }
-                
-                var validateCat = await transactionsContext.Categories.FirstOrDefaultAsync(x => x.IdCategory == transaction.IdCategory && x.IdUser == userId);
-                if (validateCat == null)
+
+                if (transaction.IdCategory != null)
                 {
-                    return new CustomHttpResponse()
+                    var validateCat = await transactionsContext.Categories.FirstOrDefaultAsync(x =>
+                        x.IdCategory == transaction.IdCategory && x.IdUser == userId);
+                    if (validateCat == null)
                     {
-                        Status = 400,
-                        Message = "Category does not exist"
-                    };
+                        return new CustomHttpResponse()
+                        {
+                            Status = 400,
+                            Message = "Category does not exist"
+                        };
+                    }
                 }
-                
-                var validateSubCat = await transactionsContext.Subcategories.FirstOrDefaultAsync(x => x.IdSubcategory == transaction.IdSubcategory && x.IdCategory == transaction.IdCategory && x.IdUser == userId);
-                if (validateSubCat == null)
+
+                if (transaction.IdCategory != null && transaction.IdSubcategory != null)
                 {
-                    return new CustomHttpResponse()
+                    var validateSubCat = await transactionsContext.Subcategories.FirstOrDefaultAsync(x =>
+                        x.IdSubcategory == transaction.IdSubcategory && x.IdCategory == transaction.IdCategory &&
+                        x.IdUser == userId);
+                    if (validateSubCat == null)
                     {
-                        Status = 400,
-                        Message = "Sub category does not exist"
-                    };
+                        return new CustomHttpResponse()
+                        {
+                            Status = 400,
+                            Message = "Sub category does not exist"
+                        };
+                    }
                 }
 
                 validation.IdWallet = transaction.IdWallet;
@@ -527,7 +566,7 @@ namespace BudgifyAPI.Transactions.UseCases
             TransactionsContext transactionsContext = new TransactionsContext();
             try
             {
-                string query = "select * from public.categories WHERE id_user = @IdUser";
+                string query = "select * from public.category WHERE id_user = @IdUser";
                 List<Category> listCategory = await transactionsContext.Categories.FromSqlRaw(query, new NpgsqlParameter("@IdUser", userId)).ToListAsync();
                 return new CustomHttpResponse()
                 {
@@ -646,7 +685,7 @@ namespace BudgifyAPI.Transactions.UseCases
             TransactionsContext transactionsContext = new TransactionsContext();
             try
             {
-                string query = "select * from public.subcategories WHERE id_user = @IdUser";
+                string query = "select * from public.subcategory WHERE id_user = @IdUser";
                 List<Subcategory> listSubcategory = await transactionsContext.Subcategories.FromSqlRaw(query, new NpgsqlParameter("@IdUser", userId)).ToListAsync();
                 return new CustomHttpResponse()
                 {
@@ -766,8 +805,19 @@ namespace BudgifyAPI.Transactions.UseCases
             TransactionsContext transactionsContext = new TransactionsContext();
             try
             {
-                string query = "select * from public.reocurrings WHERE id_user = @IdUser";
-                List<Reocurring> listReocurrings = await transactionsContext.Reocurrings.FromSqlRaw(query, new NpgsqlParameter("@IdUser", userId)).ToListAsync();
+                IEnumerable<string> wallets = await WalletsServiceClient.GetUserWallets(userId);
+                string[] walletsArray = wallets.ToArray();
+                Guid[] guids = walletsArray.Select(x => Guid.Parse(x)).ToArray();
+                
+                
+                var parameters = guids
+                    .Select((uuid, index) => new NpgsqlParameter($"@uuid{index}", uuid))
+                    .ToList();
+                var parameterNames = string.Join(", ", parameters.Select(p => p.ParameterName));
+                
+
+                string query = $"select * from public.reocurring WHERE id_wallet IN ({parameterNames})";
+                List<Reocurring> listReocurrings = await transactionsContext.Reocurrings.FromSqlRaw(query, parameters.ToArray()).ToListAsync();
                 return new CustomHttpResponse()
                 {
                     Data = listReocurrings,
@@ -801,24 +851,33 @@ namespace BudgifyAPI.Transactions.UseCases
                     };
                 }
                 
-                var validateCat = await transactionsContext.Categories.FirstOrDefaultAsync(x => x.IdCategory == reocurring.IdCategory && x.IdUser == userId);
-                if (validateCat == null)
+                if (reocurring.IdCategory != null)
                 {
-                    return new CustomHttpResponse()
+                    var validateCat = await transactionsContext.Categories.FirstOrDefaultAsync(x =>
+                        x.IdCategory == reocurring.IdCategory && x.IdUser == userId);
+                    if (validateCat == null)
                     {
-                        Status = 400,
-                        Message = "Category does not exist"
-                    };
+                        return new CustomHttpResponse()
+                        {
+                            Status = 400,
+                            Message = "Category does not exist"
+                        };
+                    }
                 }
-                
-                var validateSubCat = await transactionsContext.Subcategories.FirstOrDefaultAsync(x => x.IdSubcategory == reocurring.IdSubcategory && x.IdCategory == reocurring.IdCategory && x.IdUser == userId);
-                if (validateSubCat == null)
+
+                if (reocurring.IdCategory != null && reocurring.IdSubcategory != null)
                 {
-                    return new CustomHttpResponse()
+                    var validateSubCat = await transactionsContext.Subcategories.FirstOrDefaultAsync(x =>
+                        x.IdSubcategory == reocurring.IdSubcategory && x.IdCategory == reocurring.IdCategory &&
+                        x.IdUser == userId);
+                    if (validateSubCat == null)
                     {
-                        Status = 400,
-                        Message = "Sub category does not exist"
-                    };
+                        return new CustomHttpResponse()
+                        {
+                            Status = 400,
+                            Message = "Sub category does not exist"
+                        };
+                    }
                 }
                 
                 await transactionsContext.AddAsync(new Reocurring
@@ -835,6 +894,7 @@ namespace BudgifyAPI.Transactions.UseCases
                     IsWeekly = reocurring.IsWeekly,
                     IsActive = reocurring.IsActive
                 });
+                await transactionsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
                     Message = "Reocurring added successfully",
@@ -884,37 +944,46 @@ namespace BudgifyAPI.Transactions.UseCases
                     };
                 }
                 
-                var validateCat = await transactionsContext.Categories.FirstOrDefaultAsync(x => x.IdCategory == reocurring.IdCategory && x.IdUser == userId);
-                if (validateCat == null)
+                if (reocurring.IdCategory != null)
                 {
-                    return new CustomHttpResponse()
+                    var validateCat = await transactionsContext.Categories.FirstOrDefaultAsync(x =>
+                        x.IdCategory == reocurring.IdCategory && x.IdUser == userId);
+                    if (validateCat == null)
                     {
-                        Status = 400,
-                        Message = "Category does not exist"
-                    };
-                }
-                
-                var validateSubCat = await transactionsContext.Subcategories.FirstOrDefaultAsync(x => x.IdSubcategory == reocurring.IdSubcategory && x.IdCategory == reocurring.IdCategory && x.IdUser == userId);
-                if (validateSubCat == null)
-                {
-                    return new CustomHttpResponse()
-                    {
-                        Status = 400,
-                        Message = "Sub category does not exist"
-                    };
+                        return new CustomHttpResponse()
+                        {
+                            Status = 400,
+                            Message = "Category does not exist"
+                        };
+                    }
                 }
 
-                reocurring.IdWallet = reocurring.IdWallet;
-                reocurring.IdCategory = reocurring.IdCategory;
-                reocurring.IdSubcategory = reocurring.IdSubcategory;
-                reocurring.Description = reocurring.Description;
-                reocurring.Amount = reocurring.Amount;
-                reocurring.DayOfWeek = reocurring.DayOfWeek;
-                reocurring.StartDate = reocurring.StartDate;
-                reocurring.IsYearly = reocurring.IsYearly;
-                reocurring.IsMonthly = reocurring.IsMonthly;
-                reocurring.IsWeekly = reocurring.IsWeekly;
-                reocurring.IsActive = reocurring.IsActive;
+                if (reocurring.IdCategory != null && reocurring.IdSubcategory != null)
+                {
+                    var validateSubCat = await transactionsContext.Subcategories.FirstOrDefaultAsync(x =>
+                        x.IdSubcategory == reocurring.IdSubcategory && x.IdCategory == reocurring.IdCategory &&
+                        x.IdUser == userId);
+                    if (validateSubCat == null)
+                    {
+                        return new CustomHttpResponse()
+                        {
+                            Status = 400,
+                            Message = "Sub category does not exist"
+                        };
+                    }
+                }
+
+                reocurringExist.IdWallet = reocurring.IdWallet;
+                reocurringExist.IdCategory = reocurring.IdCategory;
+                reocurringExist.IdSubcategory = reocurring.IdSubcategory;
+                reocurringExist.Description = reocurring.Description;
+                reocurringExist.Amount = reocurring.Amount;
+                reocurringExist.DayOfWeek = reocurring.DayOfWeek;
+                reocurringExist.StartDate = reocurring.StartDate;
+                reocurringExist.IsYearly = reocurring.IsYearly;
+                reocurringExist.IsMonthly = reocurring.IsMonthly;
+                reocurringExist.IsWeekly = reocurring.IsWeekly;
+                reocurringExist.IsActive = reocurring.IsActive;
 
                 transactionsContext.Reocurrings.Update(reocurringExist);
                 await transactionsContext.SaveChangesAsync();
@@ -1106,7 +1175,7 @@ namespace BudgifyAPI.Transactions.UseCases
             TransactionsContext transactionsContext = new TransactionsContext();
             try
             {
-                string query = "select * from public.transaction_group WHERE idUser = @IdUser";
+                string query = "select * from public.transaction_group WHERE id_user = @IdUser";
                 List<TransactionGroup> listTransacationgroup =
                     await transactionsContext.TransactionGroups.FromSqlRaw(query, new NpgsqlParameter("@IdUser", userId)).ToListAsync();
                 return new CustomHttpResponse()

@@ -14,17 +14,23 @@ public class AddUserInfoHeaderHandler : DelegatingHandler
 
     protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
+        
+        
+        
+        if (_httpContextAccessor.HttpContext.Request.Path.ToString() == "/gateway/accounts/user" && _httpContextAccessor.HttpContext.Request.Method == "POST")
+        {
+            return base.SendAsync(request, cancellationToken);
+        }
+        
         var user = _httpContextAccessor.HttpContext.User;
-        request.Headers.Add("X-User-Ip", _httpContextAccessor.HttpContext.Connection.RemoteIpAddress.ToString());
         if (user.Identity.IsAuthenticated)
         {
             var userId = user.FindFirst(ClaimTypes.Name)?.Value;
-            Console.WriteLine($"userId: {userId}");
             if (userId != null)
             {
                 string enc = CustomEncryptor.EncryptString(user.Identity.Name);
                 request.Headers.Add("X-User-Id", Convert.ToBase64String(Encoding.UTF8.GetBytes(enc)));
-                Console.WriteLine(request.Headers.Contains("X-User-Id"));
+       
                
             }
         }

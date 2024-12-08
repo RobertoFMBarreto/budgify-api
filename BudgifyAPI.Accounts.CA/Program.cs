@@ -22,6 +22,8 @@ builder.WebHost.ConfigureKestrel(options =>
 
 var app = builder.Build();
 
+app = AccountsRoute.SetRoutes(app,"/api/v1/accounts");
+app.MapGrpcService<ValidateUserServiceHandler>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -29,7 +31,5 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-app.MapGrpcService<ValidateUserServiceHandler>();
-app = AccountsRoute.SetRoutes(app,"/api/v1/Accounts");
+
 app.Run();

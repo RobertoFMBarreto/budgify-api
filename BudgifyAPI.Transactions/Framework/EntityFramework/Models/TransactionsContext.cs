@@ -28,7 +28,7 @@ public partial class TransactionsContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseNpgsql(Encoding.UTF8.GetString( Convert.FromBase64String( Environment.GetEnvironmentVariable(
-            "ConnectionString__budgify_db"))));
+            "ConnectionStrings__budgify_db"))));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

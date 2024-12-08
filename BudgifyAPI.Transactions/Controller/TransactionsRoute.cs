@@ -18,7 +18,6 @@ namespace BudgifyAPI.Transactions.Controller
                 try
                 {
                     var receivedUid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {receivedUid}");
                     if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
@@ -46,7 +45,6 @@ namespace BudgifyAPI.Transactions.Controller
                 try
                 {
                     var receivedUid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {receivedUid}");
                     if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
@@ -76,7 +74,6 @@ namespace BudgifyAPI.Transactions.Controller
                     try
                     {
                         var receivedUid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {receivedUid}");
                         if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
@@ -105,7 +102,6 @@ namespace BudgifyAPI.Transactions.Controller
                 try
                 {
                     var receivedUid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {receivedUid}");
                     if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
@@ -133,7 +129,6 @@ namespace BudgifyAPI.Transactions.Controller
                     try
                     {
                         var receivedUid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {receivedUid}");
                         if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
@@ -161,7 +156,6 @@ namespace BudgifyAPI.Transactions.Controller
                 try
                 {
                     var receivedUid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {receivedUid}");
                     if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
@@ -190,7 +184,6 @@ namespace BudgifyAPI.Transactions.Controller
                 try
                 {
                     var receivedUid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {receivedUid}");
                     if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
@@ -219,7 +212,6 @@ namespace BudgifyAPI.Transactions.Controller
                 try
                 {
                     var receivedUid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {receivedUid}");
                     if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
@@ -248,7 +240,6 @@ namespace BudgifyAPI.Transactions.Controller
                     try
                     {
                         var receivedUid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {receivedUid}");
                         if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
@@ -276,7 +267,6 @@ namespace BudgifyAPI.Transactions.Controller
                 try
                 {
                     var receivedUid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {receivedUid}");
                     if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
@@ -305,7 +295,6 @@ namespace BudgifyAPI.Transactions.Controller
                 try
                 {
                     var receivedUid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {receivedUid}");
                     if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
@@ -335,7 +324,6 @@ namespace BudgifyAPI.Transactions.Controller
                     try
                     {
                         var receivedUid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {receivedUid}");
                         if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
@@ -365,7 +353,6 @@ namespace BudgifyAPI.Transactions.Controller
                     try
                     {
                         var receivedUid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {receivedUid}");
                         if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
@@ -395,7 +382,6 @@ namespace BudgifyAPI.Transactions.Controller
                     try
                     {
                         var receivedUid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {receivedUid}");
                         if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
@@ -423,7 +409,6 @@ namespace BudgifyAPI.Transactions.Controller
                 try
                 {
                     var receivedUid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {receivedUid}");
                     if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
@@ -453,7 +438,6 @@ namespace BudgifyAPI.Transactions.Controller
                     try
                     {
                         var receivedUid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {receivedUid}");
                         if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
@@ -484,7 +468,6 @@ namespace BudgifyAPI.Transactions.Controller
                     try
                     {
                         var receivedUid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {receivedUid}");
                         if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
@@ -513,7 +496,6 @@ namespace BudgifyAPI.Transactions.Controller
                     try
                     {
                         var receivedUid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {receivedUid}");
                         if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
@@ -542,7 +524,6 @@ namespace BudgifyAPI.Transactions.Controller
                     try
                     {
                         var receivedUid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {receivedUid}");
                         if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
@@ -571,7 +552,6 @@ namespace BudgifyAPI.Transactions.Controller
                     try
                     {
                         var receivedUid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {receivedUid}");
                         if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
@@ -601,7 +581,6 @@ namespace BudgifyAPI.Transactions.Controller
                     try
                     {
                         var receivedUid = req.Headers["X-User-Id"];
-                        Console.WriteLine($"Received uid: {receivedUid}");
                         if (string.IsNullOrEmpty(receivedUid))
                         {
                             return new CustomHttpResponse()
@@ -631,7 +610,6 @@ namespace BudgifyAPI.Transactions.Controller
                 try
                 {
                     var receivedUid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {receivedUid}");
                     if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()
@@ -658,7 +636,6 @@ namespace BudgifyAPI.Transactions.Controller
             application.MapGet($"{baseRoute}/gocardless/{{idWallet}}/transactions", async (HttpRequest req, Guid idWallet) => {
                 try {
                     var receivedUid = req.Headers["X-User-Id"];
-                    Console.WriteLine($"Received uid: {receivedUid}");
                     if (string.IsNullOrEmpty(receivedUid))
                     {
                         return new CustomHttpResponse()

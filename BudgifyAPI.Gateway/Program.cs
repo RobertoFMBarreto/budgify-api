@@ -18,7 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
-builder.Services.AddOcelot(builder.Configuration).AddDelegatingHandler<AddUserInfoHeaderHandler>();
+builder.Services.AddOcelot(builder.Configuration).AddDelegatingHandler<AddUserInfoHeaderHandler>().AddDelegatingHandler<AddHostHeaderHandler>();
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.Listen(IPAddress.Any,65080, o=>o.Protocols=HttpProtocols.Http1);

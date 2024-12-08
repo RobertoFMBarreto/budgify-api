@@ -115,7 +115,6 @@ public class GocardlessPersistence
             {
                 var valueAmount =
                     JsonSerializer.Deserialize<Dictionary<string, string>>(transaction["transactionAmount"].ToString());
-                Console.WriteLine(DateTime.Parse(transaction["valueDate"].ToString()));
                 CreateTransaction createTransactionEntity = new CreateTransaction()
                 {
                     IdWallet = walletId,

@@ -13,7 +13,7 @@ public static class UserRoute
         app.MapPost($"{baseRoute}/login", [AllowAnonymous] async (HttpContext context,HttpRequest req,[FromBody] LoginRequest body) =>
         {
             var userAgent = req.Headers["User-Agent"];
-            var host = context.Connection.RemoteIpAddress.ToString();
+            var host = req.Headers["X-User-Ip"];
             if (host.Contains(":"))
             {
                 host = "127.0.0.1";
@@ -34,7 +34,7 @@ public static class UserRoute
         app.MapGet($"{baseRoute}/logout", [AllowAnonymous] async (HttpContext context,HttpRequest req) =>
         {
             var userAgent = req.Headers["User-Agent"];
-            var host = context.Connection.RemoteIpAddress.ToString();
+            var host = req.Headers["X-User-Ip"];
             var receivedUid  =req.Headers["X-User-Id"];
             if (host.Contains(":"))
             {

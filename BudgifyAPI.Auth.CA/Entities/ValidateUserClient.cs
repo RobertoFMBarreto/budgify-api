@@ -22,7 +22,6 @@ public static class ValidateUserClient
                 Password = Convert.ToBase64String(Encoding.UTF8.GetBytes(CustomEncryptor.EncryptString(password)))
             };
             var response = await client.ValidateUserServiceAsync(request);
-            Console.WriteLine(response.Uid);
             return response;
 
     }

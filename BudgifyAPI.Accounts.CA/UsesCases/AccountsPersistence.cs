@@ -47,6 +47,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 return new CustomHttpResponse()
                 {
                     Message = ex.Message,
@@ -186,7 +187,6 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
             AccountsContext accountsContext = new AccountsContext();
             try
             {
-                Console.WriteLine(userId.ToString());
                 var user = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == userId);
                 if (user.IdUserGroup == null)
                 {
@@ -214,20 +214,21 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 };
             }
         }
-        public static async Task<CustomHttpResponse> AddUserToUserGroupPersistence(Guid addUserId,Guid userGroupId, Guid userId)
+        public static async Task<CustomHttpResponse> AddUserToUserGroupPersistence(Guid addUserId, Guid userId)
         {
             AccountsContext accountsContext = new AccountsContext();
             try
             {
-                var existGroup = await accountsContext.UserGroups.FirstOrDefaultAsync(x => x.IdUserGroup == userGroupId);
-                if (existGroup == null)
+                var existUser = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == userId);
+                if (existUser == null)
                 {
                     return new CustomHttpResponse()
                     {
-                        Message = "Group does not exist",
+                        Message = "User not exist",
                         Status = 400
                     };
                 }
+                
                 var isFromUser = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == userId &&
                     (x.IsAdmin == true || x.IsManager == true));
                 if (isFromUser == null)
@@ -259,7 +260,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 string query = "update public.user " +
                     $"set id_user_group = @IdUserGroup " +
                     $"where id_user = @IdUser";
-                var result = accountsContext.Database.ExecuteSqlRawAsync(query, new NpgsqlParameter("@IdUserGroup", userGroupId), new NpgsqlParameter("@IdUser", addUserId));
+                var result = accountsContext.Database.ExecuteSqlRawAsync(query, new NpgsqlParameter("@IdUserGroup", existUser.IdUserGroup), new NpgsqlParameter("@IdUser", addUserId));
                 return new CustomHttpResponse()
                 {
                     Message = "User added to a user group successfully",
@@ -275,17 +276,17 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 };
             }
         }
-        public static async Task<CustomHttpResponse> DeleteUserFromUserGroupPersistence(Guid removeUserId,Guid idUserGroup, Guid userId)
+        public static async Task<CustomHttpResponse> DeleteUserFromUserGroupPersistence(Guid removeUserId, Guid userId)
         {
             AccountsContext accountsContext = new AccountsContext();
             try
             {
-                var existGroup = await accountsContext.UserGroups.FirstOrDefaultAsync(x => x.IdUserGroup == idUserGroup);
-                if (existGroup == null)
+                var existUser = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == userId);
+                if (existUser == null)
                 {
                     return new CustomHttpResponse()
                     {
-                        Message = "Group does not exist",
+                        Message = "User not exist",
                         Status = 400
                     };
                 }
@@ -308,7 +309,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                         Status = 400
                     };
                 }
-                if (userExist.IdUserGroup != existGroup.IdUserGroup)
+                if (userExist.IdUserGroup != existUser.IdUserGroup && userExist.IdUserGroup != null)
                 {
                     return new CustomHttpResponse()
                     {
@@ -319,7 +320,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 string query = "update public.user " +
                     "set id_user_group = null " +
                     "where id_user = @IdUser ";
-                var result = accountsContext.Database.ExecuteSqlRawAsync(query, new NpgsqlParameter("@IdUser", userId));
+                var result = accountsContext.Database.ExecuteSqlRawAsync(query, new NpgsqlParameter("@IdUser", removeUserId));
                 return new CustomHttpResponse()
                 {
                     Message = "User removed successfully",
@@ -336,17 +337,17 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 };
             }
         }
-        public static async Task<CustomHttpResponse> AddManagerToUserGroupPersistence(Guid managerId,Guid idUserGroup, Guid userId)
+        public static async Task<CustomHttpResponse> AddManagerToUserGroupPersistence(Guid managerId, Guid userId)
         {
             AccountsContext accountsContext = new AccountsContext();
             try
             {
-                var existGroup = await accountsContext.UserGroups.FirstOrDefaultAsync(x => x.IdUserGroup == idUserGroup);
-                if (existGroup == null)
+                var existUser = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == userId);
+                if (existUser == null)
                 {
                     return new CustomHttpResponse()
                     {
-                        Message = "User does not exist",
+                        Message = "User not exist",
                         Status = 400
                     };
                 }
@@ -359,16 +360,17 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                         Message = "Group doesn't exist",
                     };
                 }
+                Console.WriteLine(managerId);
                 var userExist = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == managerId);
                 if (userExist == null)
                 {
                     return new CustomHttpResponse()
                     {
-                        Message = "User group does not exist",
+                        Message = "User does not exist",
                         Status = 400
                     };
                 }
-                if (userExist.IdUserGroup != existGroup.IdUserGroup)
+                if (userExist.IdUserGroup != null)
                 {
                     return new CustomHttpResponse()
                     {
@@ -378,11 +380,11 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 }
                 string query = "update public.user " +
                   $"set id_user_group = @IdUserGroup " +
-                  $"set is_Manager = true, " +
+                  $", is_Manager = true " +
                   $"where id_user = @IdUser";
 
                 await accountsContext.Database.ExecuteSqlRawAsync(query,
-                    new NpgsqlParameter("@IdUserGroup", idUserGroup),
+                    new NpgsqlParameter("@IdUserGroup", existUser.IdUserGroup),
                     new NpgsqlParameter("@IdUser", managerId));
 
                 return new CustomHttpResponse()
@@ -400,11 +402,21 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 };
             }
         }
-        public static async Task<CustomHttpResponse> DeleteManagerToUserGroupPersistence(Guid removeManagerId,Guid idUserGroup, Guid userId)
+        public static async Task<CustomHttpResponse> DeleteManagerToUserGroupPersistence(Guid removeManagerId, Guid userId)
         {
             AccountsContext accountsContext = new AccountsContext();
             try
             {
+                var existUser = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == userId);
+                if (existUser == null)
+                {
+                    return new CustomHttpResponse()
+                    {
+                        Message = "User not exist",
+                        Status = 400
+                    };
+                }
+                
                 var userExist = await accountsContext.Users.FirstOrDefaultAsync(x => x.IdUser == removeManagerId);
                 if (userExist == null)
                     return new CustomHttpResponse()
@@ -413,7 +425,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                         Status = 400
                     };
                 
-                var existGroup = await accountsContext.UserGroups.FirstOrDefaultAsync(x => x.IdUserGroup == idUserGroup);
+                var existGroup = await accountsContext.UserGroups.FirstOrDefaultAsync(x => x.IdUserGroup == existUser.IdUserGroup);
                 if (existGroup == null)
                 {
                     return new CustomHttpResponse()
@@ -432,7 +444,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                     };
                 }
                 
-                if (userExist.IdUserGroup != existGroup.IdUserGroup)
+                if (userExist.IdUserGroup != existGroup.IdUserGroup && userExist.IdUserGroup != null)
                 {
                     return new CustomHttpResponse()
                     {
@@ -443,7 +455,8 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 
                 
                 string query = "update public.user " +
-                "set is_manager = false " +
+                "set is_manager = false ," +
+                "id_user_group = null " +
                 "where id_user = @IdUser ";
                 var result = accountsContext.Database.ExecuteSqlRawAsync(query, new NpgsqlParameter("@IdUser", removeManagerId));
                 await accountsContext.SaveChangesAsync();
@@ -481,7 +494,6 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 string hash = BCrypt.Net.BCrypt.HashPassword(createUser.Password);
                 await accountsContext.Users.AddAsync(new User
                 {
-
                     IdUserGroup = createUser.IdUserGroup,
                     Name = createUser.Name,
                     Email = createUser.Email,
@@ -505,6 +517,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 return new CustomHttpResponse()
                 {
                     Message = ex.Message,
@@ -572,7 +585,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
             }
         }
         
-        public static async Task<CustomHttpResponse> UpdateUserPersistence(Guid userId, CreateUser createUser)
+        public static async Task<CustomHttpResponse> UpdateUserPersistence(Guid userId, UpdateUser updateUser)
         {
             AccountsContext accountsContext = new AccountsContext();
             try
@@ -588,22 +601,22 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                 }
 
 
-                userExist.IdUserGroup = createUser.IdUserGroup;
-                userExist.Name = createUser.Name;
-                userExist.Email = createUser.Email;
-                userExist.Password = createUser.Password;
-                userExist.DateOfBirth = createUser.DateOfBirth;
-                userExist.Genre = createUser.Genre;
-                userExist.IsActive = createUser.IsActive;
-                userExist.IsAdmin = createUser.IsAdmin;
-                userExist.IsManager = createUser.IsManager;
-                userExist.AllowWalletWatch = createUser.AllowWalletWatch;
+                userExist.IdUserGroup = updateUser.IdUserGroup;
+                userExist.Name = updateUser.Name;
+                userExist.Email = updateUser.Email;
+                userExist.DateOfBirth = updateUser.DateOfBirth;
+                userExist.Genre = updateUser.Genre;
+                userExist.IsActive = true;
+                userExist.IsAdmin = false;
+                userExist.IsManager = false;
+                userExist.IsSuperAdmin = false;
+                userExist.AllowWalletWatch = updateUser.AllowWalletWatch;
 
                 accountsContext.Users.Update(userExist);
                 await accountsContext.SaveChangesAsync();
                 return new CustomHttpResponse()
                 {
-                    Message = "User added successfully",
+                    Message = "User updated successfully",
                     Status = 200
                 };
             }
@@ -665,7 +678,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
                     };
                 }
                 string query = "update public.user " +
-                   "set is_active = 'active' " +
+                   "set is_active = 'true' " +
                    "where id_user = @IdUser";
                 var result2 = accountsContext.Database.ExecuteSqlRawAsync(query, new NpgsqlParameter("@IdUser", userId));
                 await accountsContext.SaveChangesAsync();
@@ -677,6 +690,7 @@ namespace BudgifyAPI.Accounts.CA.UsesCases
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 return new CustomHttpResponse()
                 {
                     Message = ex.Message,

@@ -14,22 +14,18 @@ namespace BudgifyAPI.Wallets.CA.UseCases
             {
                 await walletEntity.Validate();
 
-                Wallet? wallet = await context.Wallets.Where(x => x.Name == walletEntity.WalletName).FirstOrDefaultAsync();
-                if (wallet != null) {
-                    return new CustomHttpResponse(){Status = 400, Message="Wallet with same name already exists!"};
-                }
-                else {
-                    await context.Wallets.AddAsync(new Wallet() {
-                        IdWallet = Guid.NewGuid(),
-                        Name = walletEntity.WalletName!,
-                        IdUser = userId,
-                        StoreInCloud = walletEntity.StoreInCloud,
-                        IdAccount = walletEntity.IdAccount,
-                        IdRequisition = walletEntity.IdRequisition,
-                        
-                    });
-                    await context.SaveChangesAsync();
-                }
+               
+                await context.Wallets.AddAsync(new Wallet() {
+                    IdWallet = Guid.NewGuid(),
+                    Name = walletEntity.WalletName!,
+                    IdUser = userId,
+                    StoreInCloud = walletEntity.StoreInCloud,
+                    IdAccount = walletEntity.IdAccount,
+                    IdRequisition = walletEntity.IdRequisition,
+                    
+                });
+                await context.SaveChangesAsync();
+                
 
                 return new CustomHttpResponse(){Status = 200, Message="wallet created successfully"};
             }
@@ -62,6 +58,7 @@ namespace BudgifyAPI.Wallets.CA.UseCases
             WalletsContext context = new WalletsContext();
 
             try {
+                Console.WriteLine(uid.ToString());
                 List<Wallet>? wallet = await context.Wallets.Where(x => x.IdUser == uid).ToListAsync();
 
                 return new CustomHttpResponse(){Status = 200, Data = wallet};

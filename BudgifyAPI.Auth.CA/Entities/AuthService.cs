@@ -19,7 +19,7 @@ public class AuthServiceHandler: Authservice.AuthService.AuthServiceBase
     public override async Task<ValidateTokenResponse> ValidateRefreshToken(ValidateTokenRequest request, ServerCallContext context)
     {
         var isValid = await ValidateToken(request);
-
+        Console.WriteLine($"Sending :{isValid}");
         return new ValidateTokenResponse
         {
             IsValid = isValid,

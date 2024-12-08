@@ -21,9 +21,8 @@ public partial class AccountsContext : DbContext
     public virtual DbSet<UserGroup> UserGroups { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql( 
-            Encoding.UTF8.GetString( Convert.FromBase64String( Environment.GetEnvironmentVariable(
-                "ConnectionString__budgify_db"))));
+        => optionsBuilder.UseNpgsql(Encoding.UTF8.GetString( Convert.FromBase64String( Environment.GetEnvironmentVariable(
+            "ConnectionStrings__budgify_db"))));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -31,10 +30,13 @@ public partial class AccountsContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("user");
+            entity.HasKey(e => e.IdUser).HasName("user_pkey");
 
+            entity.ToTable("user");
+
+            entity.Property(e => e.IdUser)
+                .HasDefaultValueSql("uuid_generate_v4()")
+                .HasColumnName("id_user");
             entity.Property(e => e.AllowWalletWatch)
                 .HasDefaultValue(true)
                 .HasColumnName("allow_wallet_watch");
@@ -43,9 +45,6 @@ public partial class AccountsContext : DbContext
                 .HasMaxLength(255)
                 .HasColumnName("email");
             entity.Property(e => e.Genre).HasColumnName("genre");
-            entity.Property(e => e.IdUser)
-                .HasDefaultValueSql("uuid_generate_v4()")
-                .HasColumnName("id_user");
             entity.Property(e => e.IdUserGroup).HasColumnName("id_user_group");
             entity.Property(e => e.IsActive)
                 .HasDefaultValue(true)
@@ -67,9 +66,9 @@ public partial class AccountsContext : DbContext
 
         modelBuilder.Entity<UserGroup>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("user_group");
+            entity.HasKey(e => e.IdUserGroup).HasName("user_group_pkey");
+
+            entity.ToTable("user_group");
 
             entity.Property(e => e.IdUserGroup)
                 .HasDefaultValueSql("uuid_generate_v4()")
