@@ -1,1 +1,0 @@
-hey -n 10000 -c 100 http://localhost:port/api/v1/authentication/users

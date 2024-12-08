@@ -1,6 +1,0 @@
-@BudgifyAPI.Family_HostAddress = http://localhost:5155
-
-GET {{BudgifyAPI.Family_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
