@@ -21,7 +21,7 @@ public class PasetoAuthenticationHandler : AuthenticationHandler<AuthenticationS
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
 
-        if (Request.Path.ToString() == "/gateway/accounts/user" && Request.Path == "POST")
+        if (Request.Path.ToString() == "/gateway/accounts/user" && Request.Method == "POST")
         {
             List<Claim> claims = new List<Claim>();
             var identity = new ClaimsIdentity(claims, Scheme.Name);

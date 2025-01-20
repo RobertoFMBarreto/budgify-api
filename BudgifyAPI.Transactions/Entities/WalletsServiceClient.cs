@@ -19,6 +19,8 @@ public static class WalletsServiceClient
         return response.WalletId;
     }
     
+    
+    
     public static async Task<GetWalletByIdResponse> GetWalletById(Guid walletId, Guid uid)
     {
        
