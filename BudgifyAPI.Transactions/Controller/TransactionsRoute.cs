@@ -656,6 +656,29 @@ namespace BudgifyAPI.Transactions.Controller
                 }
             });
             
+            application.MapGet($"{baseRoute}/export/{{idWallet}}", async (HttpRequest req, Guid idWallet) => {
+                try {
+                    var receivedUid = req.Headers["X-User-Id"];
+                    if (string.IsNullOrEmpty(receivedUid))
+                    {
+                        return new CustomHttpResponse()
+                        {
+                            Status = 400,
+                            Message = "Bad Request",
+                        };
+                    }
+
+                    var uid = CustomEncryptor.DecryptString(
+                        Encoding.UTF8.GetString(Convert.FromBase64String(receivedUid)));
+                    return await TransactionsInteractorEf.ExportTransactions(TransactionsPersistence.ExportTransactions, Guid.Parse(uid),idWallet);
+                } 
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            });
+            
             return application;
         }
     }

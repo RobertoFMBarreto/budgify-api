@@ -162,5 +162,11 @@ namespace BudgifyAPI.Transactions.UseCases
         {
             return await getGroupTransactionStatsPersistence(transactionGroupId);
         }
+
+        public static async Task<CustomHttpResponse> ExportTransactions(
+            Func<Guid, Guid, Task<CustomHttpResponse>> exportTransactionsPersistence, Guid userId, Guid walletId)
+        {
+            return await exportTransactionsPersistence(userId, walletId);
+        }
     }
 }

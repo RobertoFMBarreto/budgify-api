@@ -371,6 +371,8 @@ namespace BudgifyAPI.Transactions.UseCases
             TransactionsContext transactionsContext = new TransactionsContext();
             try
             {
+                //WalletRequest wallets = await WalletsServiceClient.GetUserWalletsHttp(userId);
+                //string[] walletsArray = wallets.data.Select(x=> x.idWallet).ToArray();
                 IEnumerable<string> wallets = await WalletsServiceClient.GetUserWallets(userId);
                 string[] walletsArray = wallets.ToArray();
                 Guid[] guids = walletsArray.Select(x => Guid.Parse(x)).ToArray();
@@ -1185,6 +1187,34 @@ namespace BudgifyAPI.Transactions.UseCases
                 };
             }
             catch (Exception ex)
+            {
+                return new CustomHttpResponse()
+                {
+                    Message = ex.Message,
+                    Status = 500
+                };
+            }
+        }
+
+        public static async Task<CustomHttpResponse> ExportTransactions(Guid userId, Guid walletId)
+        {
+            TransactionsContext transactionsContext = new TransactionsContext();
+
+            try
+            {
+                string query = "select * from public.transactions t "
+                    + "left join category c On c.id_category = t.id_category "+
+                    "left join subcategory sc On sc.id_subcategory = t.id_subcategory " + 
+                    "where t.id_wallet = @IdWallet";
+                List<TransactionGroup> listTransacationgroup =
+                    await transactionsContext.TransactionGroups.FromSqlRaw(query, 
+                        new NpgsqlParameter("@IdWallet", walletId)).ToListAsync();
+                return new CustomHttpResponse()
+                {
+                    Data = listTransacationgroup,
+                    Status = 200
+                };
+            }catch (Exception ex)
             {
                 return new CustomHttpResponse()
                 {
